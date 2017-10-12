@@ -1,6 +1,7 @@
 docs-master/_images/erddapy_tour_40_0.png
 docs-master/_images/erddapy_tour_41_0.png
-docs-master/_images/erddapy_tour_53_0.png
+docs-master/_images/erddapy_tour_52_0.png
+docs-master/_sources/erddapy_searchfor.ipynb.txt
 docs-master/_sources/erddapy_tour.ipynb.txt
 docs-master/_sources/index.rst.txt
 docs-master/_static/ajax-loader.gif
@@ -26,6 +27,7 @@ docs-master/_static/underscore.js
 docs-master/_static/up-pressed.png
 docs-master/_static/up.png
 docs-master/_static/websupport.js
+docs-master/erddapy_searchfor.html
 docs-master/erddapy_tour.html
 docs-master/genindex.html
 docs-master/index.html

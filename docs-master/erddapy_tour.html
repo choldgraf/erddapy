@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy tour &#8212; erddapy 0.1.1+9.g1c145b4 documentation</title>
+    <title>erddapy tour &#8212; erddapy 0.1.1+14.g8914cb3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.1+9.g1c145b4',
+        VERSION:     '0.1.1+14.g8914cb3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -23,6 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Search for demostration" href="erddapy_searchfor.html" />
     <link rel="prev" title="erddapy" href="index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -73,9 +74,14 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal"><span class="pre">erddapy</span></code> tour</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Extras">Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Extras">Extras</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#OPeNDAP-response">OPeNDAP response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#netCDF-&quot;file-like&quot;-to-xarray">netCDF “file-like” to xarray</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="erddapy_searchfor.html">Search for demostration</a></li>
 </ul>
 
 <div class="relations">
@@ -83,6 +89,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="index.html" title="previous chapter">erddapy</a></li>
+      <li>Next: <a href="erddapy_searchfor.html" title="next chapter">Search for demostration</a></li>
   </ul></li>
 </ul>
 </div>
@@ -370,7 +377,7 @@ df = pd.read_csv(e.get_search_url(response=&#39;csv&#39;, search_for=&#39;all&#3
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;We have 267 tabledap, 0 griddap, and 0 wms endpoints.&#39;
+<span></span>&#39;We have 268 tabledap, 0 griddap, and 0 wms endpoints.&#39;
 </pre></div>
 </div>
 </div>
@@ -381,19 +388,7 @@ df = pd.read_csv(e.get_search_url(response=&#39;csv&#39;, search_for=&#39;all&#3
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>def parse_dates(date_time, calendar=&#39;standard&#39;):
-    &quot;&quot;&quot;
-    ERDDAP can take a variety of time constraints, we chose to use only
-    `seconds since 1970-01-01T00:00:00Z` so the user can parse the dates in any way they like,
-    and provide a datetime object to this function.
-
-    &quot;&quot;&quot;
-    from netCDF4 import netcdftime
-
-    utime = netcdftime.utime(&#39;seconds since 1970-01-01T00:00:00Z&#39;, calendar=calendar)
-    return utime.date2num(date_time)
-
-def show_iframe(src):
+<span></span>def show_iframe(src):
     &quot;&quot;&quot;Helper function to show HTML returns.&quot;&quot;&quot;
     from IPython.display import HTML
     iframe = &#39;&lt;iframe src=&quot;{src}&quot; width=&quot;100%&quot; height=&quot;950&quot;&gt;&lt;/iframe&gt;&#39;.format
@@ -401,8 +396,8 @@ def show_iframe(src):
 </pre></div>
 </div>
 </div>
-<p>Let’s narrow the search area and time span, and looking only for
-<code class="docutils literal"><span class="pre">sea_water_temperature</span></code>.</p>
+<p>Let’s narrow the search area, time span, and look for
+<code class="docutils literal"><span class="pre">sea_water_temperature</span></code> only.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [7]:
@@ -413,7 +408,6 @@ def show_iframe(src):
 
 min_time = pendulum.parse(&#39;2016-07-10T00:00:00Z&#39;)
 max_time = pendulum.parse(&#39;2017-02-10T00:00:00Z&#39;)
-min_time, max_time = parse_dates(min_time), parse_dates(max_time)
 
 min_lat, max_lat =  38.0, 41.0
 min_lon, max_lon = -72.0, -69.0
@@ -454,7 +448,7 @@ show_iframe(search_url)
 </div>
 <p>We can see that the search form above was correctly populated with the
 constraints.</p>
-<p>We change the response from <code class="docutils literal"><span class="pre">html</span></code> to <code class="docutils literal"><span class="pre">csv</span></code>, load it as a
+<p>We change the response from <code class="docutils literal"><span class="pre">.html</span></code> to <code class="docutils literal"><span class="pre">.csv</span></code>, load it as a
 <code class="docutils literal"><span class="pre">DataFrame</span></code>, and inspect what are the <code class="docutils literal"><span class="pre">Dataset</span> <span class="pre">ID</span></code>s available for
 download.</p>
 <p>Note that the optional constraints are kept in a <code class="docutils literal"><span class="pre">dict</span></code>, making if
@@ -686,8 +680,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 150 ms, sys: 6.15 ms, total: 156 ms
-Wall time: 1.83 s
+CPU times: user 140 ms, sys: 458 µs, total: 140 ms
+Wall time: 2.18 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -721,8 +715,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 22.7 ms, sys: 1.04 ms, total: 23.7 ms
-Wall time: 793 ms
+CPU times: user 18.2 ms, sys: 11.8 ms, total: 30 ms
+Wall time: 783 ms
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -756,8 +750,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 386 ms, sys: 900 µs, total: 387 ms
-Wall time: 2.17 s
+CPU times: user 136 ms, sys: 0 ns, total: 136 ms
+Wall time: 2.23 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -874,7 +868,7 @@ download_url
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?depth_qc,lon_uv,time,v_qc,longitude_qc,depth,time_qc,salinity,conductivity,salinity_qc,temperature_qc,lat_uv_qc,v,precise_lat,lon_uv_qc,pressure_qc,precise_time_qc,longitude,time_uv,latitude,u_qc,precise_time,u,density,lat_uv,precise_lon,density_qc,pressure,conductivity_qc,latitude_qc,time_uv_qc,temperature&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&#39;
+<span></span>&#39;https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?lat_uv_qc,lat_uv,time_uv,pressure_qc,conductivity_qc,precise_lon,salinity,latitude,lon_uv_qc,salinity_qc,pressure,temperature,density_qc,depth,u,v_qc,precise_time,longitude_qc,v,time_qc,precise_time_qc,time_uv_qc,time,latitude_qc,u_qc,density,temperature_qc,longitude,precise_lat,conductivity,depth_qc,lon_uv&amp;time&gt;=2016-07-10T00:00:00+00:00&amp;time&lt;=2017-02-10T00:00:00+00:00&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&#39;
 </pre></div>
 </div>
 </div>
@@ -898,8 +892,8 @@ download_url
  &#39;latitude&gt;=&#39;: 38.0,
  &#39;longitude&lt;=&#39;: -69.0,
  &#39;longitude&gt;=&#39;: -72.0,
- &#39;time&lt;=&#39;: 1486684800.0,
- &#39;time&gt;=&#39;: 1468108800.0}
+ &#39;time&lt;=&#39;: &lt;Pendulum [2017-02-10T00:00:00+00:00]&gt;,
+ &#39;time&gt;=&#39;: &lt;Pendulum [2016-07-10T00:00:00+00:00]&gt;}
 </pre></div>
 </div>
 </div>
@@ -958,7 +952,7 @@ except Exception as err:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?depth_qc,lon_uv,time,v_qc,longitude_qc,depth,time_qc,salinity,conductivity,salinity_qc,temperature_qc,lat_uv_qc,v,precise_lat,lon_uv_qc,pressure_qc,precise_time_qc,longitude,time_uv,latitude,u_qc,precise_time,u,density,lat_uv,precise_lon,density_qc,pressure,conductivity_qc,latitude_qc,time_uv_qc,temperature&amp;time%3E=1468108800.0&amp;time%3C=1486684800.0&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0
+500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?lat_uv_qc,lat_uv,time_uv,pressure_qc,conductivity_qc,precise_lon,salinity,latitude,lon_uv_qc,salinity_qc,pressure,temperature,density_qc,depth,u,v_qc,precise_time,longitude_qc,v,time_qc,precise_time_qc,time_uv_qc,time,latitude_qc,u_qc,density,temperature_qc,longitude,precise_lat,conductivity,depth_qc,lon_uv&amp;time%3E=2016-07-10T00:00:00+00:00&amp;time%3C=2017-02-10T00:00:00+00:00&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0
 </pre></div></div>
 </div>
 <p>The glider datasets should be masked automatically but we found that is
@@ -991,16 +985,31 @@ for glider in dfs.keys():
 <span></span>%matplotlib inline
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
+from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
 
 
-fig, ax = plt.subplots(
-    figsize=(9, 9),
-    subplot_kw=dict(projection=ccrs.PlateCarree())
-)
-ax.coastlines(resolution=&#39;10m&#39;)
+def make_map(extent):
+    fig, ax = plt.subplots(
+        figsize=(9, 9),
+        subplot_kw=dict(projection=ccrs.PlateCarree())
+    )
+    ax.coastlines(resolution=&#39;10m&#39;)
+    ax.set_extent(extent)
+
+    ax.set_xticks([extent[0], extent[1]], crs=ccrs.PlateCarree())
+    ax.set_yticks([extent[2], extent[3]], crs=ccrs.PlateCarree())
+    lon_formatter = LongitudeFormatter(zero_direction_label=True)
+    lat_formatter = LatitudeFormatter()
+    ax.xaxis.set_major_formatter(lon_formatter)
+    ax.yaxis.set_major_formatter(lat_formatter)
+
+    return fig, ax
+
+
 dx = dy = 0.5
-ax.set_extent([min_lon-dx, max_lon+dx, min_lat-dy, max_lat+dy])
+extent = min_lon-dx, max_lon+dx, min_lat+dy, max_lat+dy
 
+fig, ax = make_map(extent)
 for glider, df in dfs.items():
     ax.plot(df[&#39;longitude&#39;], df[&#39;latitude&#39;], label=glider)
 
@@ -1046,9 +1055,8 @@ leg = ax.legend()
 </div>
 <div class="section" id="Extras">
 <h2>Extras<a class="headerlink" href="#Extras" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>OPeNDAP response</li>
-</ul>
+<div class="section" id="OPeNDAP-response">
+<h3>OPeNDAP response<a class="headerlink" href="#OPeNDAP-response" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [26]:
@@ -1058,6 +1066,7 @@ leg = ax.legend()
 <span></span>from netCDF4 import Dataset
 
 opendap_url = e.get_opendap_url(&#39;cp_336-20170116T1254&#39;)
+print(&#39;Getting data from {}\n&#39;.format(opendap_url))
 with Dataset(opendap_url) as nc:
     print(nc.summary)
 </pre></div>
@@ -1068,12 +1077,14 @@ with Dataset(opendap_url) as nc:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+Getting data from https://data.ioos.us/gliders/erddap/tabledap/cp_336-20170116T1254
+
 The Pioneer Array is located off the coast of New England, south of Martha&#39;s Vineyard. The Continental Shelf-Slope area off the New England coast is a highly productive area and one that is located at a dynamic intersection where ocean currents meet in weather-like &#39;fronts&#39;, and where nutrients, pollutants, and other properties are exchanged between the coast and the deep ocean. Data from the inshore, shelf area helps to examine exchanges between the shelf and slope and the shelf ecosystem, as well as provide broader insight into the issues of air-sea gas exchange, including Carbon Dioxide. In order to provide synoptic, multi-scale observations of the outer continental shelf, shelf break region, and continental slope, the moored portion of the Pioneer Array is supplemented by six Coastal Gliders. The role of the Coastal Gliders is to monitor the mesoscale field of the slope sea and outer shelf, resolving rings, eddies and meanders from the Gulf Stream as they impinge on the shelf break front.  This dataset contains profiles of conductivity, temperature, depth, salinity and density, which are either measured or derived from the CTD measurements.
 </pre></div></div>
 </div>
-<ul class="simple">
-<li>netCDF file-like to xarray</li>
-</ul>
+</div>
+<div class="section" id="netCDF-&quot;file-like&quot;-to-xarray">
+<h3>netCDF “file-like” to xarray<a class="headerlink" href="#netCDF-"file-like"-to-xarray" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">open_dataset</span></code> will download a temporary file, so be careful with the
 constraints to avoid download serveral gigabytes!</p>
 <div class="nbinput docutils container">
@@ -1084,9 +1095,19 @@ constraints to avoid download serveral gigabytes!</p>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span>import requests
 
-r = requests.head(download_url)
 
-r.headers
+def humansize(nbytes):
+    suffixes = [&#39;B&#39;, &#39;KB&#39;, &#39;MB&#39;, &#39;GB&#39;, &#39;TB&#39;, &#39;PB&#39;]
+    k = 0
+    while nbytes &gt;= 1024 and k &lt; len(suffixes)-1:
+        nbytes /= 1024.
+        k += 1
+    f = (&#39;%.2f&#39; % nbytes).rstrip(&#39;0&#39;).rstrip(&#39;.&#39;)
+    return &#39;%s %s&#39; % (f, suffixes[k])
+
+r = requests.head(download_url)
+nbytes = float(r.headers[&#39;Content-Length&#39;])
+humansize(nbytes)
 </pre></div>
 </div>
 </div>
@@ -1096,27 +1117,33 @@ r.headers
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>{&#39;Server&#39;: &#39;nginx/1.8.1&#39;, &#39;Date&#39;: &#39;Mon, 09 Oct 2017 20:15:23 GMT&#39;, &#39;Content-Type&#39;: &#39;text/csv;charset=ISO-8859-1&#39;, &#39;Content-Length&#39;: &#39;2188054&#39;, &#39;Connection&#39;: &#39;keep-alive&#39;, &#39;Last-Modified&#39;: &#39;Mon, 09 Oct 2017 20:15:22 GMT&#39;, &#39;xdods-server&#39;: &#39;dods/3.7&#39;, &#39;erddap-server&#39;: &#39;1.78&#39;, &#39;Content-Disposition&#39;: &#39;attachment;filename=whoi_406-20160902T1700_aabb_f6bc_8591.csv&#39;, &#39;Content-Encoding&#39;: &#39;gzip&#39;}
+<span></span>&#39;2.05 MB&#39;
 </pre></div>
 </div>
 </div>
+<p>That is the unpacklaged size, so we will download less than b/c ERDDAP
+streams gzip’ed data.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>suffixes = [&#39;B&#39;, &#39;KB&#39;, &#39;MB&#39;, &#39;GB&#39;, &#39;TB&#39;, &#39;PB&#39;]
-def humansize(nbytes):
-    i = 0
-    while nbytes &gt;= 1024 and i &lt; len(suffixes)-1:
-        nbytes /= 1024.
-        i += 1
-    f = (&#39;%.2f&#39; % nbytes).rstrip(&#39;0&#39;).rstrip(&#39;.&#39;)
-    return &#39;%s %s&#39; % (f, suffixes[i])
+<span></span>from erddapy import open_dataset
 
-nbytes = float(r.headers[&#39;Content-Length&#39;])
-humansize(nbytes)
+download_url = e.get_download_url(
+    dataset_id=&#39;cp_336-20170116T1254&#39;,
+    response=&#39;nc&#39;,
+    variables=common_variables,
+    **kwargs,
+)
+
+ds = open_dataset(
+    download_url,
+    decode_times=False  # xarray fails to convert some CF-dates :-(
+)
+
+ds
 </pre></div>
 </div>
 </div>
@@ -1126,70 +1153,43 @@ humansize(nbytes)
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;2.09 MB&#39;
-</pre></div>
-</div>
-</div>
-<p>The download is just a few gzip’ed KBs in this case.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [29]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>from erddapy import open_dataset
-
-download_url = e.get_download_url(dataset_id=&#39;cp_336-20170116T1254&#39;, response=&#39;nc&#39;, variables=common_variables, **kwargs)
-
-ds = open_dataset(download_url, decode_times=False)
-
-ds
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[29]:
-</pre></div>
-</div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
 <span></span>&lt;xarray.Dataset&gt;
 Dimensions:          (row: 16232)
 Coordinates:
-    lon_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    time             (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
-    depth            (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 ...
-    longitude        (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    lat_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
     time_uv          (row) float64 nan nan nan nan nan nan nan nan nan nan ...
     latitude         (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
-    lat_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    depth            (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 ...
+    time             (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
+    longitude        (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    lon_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
 Dimensions without coordinates: row
 Data variables:
-    depth_qc         (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    v_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    longitude_qc     (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    time_qc          (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    salinity         (row) float64 35.45 35.45 35.45 35.45 35.45 35.46 35.46 ...
-    conductivity     (row) float64 4.281 4.284 4.287 4.287 4.289 4.29 4.29 ...
-    salinity_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    temperature_qc   (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
     lat_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    v                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    precise_lat      (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
-    lon_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
     pressure_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    precise_time_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    u_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    precise_time     (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
-    u                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    density          (row) float64 1.026e+03 1.026e+03 1.026e+03 1.026e+03 ...
-    precise_lon      (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
-    density_qc       (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    pressure         (row) float64 0.51 0.52 1.91 0.35 2.1 8.65 18.68 0.34 ...
     conductivity_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    latitude_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    time_uv_qc       (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    precise_lon      (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    salinity         (row) float64 35.45 35.45 35.45 35.45 35.45 35.46 35.46 ...
+    lon_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    salinity_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    pressure         (row) float64 0.51 0.52 1.91 0.35 2.1 8.65 18.68 0.34 ...
     temperature      (row) float64 14.4 14.42 14.46 14.45 14.47 14.47 14.47 ...
+    density_qc       (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    u                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    v_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    precise_time     (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
+    longitude_qc     (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    v                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    time_qc          (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    precise_time_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    time_uv_qc       (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    latitude_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    u_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    density          (row) float64 1.026e+03 1.026e+03 1.026e+03 1.026e+03 ...
+    temperature_qc   (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    precise_lat      (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
+    conductivity     (row) float64 4.281 4.284 4.287 4.287 4.289 4.29 4.29 ...
+    depth_qc         (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
 Attributes:
     acknowledgement:               Funding provided by the National Science F...
     cdm_data_type:                 TrajectoryProfile
@@ -1254,7 +1254,7 @@ Attributes:
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [30]:
+<span></span>In [29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
@@ -1264,20 +1264,20 @@ Attributes:
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[30]:
+<span></span>Out[29]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
 <span></span>&lt;xarray.DataArray &#39;temperature&#39; (row: 16232)&gt;
 array([ 14.3976,  14.4236,  14.4596, ...,   4.4004,   4.3975,   4.3978])
 Coordinates:
-    lon_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
-    time       (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
-    depth      (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 18.54 ...
-    longitude  (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    lat_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
     time_uv    (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
     latitude   (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
-    lat_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
+    depth      (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 18.54 ...
+    time       (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
+    longitude  (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    lon_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
 Dimensions without coordinates: row
 Attributes:
     _ChunkSizes:          1
@@ -1300,7 +1300,7 @@ Attributes:
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [31]:
+<span></span>In [30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
@@ -1313,7 +1313,7 @@ mask = ~np.ma.masked_invalid(data).mask
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [32]:
+<span></span>In [31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
@@ -1326,11 +1326,12 @@ lat = ds[&#39;latitude&#39;].values[mask]
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [33]:
+<span></span>In [32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span>import warnings
+
 
 with warnings.catch_warnings():
     warnings.simplefilter(&#39;ignore&#39;)
@@ -1345,7 +1346,7 @@ lat = lat[mask]
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [34]:
+<span></span>In [33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
@@ -1353,16 +1354,12 @@ lat = lat[mask]
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 
-fig, ax = plt.subplots(
-    figsize=(9, 9),
-    subplot_kw=dict(projection=ccrs.PlateCarree())
-)
-ax.coastlines(resolution=&#39;10m&#39;)
-dx = dy = 0.5
 
-extent = (ds.geospatial_lon_min-dx, ds.geospatial_lon_max+dx,
-          ds.geospatial_lat_min-dy, ds.geospatial_lat_max+dy)
-ax.set_extent(extent)
+extent = (
+    ds.geospatial_lon_min-dx, ds.geospatial_lon_max+dx,
+    ds.geospatial_lat_min-dy, ds.geospatial_lat_max+dy
+)
+fig, ax = make_map(extent)
 
 cs = ax.scatter(lon, lat, c=data, s=50, alpha=0.5, edgecolor=&#39;none&#39;)
 kw = dict(orientation=&#39;vertical&#39;, fraction=0.1, shrink=0.9, extend=&#39;both&#39;)
@@ -1374,7 +1371,8 @@ cbar = fig.colorbar(cs, **kw)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/erddapy_tour_53_0.png" src="_images/erddapy_tour_53_0.png" />
+<img alt="_images/erddapy_tour_52_0.png" src="_images/erddapy_tour_52_0.png" />
+</div>
 </div>
 </div>
 </div>
