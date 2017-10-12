@@ -1,6 +1,7 @@
 ./_images/erddapy_tour_40_0.png
 ./_images/erddapy_tour_41_0.png
-./_images/erddapy_tour_53_0.png
+./_images/erddapy_tour_52_0.png
+./_sources/erddapy_searchfor.ipynb.txt
 ./_sources/erddapy_tour.ipynb.txt
 ./_sources/index.rst.txt
 ./_static/ajax-loader.gif
@@ -26,6 +27,7 @@
 ./_static/up-pressed.png
 ./_static/up.png
 ./_static/websupport.js
+./erddapy_searchfor.html
 ./erddapy_tour.html
 ./genindex.html
 ./index.html
