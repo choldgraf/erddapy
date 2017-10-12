@@ -1,0 +1,1409 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>erddapy tour &#8212; erddapy 0.1.1+8.g29c5421 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.1+8.g29c5421',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="erddapy" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=pyoceans&repo=erddapy&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a href="https://travis-ci.org/pyoceans/erddapy">
+    <img
+        alt="https://secure.travis-ci.org/pyoceans/erddapy.svg?branch=master"
+        src="https://secure.travis-ci.org/pyoceans/erddapy.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal"><span class="pre">erddapy</span></code> tour</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Extras">Extras</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">erddapy</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="section" id="erddapy-tour">
+<h1><code class="docutils literal"><span class="pre">erddapy</span></code> tour<a class="headerlink" href="#erddapy-tour" title="Permalink to this headline">¶</a></h1>
+<p>First we need to instantiate an <code class="docutils literal"><span class="pre">ERDDAP</span></code> <code class="docutils literal"><span class="pre">URL</span></code> constructor for the
+an <code class="docutils literal"><span class="pre">erddap</span></code> server. In this example we will use
+<a class="reference external" href="https://data.ioos.us/gliders/erddap">https://data.ioos.us/gliders/erddap</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>from erddapy import ERDDAP
+
+
+server_url = &#39;https://data.ioos.us/gliders/erddap&#39;
+
+e = ERDDAP(server_url=server_url)
+</pre></div>
+</div>
+</div>
+<p>What are the methods/attributes available?</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>[method for method in dir(e) if not method.startswith(&#39;_&#39;)]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&#39;download_options&#39;,
+ &#39;get_download_url&#39;,
+ &#39;get_info_url&#39;,
+ &#39;get_opendap_url&#39;,
+ &#39;get_search_url&#39;,
+ &#39;get_var_by_attr&#39;,
+ &#39;search_options&#39;,
+ &#39;server_url&#39;]
+</pre></div>
+</div>
+</div>
+<p>All the <code class="docutils literal"><span class="pre">get_&lt;methods&gt;</span></code> will return a valid ERDDAP URL for the
+requested response and options.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>print(e.get_search_url(response=&#39;.html&#39;, search_for=&#39;all&#39;))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://data.ioos.us/gliders/erddap/search/advanced.html?page=1&amp;itemsPerPage=1000&amp;protocol=(ANY)&amp;cdm_data_type=(ANY)&amp;institution=(ANY)&amp;ioos_category=(ANY)&amp;keywords=(ANY)&amp;long_name=(ANY)&amp;standard_name=(ANY)&amp;variableName=(ANY)&amp;minLon=(ANY)&amp;maxLon=(ANY)&amp;minLat=(ANY)&amp;maxLat=(ANY)&amp;minTime=(ANY)&amp;maxTime=(ANY)&amp;searchFor=all
+</pre></div></div>
+</div>
+<p>There are many responses available, see the docs for
+<a class="reference external" href="http://coastwatch.pfeg.noaa.gov/erddap/griddap/documentation.html">griddap</a>
+and
+<a class="reference external" href="http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html">tabledap</a>
+respectively. Let’s load the <code class="docutils literal"><span class="pre">csv</span></code> reponse directly with <code class="docutils literal"><span class="pre">pandas</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>import pandas as pd
+
+
+df = pd.read_csv(e.get_search_url(response=&#39;csv&#39;, search_for=&#39;all&#39;))
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>&#39;We have {} tabledap, {} griddap, and {} wms endpoints.&#39;.format(
+    len(set(df[&#39;tabledap&#39;].dropna())),
+    len(set(df[&#39;griddap&#39;].dropna())),
+    len(set(df[&#39;wms&#39;].dropna()))
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[5]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;We have 267 tabledap, 0 griddap, and 0 wms endpoints.&#39;
+</pre></div>
+</div>
+</div>
+<p>We can refine our search by providing some constraints.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>def parse_dates(date_time, calendar=&#39;standard&#39;):
+    &quot;&quot;&quot;
+    ERDDAP can take a variety of time constraints, we chose to use only
+    `seconds since 1970-01-01T00:00:00Z` so the user can parse the dates in any way they like,
+    and provide a datetime object to this function.
+
+    &quot;&quot;&quot;
+    from netCDF4 import netcdftime
+
+    utime = netcdftime.utime(&#39;seconds since 1970-01-01T00:00:00Z&#39;, calendar=calendar)
+    return utime.date2num(date_time)
+
+def show_iframe(src):
+    &quot;&quot;&quot;Helper function to show HTML returns.&quot;&quot;&quot;
+    from IPython.display import HTML
+    iframe = &#39;&lt;iframe src=&quot;{src}&quot; width=&quot;100%&quot; height=&quot;950&quot;&gt;&lt;/iframe&gt;&#39;.format
+    return HTML(iframe(src=src))
+</pre></div>
+</div>
+</div>
+<p>Let’s narrow the search area and time span, and looking only for
+<code class="docutils literal"><span class="pre">sea_water_temperature</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>import pendulum
+
+min_time = pendulum.parse(&#39;2016-07-10T00:00:00Z&#39;)
+max_time = pendulum.parse(&#39;2017-02-10T00:00:00Z&#39;)
+min_time, max_time = parse_dates(min_time), parse_dates(max_time)
+
+min_lat, max_lat =  38.0, 41.0
+min_lon, max_lon = -72.0, -69.0
+
+standard_name = &#39;sea_water_temperature&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>kw = dict(
+    standard_name=standard_name,
+    min_lat=min_lat,
+    max_lat=max_lat,
+    min_lon=min_lon,
+    max_lon=max_lon,
+    min_time=min_time,
+    max_time=max_time
+)
+
+search_url = e.get_search_url(response=&#39;html&#39;, **kw)
+
+show_iframe(search_url)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<iframe src="https://data.ioos.us/gliders/erddap/search/advanced.html?page=1&itemsPerPage=1000&protocol=(ANY)&cdm_data_type=(ANY)&institution=(ANY)&ioos_category=(ANY)&keywords=(ANY)&long_name=(ANY)&standard_name=sea_water_temperature&variableName=(ANY)&minLon=-72.0&maxLon=-69.0&minLat=38.0&maxLat=41.0&minTime=1468108800.0&maxTime=1486684800.0" width="100%" height="950"></iframe></div>
+</div>
+<p>We can see that the search form above was correctly populated with the
+constraints.</p>
+<p>We change the response from <code class="docutils literal"><span class="pre">html</span></code> to <code class="docutils literal"><span class="pre">csv</span></code>, load it as a
+<code class="docutils literal"><span class="pre">DataFrame</span></code>, and inspect what are the <code class="docutils literal"><span class="pre">Dataset</span> <span class="pre">ID</span></code>s available for
+download.</p>
+<p>Note that the optional constraints are kept in a <code class="docutils literal"><span class="pre">dict</span></code>, making if
+easy to reuse, update or just inspect what where the original parameters
+used.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>e.search_options
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[9]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>{&#39;cdm_data_type&#39;: &#39;(ANY)&#39;,
+ &#39;institution&#39;: &#39;(ANY)&#39;,
+ &#39;ioos_category&#39;: &#39;(ANY)&#39;,
+ &#39;itemsPerPage&#39;: 1000,
+ &#39;keywords&#39;: &#39;(ANY)&#39;,
+ &#39;long_name&#39;: &#39;(ANY)&#39;,
+ &#39;maxLat&#39;: 41.0,
+ &#39;maxLon&#39;: -69.0,
+ &#39;maxTime&#39;: 1486684800.0,
+ &#39;minLat&#39;: 38.0,
+ &#39;minLon&#39;: -72.0,
+ &#39;minTime&#39;: 1468108800.0,
+ &#39;page&#39;: 1,
+ &#39;protocol&#39;: &#39;(ANY)&#39;,
+ &#39;response&#39;: &#39;html&#39;,
+ &#39;searchFor&#39;: None,
+ &#39;server_url&#39;: &#39;https://data.ioos.us/gliders/erddap&#39;,
+ &#39;standard_name&#39;: &#39;sea_water_temperature&#39;,
+ &#39;variableName&#39;: &#39;(ANY)&#39;}
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>search_url = e.get_search_url(response=&#39;csv&#39;, **kw)
+search = pd.read_csv(search_url)
+gliders = search[&#39;Dataset ID&#39;].values
+
+print(&#39;Found {} Glider Datasets:\n{}&#39;.format(len(gliders), &#39;\n&#39;.join(gliders)))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Found 5 Glider Datasets:
+blue-20160818T1448
+cp_336-20170116T1254
+silbo-20160413T1534
+sp022-20170209T1616
+whoi_406-20160902T1700
+</pre></div></div>
+</div>
+<p>Now that we know the <code class="docutils literal"><span class="pre">Dataset</span> <span class="pre">ID</span></code>s we can explore their metadata
+with the <code class="docutils literal"><span class="pre">get_info_url</span></code> method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>info_url = e.get_info_url(dataset_id=gliders[0], response=&#39;html&#39;)
+
+show_iframe(src=info_url)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<iframe src="https://data.ioos.us/gliders/erddap/info/blue-20160818T1448/index.html" width="100%" height="950"></iframe></div>
+</div>
+<p>Again, with the <code class="docutils literal"><span class="pre">csv</span></code> response, we can manipulate the metadata and
+find the variables that are <code class="docutils literal"><span class="pre">cdm_profile_variables</span></code> for example.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>info_url = e.get_info_url(dataset_id=gliders[0], response=&#39;csv&#39;)
+
+info = pd.read_csv(info_url)
+
+info.head()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Row Type</th>
+      <th>Variable Name</th>
+      <th>Attribute Name</th>
+      <th>Data Type</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>attribute</td>
+      <td>NC_GLOBAL</td>
+      <td>acknowledgement</td>
+      <td>String</td>
+      <td>This deployment supported by NOAA U.S. IOOS</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>attribute</td>
+      <td>NC_GLOBAL</td>
+      <td>cdm_data_type</td>
+      <td>String</td>
+      <td>TrajectoryProfile</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>attribute</td>
+      <td>NC_GLOBAL</td>
+      <td>cdm_profile_variables</td>
+      <td>String</td>
+      <td>profile_id, time, latitude, longitude, time_uv...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>attribute</td>
+      <td>NC_GLOBAL</td>
+      <td>cdm_trajectory_variables</td>
+      <td>String</td>
+      <td>trajectory, wmo_id</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>attribute</td>
+      <td>NC_GLOBAL</td>
+      <td>comment</td>
+      <td>String</td>
+      <td>Glider deployed by the University of Massachus...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>&#39;&#39;.join(info.loc[info[&#39;Attribute Name&#39;] == &#39;cdm_profile_variables&#39;, &#39;Value&#39;])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[13]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;profile_id, time, latitude, longitude, time_uv, lat_uv, lon_uv, u, v&#39;
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">get_var_by_attr</span></code> method provides an easy way to find variables
+based on their attributes. Here we check what is/are the variable(s)
+associated with the <code class="docutils literal"><span class="pre">standard_name</span></code> used in the search.</p>
+<p>Note that <code class="docutils literal"><span class="pre">get_var_by_attr</span></code> caches the last response in case the user
+needs to make multiple requests, but it will loose its state when a new
+request is made. See the times below.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>%%time
+
+# First one, slow.
+e.get_var_by_attr(
+    dataset_id=&#39;blue-20160818T1448&#39;,
+    standard_name=&#39;sea_water_temperature&#39;
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 150 ms, sys: 6.15 ms, total: 156 ms
+Wall time: 1.83 s
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&#39;temperature&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>%%time
+
+# Second one on the same glider, fast.
+e.get_var_by_attr(
+    dataset_id=&#39;blue-20160818T1448&#39;,
+    standard_name=&#39;sea_water_practical_salinity&#39;
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 22.7 ms, sys: 1.04 ms, total: 23.7 ms
+Wall time: 793 ms
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&#39;salinity&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>%%time
+
+# New one, slow.
+e.get_var_by_attr(
+    dataset_id=&#39;cp_336-20170116T1254&#39;,
+    standard_name=&#39;sea_water_practical_salinity&#39;
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 386 ms, sys: 900 µs, total: 387 ms
+Wall time: 2.17 s
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[16]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>[&#39;salinity&#39;]
+</pre></div>
+</div>
+</div>
+<p>With Python it is easy to loop over all the <code class="docutils literal"><span class="pre">dataset_id</span></code>s for the
+variables with <code class="docutils literal"><span class="pre">standard_names</span></code></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>variables = [e.get_var_by_attr(dataset_id=glider, standard_name=lambda v: v is not None) for glider in gliders]
+</pre></div>
+</div>
+</div>
+<p>We can construct a <code class="docutils literal"><span class="pre">set</span></code> with the common variables in those
+<code class="docutils literal"><span class="pre">dataset_id</span></code>s.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>common_variables = set(variables[0]).intersection(*variables[1:])
+
+common_variables
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[18]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>{&#39;conductivity&#39;,
+ &#39;conductivity_qc&#39;,
+ &#39;density&#39;,
+ &#39;density_qc&#39;,
+ &#39;depth&#39;,
+ &#39;depth_qc&#39;,
+ &#39;lat_uv&#39;,
+ &#39;lat_uv_qc&#39;,
+ &#39;latitude&#39;,
+ &#39;latitude_qc&#39;,
+ &#39;lon_uv&#39;,
+ &#39;lon_uv_qc&#39;,
+ &#39;longitude&#39;,
+ &#39;longitude_qc&#39;,
+ &#39;precise_lat&#39;,
+ &#39;precise_lon&#39;,
+ &#39;precise_time&#39;,
+ &#39;precise_time_qc&#39;,
+ &#39;pressure&#39;,
+ &#39;pressure_qc&#39;,
+ &#39;salinity&#39;,
+ &#39;salinity_qc&#39;,
+ &#39;temperature&#39;,
+ &#39;temperature_qc&#39;,
+ &#39;time&#39;,
+ &#39;time_qc&#39;,
+ &#39;time_uv&#39;,
+ &#39;time_uv_qc&#39;,
+ &#39;u&#39;,
+ &#39;u_qc&#39;,
+ &#39;v&#39;,
+ &#39;v_qc&#39;}
+</pre></div>
+</div>
+</div>
+<p>Last, but not least, the download endpoint!</p>
+<p>It is important to note that the download constraints are based on the
+variables names and not the standardized ones for the <code class="docutils literal"><span class="pre">get_search_url</span></code>
+method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span># I don&#39;t think inequalities are supported by REST.
+# For simplicity I left them as part of the user input.
+# Some googling tells me that the &quot;correct&quot; should be:
+# time=min_time&amp;gt=min_time&amp;le=max_time
+# not sure if ERDDAP supports that though.
+kwargs = {
+    &#39;time&gt;=&#39;: min_time,
+    &#39;time&lt;=&#39;: max_time,
+    &#39;latitude&gt;=&#39;: min_lat,
+    &#39;latitude&lt;=&#39;: max_lat,
+    &#39;longitude&gt;=&#39;: min_lon,
+    &#39;longitude&lt;=&#39;: max_lon,
+}
+
+
+download_url = e.get_download_url(dataset_id=gliders[0], variables=common_variables, response=&#39;html&#39;, **kwargs)
+
+download_url
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[19]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?depth_qc,lon_uv,time,v_qc,longitude_qc,depth,time_qc,salinity,conductivity,salinity_qc,temperature_qc,lat_uv_qc,v,precise_lat,lon_uv_qc,pressure_qc,precise_time_qc,longitude,time_uv,latitude,u_qc,precise_time,u,density,lat_uv,precise_lon,density_qc,pressure,conductivity_qc,latitude_qc,time_uv_qc,temperature&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>e.download_options
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[20]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>{&#39;latitude&lt;=&#39;: 41.0,
+ &#39;latitude&gt;=&#39;: 38.0,
+ &#39;longitude&lt;=&#39;: -69.0,
+ &#39;longitude&gt;=&#39;: -72.0,
+ &#39;time&lt;=&#39;: 1486684800.0,
+ &#39;time&gt;=&#39;: 1468108800.0}
+</pre></div>
+</div>
+</div>
+<p>Putting everything in <code class="docutils literal"><span class="pre">DataFrame</span></code>s.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>from requests.exceptions import HTTPError
+
+
+def download_csv(url):
+    return pd.read_csv(url, index_col=&#39;time&#39;, parse_dates=True, skiprows=[1])
+
+
+dfs = {}
+for glider in gliders:
+    try:
+        download_url = e.get_download_url(dataset_id=glider, variables=common_variables, response=&#39;csv&#39;, **kwargs)
+    except HTTPError:
+        print(&#39;Failed to download {}&#39;.format(glider))
+        continue
+    dfs.update({glider: download_csv(download_url)})
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Failed to download silbo-20160413T1534
+Failed to download sp022-20170209T1616
+</pre></div></div>
+</div>
+<p>It is unclear to me why ERDDAP found two datasets in the constraints
+provided but fails to generate an URL for the download using the same
+constraints.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>try:
+    e.get_download_url(dataset_id=&#39;silbo-20160413T1534&#39;, variables=common_variables, response=&#39;csv&#39;, **kwargs)
+except Exception as err:
+    print(err)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?depth_qc,lon_uv,time,v_qc,longitude_qc,depth,time_qc,salinity,conductivity,salinity_qc,temperature_qc,lat_uv_qc,v,precise_lat,lon_uv_qc,pressure_qc,precise_time_qc,longitude,time_uv,latitude,u_qc,precise_time,u,density,lat_uv,precise_lon,density_qc,pressure,conductivity_qc,latitude_qc,time_uv_qc,temperature&amp;time%3E=1468108800.0&amp;time%3C=1486684800.0&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0
+</pre></div></div>
+</div>
+<p>The glider datasets should be masked automatically but we found that is
+not true. The cell below applies the mask as described by the data QC
+flag.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>import numpy as np
+
+
+for glider in dfs.keys():
+    dfs[glider].loc[dfs[glider][&#39;salinity_qc&#39;] == 9, &#39;salinity&#39;] = np.NaN
+    dfs[glider].loc[dfs[glider][&#39;pressure_qc&#39;] == 9, &#39;pressure&#39;] = np.NaN
+    dfs[glider].loc[dfs[glider][&#39;temperature_qc&#39;] == 9, &#39;temperature&#39;] = np.NaN
+    dfs[glider].loc[dfs[glider][&#39;salinity&#39;] &lt;= 0, &#39;salinity&#39;] = np.NaN
+</pre></div>
+</div>
+</div>
+<p>Finally let’s see some figures!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>%matplotlib inline
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+
+fig, ax = plt.subplots(
+    figsize=(9, 9),
+    subplot_kw=dict(projection=ccrs.PlateCarree())
+)
+ax.coastlines(resolution=&#39;10m&#39;)
+dx = dy = 0.5
+ax.set_extent([min_lon-dx, max_lon+dx, min_lat-dy, max_lat+dy])
+
+for glider, df in dfs.items():
+    ax.plot(df[&#39;longitude&#39;], df[&#39;latitude&#39;], label=glider)
+
+leg = ax.legend()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/erddapy_tour_40_0.png" src="_images/erddapy_tour_40_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>def glider_scatter(df, ax, glider):
+    ax.scatter(df[&#39;temperature&#39;], df[&#39;salinity&#39;],
+               s=10, alpha=0.5, label=glider)
+
+fig, ax = plt.subplots(figsize=(9, 9))
+ax.set_ylabel(&#39;salinity&#39;)
+ax.set_xlabel(&#39;temperature&#39;)
+ax.grid(True)
+
+for glider, df in dfs.items():
+    glider_scatter(df, ax, glider)
+
+leg = ax.legend()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/erddapy_tour_41_0.png" src="_images/erddapy_tour_41_0.png" />
+</div>
+</div>
+<div class="section" id="Extras">
+<h2>Extras<a class="headerlink" href="#Extras" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>OPeNDAP response</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>from netCDF4 import Dataset
+
+opendap_url = e.get_opendap_url(&#39;cp_336-20170116T1254&#39;)
+with Dataset(opendap_url) as nc:
+    print(nc.summary)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The Pioneer Array is located off the coast of New England, south of Martha&#39;s Vineyard. The Continental Shelf-Slope area off the New England coast is a highly productive area and one that is located at a dynamic intersection where ocean currents meet in weather-like &#39;fronts&#39;, and where nutrients, pollutants, and other properties are exchanged between the coast and the deep ocean. Data from the inshore, shelf area helps to examine exchanges between the shelf and slope and the shelf ecosystem, as well as provide broader insight into the issues of air-sea gas exchange, including Carbon Dioxide. In order to provide synoptic, multi-scale observations of the outer continental shelf, shelf break region, and continental slope, the moored portion of the Pioneer Array is supplemented by six Coastal Gliders. The role of the Coastal Gliders is to monitor the mesoscale field of the slope sea and outer shelf, resolving rings, eddies and meanders from the Gulf Stream as they impinge on the shelf break front.  This dataset contains profiles of conductivity, temperature, depth, salinity and density, which are either measured or derived from the CTD measurements.
+</pre></div></div>
+</div>
+<ul class="simple">
+<li>netCDF file-like to xarray</li>
+</ul>
+<p><code class="docutils literal"><span class="pre">open_dataset</span></code> will download a temporary file, so be careful with the
+constraints to avoid download serveral gigabytes!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>import requests
+
+r = requests.head(download_url)
+
+r.headers
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[27]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>{&#39;Server&#39;: &#39;nginx/1.8.1&#39;, &#39;Date&#39;: &#39;Mon, 09 Oct 2017 20:15:23 GMT&#39;, &#39;Content-Type&#39;: &#39;text/csv;charset=ISO-8859-1&#39;, &#39;Content-Length&#39;: &#39;2188054&#39;, &#39;Connection&#39;: &#39;keep-alive&#39;, &#39;Last-Modified&#39;: &#39;Mon, 09 Oct 2017 20:15:22 GMT&#39;, &#39;xdods-server&#39;: &#39;dods/3.7&#39;, &#39;erddap-server&#39;: &#39;1.78&#39;, &#39;Content-Disposition&#39;: &#39;attachment;filename=whoi_406-20160902T1700_aabb_f6bc_8591.csv&#39;, &#39;Content-Encoding&#39;: &#39;gzip&#39;}
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>suffixes = [&#39;B&#39;, &#39;KB&#39;, &#39;MB&#39;, &#39;GB&#39;, &#39;TB&#39;, &#39;PB&#39;]
+def humansize(nbytes):
+    i = 0
+    while nbytes &gt;= 1024 and i &lt; len(suffixes)-1:
+        nbytes /= 1024.
+        i += 1
+    f = (&#39;%.2f&#39; % nbytes).rstrip(&#39;0&#39;).rstrip(&#39;.&#39;)
+    return &#39;%s %s&#39; % (f, suffixes[i])
+
+nbytes = float(r.headers[&#39;Content-Length&#39;])
+humansize(nbytes)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[28]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;2.09 MB&#39;
+</pre></div>
+</div>
+</div>
+<p>The download is just a few gzip’ed KBs in this case.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>from erddapy import open_dataset
+
+download_url = e.get_download_url(dataset_id=&#39;cp_336-20170116T1254&#39;, response=&#39;nc&#39;, variables=common_variables, **kwargs)
+
+ds = open_dataset(download_url, decode_times=False)
+
+ds
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[29]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;xarray.Dataset&gt;
+Dimensions:          (row: 16232)
+Coordinates:
+    lon_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    time             (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
+    depth            (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 ...
+    longitude        (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    time_uv          (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    latitude         (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
+    lat_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+Dimensions without coordinates: row
+Data variables:
+    depth_qc         (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    v_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    longitude_qc     (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    time_qc          (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    salinity         (row) float64 35.45 35.45 35.45 35.45 35.45 35.46 35.46 ...
+    conductivity     (row) float64 4.281 4.284 4.287 4.287 4.289 4.29 4.29 ...
+    salinity_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    temperature_qc   (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    lat_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    v                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    precise_lat      (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
+    lon_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    pressure_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    precise_time_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    u_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    precise_time     (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
+    u                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    density          (row) float64 1.026e+03 1.026e+03 1.026e+03 1.026e+03 ...
+    precise_lon      (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    density_qc       (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    pressure         (row) float64 0.51 0.52 1.91 0.35 2.1 8.65 18.68 0.34 ...
+    conductivity_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    latitude_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    time_uv_qc       (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    temperature      (row) float64 14.4 14.42 14.46 14.45 14.47 14.47 14.47 ...
+Attributes:
+    acknowledgement:               Funding provided by the National Science F...
+    cdm_data_type:                 TrajectoryProfile
+    cdm_profile_variables:         profile_id, time, latitude, longitude, tim...
+    cdm_trajectory_variables:      trajectory, wmo_id
+    contributor_name:              Paul Matthias,Peter Brickley,Sheri White,D...
+    contributor_role:              CGSN Program Manager,CGSN Operations Engin...
+    Conventions:                   Unidata Dataset Discovery v1.0, COARDS, CF...
+    creator_email:                 kerfoot@marine.rutgers.edu
+    creator_name:                  John Kerfoot
+    creator_url:                   http://rucool.marine.rutgers.edu
+    date_created:                  2017-04-19T14:33:41Z
+    date_issued:                   2017-04-19T14:33:41Z
+    date_modified:                 2017-04-19T14:33:41Z
+    deployment_number:             4
+    Easternmost_Easting:           -69.9830368207
+    featureType:                   TrajectoryProfile
+    format_version:                https://github.com/ioos/ioosngdac/tree/mas...
+    geospatial_lat_max:            39.9172641723
+    geospatial_lat_min:            39.3237067304
+    geospatial_lat_units:          degrees_north
+    geospatial_lon_max:            -69.9830368207
+    geospatial_lon_min:            -71.182596026
+    geospatial_lon_units:          degrees_east
+    geospatial_vertical_max:       976.756
+    geospatial_vertical_min:       -0.0396958
+    geospatial_vertical_positive:  down
+    geospatial_vertical_units:     m
+    history:                       2017-04-19T14:33:35Z: Data Source /Users/k...
+    id:                            cp_336-20170116T1254_e698_69e3_e309
+    infoUrl:                       http://data.ioos.us/gliders/erddap/
+    institution:                   Ocean Observatories Initiative
+    ioos_dac_checksum:             f42b729c0bf19af1b7229b21350ebaaf
+    ioos_dac_completed:            False
+    keywords:                      AUVS &gt; Autonomous Underwater Vehicles, Oce...
+    keywords_vocabulary:           GCMD Science Keywords
+    license:                       All OOI data including data from OOI core ...
+    Metadata_Conventions:          Unidata Dataset Discovery v1.0, COARDS, CF...
+    metadata_link:                 http://ooi.visualocean.net/sites/view/CP05...
+    naming_authority:              org.oceanobservatories
+    Northernmost_Northing:         39.9172641723
+    platform_type:                 Slocum Glider
+    processing_level:              Contains any/all of the following: L0 Data...
+    project:                       Ocean Observatories Initiative
+    publisher_email:               kerfoot@marine.rutgers.edu
+    publisher_name:                John Kerfoot
+    publisher_url:                 http://rucool.marine.rutgers.edu
+    references:                    http://oceanobservatories.org/
+    sea_name:                      Mid-Atlantic Bight
+    source:                        Observational data from a profiling glider
+    sourceUrl:                     (local files)
+    Southernmost_Northing:         39.3237067304
+    standard_name_vocabulary:      CF Standard Name Table v27
+    subsetVariables:               trajectory, wmo_id, profile_id, time, lati...
+    summary:                       The Pioneer Array is located off the coast...
+    time_coverage_end:             2017-02-09T23:03:25Z
+    time_coverage_start:           2017-01-16T13:03:04Z
+    title:                         cp_336-20170116T1254
+    Westernmost_Easting:           -71.182596026
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>ds[&#39;temperature&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[30]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;xarray.DataArray &#39;temperature&#39; (row: 16232)&gt;
+array([ 14.3976,  14.4236,  14.4596, ...,   4.4004,   4.3975,   4.3978])
+Coordinates:
+    lon_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
+    time       (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
+    depth      (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 18.54 ...
+    longitude  (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    time_uv    (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
+    latitude   (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
+    lat_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
+Dimensions without coordinates: row
+Attributes:
+    _ChunkSizes:          1
+    actual_range:         [  0.          17.26519966]
+    ancillary_variables:  temperature_qc
+    colorBarMaximum:      32.0
+    colorBarMinimum:      0.0
+    instrument:           instrument_ctd
+    ioos_category:        Temperature
+    long_name:            Sea Water Temperature
+    observation_type:     measured
+    platform:             platform
+    source_variable:      sci_water_temp
+    standard_name:        sea_water_temperature
+    units:                degree_Celsius
+    valid_max:            40.0
+    valid_min:            -5.0
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>data = ds[&#39;temperature&#39;].values
+depth = ds[&#39;depth&#39;].values
+
+mask = ~np.ma.masked_invalid(data).mask
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>data = data[mask]
+depth = depth[mask]
+lon = ds[&#39;longitude&#39;].values[mask]
+lat = ds[&#39;latitude&#39;].values[mask]
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>import warnings
+
+with warnings.catch_warnings():
+    warnings.simplefilter(&#39;ignore&#39;)
+    mask = depth &lt;= 5
+
+data = data[mask]
+depth = depth[mask]
+lon = lon[mask]
+lat = lat[mask]
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>%matplotlib inline
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+fig, ax = plt.subplots(
+    figsize=(9, 9),
+    subplot_kw=dict(projection=ccrs.PlateCarree())
+)
+ax.coastlines(resolution=&#39;10m&#39;)
+dx = dy = 0.5
+
+extent = (ds.geospatial_lon_min-dx, ds.geospatial_lon_max+dx,
+          ds.geospatial_lat_min-dy, ds.geospatial_lat_max+dy)
+ax.set_extent(extent)
+
+cs = ax.scatter(lon, lat, c=data, s=50, alpha=0.5, edgecolor=&#39;none&#39;)
+kw = dict(orientation=&#39;vertical&#39;, fraction=0.1, shrink=0.9, extend=&#39;both&#39;)
+cbar = fig.colorbar(cs, **kw)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/erddapy_tour_53_0.png" src="_images/erddapy_tour_53_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2017, Filipe Fernandes.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/erddapy_tour.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/pyoceans/erddapy" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
