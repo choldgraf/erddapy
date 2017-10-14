@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy tour &#8212; erddapy 0.1.1+14.g8914cb3 documentation</title>
+    <title>Quick introduction &#8212; erddapy 0.1.1+20.g99d990c documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.1+14.g8914cb3',
+        VERSION:     '0.1.1+20.g99d990c',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Search for demostration" href="erddapy_searchfor.html" />
-    <link rel="prev" title="erddapy" href="index.html" />
+    <link rel="next" title="Searching datasets" href="searchfor.html" />
+    <link rel="prev" title="erddapy" href="erddapy.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -73,7 +73,9 @@
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal"><span class="pre">erddapy</span></code> tour</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="erddapy.html"><code class="docutils literal"><span class="pre">erddapy</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="erddapy.html#module-erddapy.extras"><code class="docutils literal"><span class="pre">extras</span></code></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Extras">Extras</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#OPeNDAP-response">OPeNDAP response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#netCDF-&quot;file-like&quot;-to-xarray">netCDF “file-like” to xarray</a></li>
@@ -81,15 +83,15 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="erddapy_searchfor.html">Search for demostration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searchfor.html">Searching datasets</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">erddapy</a></li>
-      <li>Next: <a href="erddapy_searchfor.html" title="next chapter">Search for demostration</a></li>
+      <li>Previous: <a href="erddapy.html" title="previous chapter"><code class="docutils literal"><span class="pre">erddapy</span></code></a></li>
+      <li>Next: <a href="searchfor.html" title="next chapter">Searching datasets</a></li>
   </ul></li>
 </ul>
 </div>
@@ -271,11 +273,10 @@ div.nboutput div.output_area.stderr {
 
 .ansi-bold { font-weight: bold; }
 </style>
-<div class="section" id="erddapy-tour">
-<h1><code class="docutils literal"><span class="pre">erddapy</span></code> tour<a class="headerlink" href="#erddapy-tour" title="Permalink to this headline">¶</a></h1>
-<p>First we need to instantiate an <code class="docutils literal"><span class="pre">ERDDAP</span></code> <code class="docutils literal"><span class="pre">URL</span></code> constructor for the
-an <code class="docutils literal"><span class="pre">erddap</span></code> server. In this example we will use
-<a class="reference external" href="https://data.ioos.us/gliders/erddap">https://data.ioos.us/gliders/erddap</a>.</p>
+<div class="section" id="Quick-introduction">
+<h1>Quick introduction<a class="headerlink" href="#Quick-introduction" title="Permalink to this headline">¶</a></h1>
+<p>First we need to instantiate the <code class="docutils literal"><span class="pre">ERDDAP</span></code> URL constructor for a
+server. In this example we will use <a class="reference external" href="https://data.ioos.us/gliders/erddap">https://data.ioos.us/gliders/erddap</a>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [1]:
@@ -319,8 +320,9 @@ e = ERDDAP(server_url=server_url)
 </pre></div>
 </div>
 </div>
-<p>All the <code class="docutils literal"><span class="pre">get_&lt;methods&gt;</span></code> will return a valid ERDDAP URL for the
-requested response and options.</p>
+<p>All the <code class="docutils literal"><span class="pre">get_&lt;methods&gt;</span></code> will return a valid <code class="docutils literal"><span class="pre">ERDDAP</span></code> URL for the
+requested response and options. <code class="docutils literal"><span class="pre">erddapy</span></code> will raise an error is if
+URL HEADER cannot be validated.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [3]:
@@ -343,7 +345,9 @@ https://data.ioos.us/gliders/erddap/search/advanced.html?page=1&amp;itemsPerPage
 <a class="reference external" href="http://coastwatch.pfeg.noaa.gov/erddap/griddap/documentation.html">griddap</a>
 and
 <a class="reference external" href="http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html">tabledap</a>
-respectively. Let’s load the <code class="docutils literal"><span class="pre">csv</span></code> reponse directly with <code class="docutils literal"><span class="pre">pandas</span></code>.</p>
+respectively. The most useful ones for Pythonistas are the <code class="docutils literal"><span class="pre">.csv</span></code> and
+<code class="docutils literal"><span class="pre">.nc</span></code> that can be read with pandas and netCDF4-python respectively.</p>
+<p>Let’s load the <code class="docutils literal"><span class="pre">csv</span></code> reponse directly with <code class="docutils literal"><span class="pre">pandas</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [4]:
@@ -377,7 +381,7 @@ df = pd.read_csv(e.get_search_url(response=&#39;csv&#39;, search_for=&#39;all&#3
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;We have 268 tabledap, 0 griddap, and 0 wms endpoints.&#39;
+<span></span>&#39;We have 271 tabledap, 0 griddap, and 0 wms endpoints.&#39;
 </pre></div>
 </div>
 </div>
@@ -447,10 +451,10 @@ show_iframe(search_url)
 <iframe src="https://data.ioos.us/gliders/erddap/search/advanced.html?page=1&itemsPerPage=1000&protocol=(ANY)&cdm_data_type=(ANY)&institution=(ANY)&ioos_category=(ANY)&keywords=(ANY)&long_name=(ANY)&standard_name=sea_water_temperature&variableName=(ANY)&minLon=-72.0&maxLon=-69.0&minLat=38.0&maxLat=41.0&minTime=1468108800.0&maxTime=1486684800.0" width="100%" height="950"></iframe></div>
 </div>
 <p>We can see that the search form above was correctly populated with the
-constraints.</p>
-<p>We change the response from <code class="docutils literal"><span class="pre">.html</span></code> to <code class="docutils literal"><span class="pre">.csv</span></code>, load it as a
-<code class="docutils literal"><span class="pre">DataFrame</span></code>, and inspect what are the <code class="docutils literal"><span class="pre">Dataset</span> <span class="pre">ID</span></code>s available for
-download.</p>
+constraints we provided.</p>
+<p>Let us change the response from <code class="docutils literal"><span class="pre">.html</span></code> to <code class="docutils literal"><span class="pre">.csv</span></code>, so we load it as
+a <code class="docutils literal"><span class="pre">pandas.DataFrame</span></code>, and inspect what are the <code class="docutils literal"><span class="pre">Dataset</span> <span class="pre">ID</span></code>s
+available for download.</p>
 <p>Note that the optional constraints are kept in a <code class="docutils literal"><span class="pre">dict</span></code>, making if
 easy to reuse, update or just inspect what where the original parameters
 used.</p>
@@ -542,7 +546,7 @@ show_iframe(src=info_url)
 <iframe src="https://data.ioos.us/gliders/erddap/info/blue-20160818T1448/index.html" width="100%" height="950"></iframe></div>
 </div>
 <p>Again, with the <code class="docutils literal"><span class="pre">csv</span></code> response, we can manipulate the metadata and
-find the variables that are <code class="docutils literal"><span class="pre">cdm_profile_variables</span></code> for example.</p>
+find the variables that have the <code class="docutils literal"><span class="pre">cdm_profile_variables</span></code> attribute.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [12]:
@@ -653,12 +657,18 @@ info.head()
 </pre></div>
 </div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">get_var_by_attr</span></code> method provides an easy way to find variables
-based on their attributes. Here we check what is/are the variable(s)
-associated with the <code class="docutils literal"><span class="pre">standard_name</span></code> used in the search.</p>
+<p>Selecting variables by theirs attributes is such a common operation that
+<code class="docutils literal"><span class="pre">erddapy</span></code> brings its own method to simplify this task.</p>
+<p>The <code class="docutils literal"><span class="pre">get_var_by_attr</span></code> method is inspired by <code class="docutils literal"><span class="pre">netCDF4-python</span></code>’s
+<code class="docutils literal"><span class="pre">get_variables_by_attributes</span></code> however, because <code class="docutils literal"><span class="pre">erddapy</span></code> is
+operating on remote serves, it will return the variable names instead of
+the actual variables.</p>
+<p>Here we check what is/are the variable(s) associated with the
+<code class="docutils literal"><span class="pre">standard_name</span></code> used in the search.</p>
 <p>Note that <code class="docutils literal"><span class="pre">get_var_by_attr</span></code> caches the last response in case the user
 needs to make multiple requests, but it will loose its state when a new
-request is made. See the times below.</p>
+request is made.</p>
+<p>(See the execution times below.)</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [14]:
@@ -680,8 +690,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 140 ms, sys: 458 µs, total: 140 ms
-Wall time: 2.18 s
+CPU times: user 131 ms, sys: 4.68 ms, total: 136 ms
+Wall time: 2.2 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -715,8 +725,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 18.2 ms, sys: 11.8 ms, total: 30 ms
-Wall time: 783 ms
+CPU times: user 20.9 ms, sys: 11.3 ms, total: 32.1 ms
+Wall time: 825 ms
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -725,7 +735,7 @@ Wall time: 783 ms
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>[&#39;salinity&#39;]
+<span></span>[]
 </pre></div>
 </div>
 </div>
@@ -750,8 +760,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 136 ms, sys: 0 ns, total: 136 ms
-Wall time: 2.23 s
+CPU times: user 97.1 ms, sys: 4.45 ms, total: 102 ms
+Wall time: 2.1 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -841,12 +851,7 @@ method.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span># I don&#39;t think inequalities are supported by REST.
-# For simplicity I left them as part of the user input.
-# Some googling tells me that the &quot;correct&quot; should be:
-# time=min_time&amp;gt=min_time&amp;le=max_time
-# not sure if ERDDAP supports that though.
-kwargs = {
+<span></span>kwargs = {
     &#39;time&gt;=&#39;: min_time,
     &#39;time&lt;=&#39;: max_time,
     &#39;latitude&gt;=&#39;: min_lat,
@@ -868,7 +873,7 @@ download_url
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?lat_uv_qc,lat_uv,time_uv,pressure_qc,conductivity_qc,precise_lon,salinity,latitude,lon_uv_qc,salinity_qc,pressure,temperature,density_qc,depth,u,v_qc,precise_time,longitude_qc,v,time_qc,precise_time_qc,time_uv_qc,time,latitude_qc,u_qc,density,temperature_qc,longitude,precise_lat,conductivity,depth_qc,lon_uv&amp;time&gt;=2016-07-10T00:00:00+00:00&amp;time&lt;=2017-02-10T00:00:00+00:00&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&#39;
+<span></span>&#39;https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?conductivity,density_qc,longitude,salinity_qc,latitude_qc,depth,pressure_qc,precise_time,temperature,v,lat_uv_qc,time_uv,lat_uv,precise_lat,conductivity_qc,u,depth_qc,time_qc,time,lon_uv,precise_lon,precise_time_qc,lon_uv_qc,temperature_qc,time_uv_qc,salinity,v_qc,latitude,longitude_qc,pressure,u_qc,density&amp;time&gt;=2016-07-10T00:00:00+00:00&amp;time&lt;=2017-02-10T00:00:00+00:00&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&#39;
 </pre></div>
 </div>
 </div>
@@ -931,9 +936,8 @@ Failed to download silbo-20160413T1534
 Failed to download sp022-20170209T1616
 </pre></div></div>
 </div>
-<p>It is unclear to me why ERDDAP found two datasets in the constraints
-provided but fails to generate an URL for the download using the same
-constraints.</p>
+<p>It is unclear to me why <code class="docutils literal"><span class="pre">ERDDAP</span></code> found two datasets with the
+constraints provided but failed to generate an URL for the download.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [22]:
@@ -941,7 +945,12 @@ constraints.</p>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span>try:
-    e.get_download_url(dataset_id=&#39;silbo-20160413T1534&#39;, variables=common_variables, response=&#39;csv&#39;, **kwargs)
+    e.get_download_url(
+        dataset_id=&#39;silbo-20160413T1534&#39;,
+        variables=common_variables,
+        response=&#39;csv&#39;,
+        **kwargs
+    )
 except Exception as err:
     print(err)
 </pre></div>
@@ -952,7 +961,7 @@ except Exception as err:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?lat_uv_qc,lat_uv,time_uv,pressure_qc,conductivity_qc,precise_lon,salinity,latitude,lon_uv_qc,salinity_qc,pressure,temperature,density_qc,depth,u,v_qc,precise_time,longitude_qc,v,time_qc,precise_time_qc,time_uv_qc,time,latitude_qc,u_qc,density,temperature_qc,longitude,precise_lat,conductivity,depth_qc,lon_uv&amp;time%3E=2016-07-10T00:00:00+00:00&amp;time%3C=2017-02-10T00:00:00+00:00&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0
+500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?conductivity,density_qc,longitude,salinity_qc,latitude_qc,depth,pressure_qc,precise_time,temperature,v,lat_uv_qc,time_uv,lat_uv,precise_lat,conductivity_qc,u,depth_qc,time_qc,time,lon_uv,precise_lon,precise_time_qc,lon_uv_qc,temperature_qc,time_uv_qc,salinity,v_qc,latitude,longitude_qc,pressure,u_qc,density&amp;time%3E=2016-07-10T00:00:00+00:00&amp;time%3C=2017-02-10T00:00:00+00:00&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0
 </pre></div></div>
 </div>
 <p>The glider datasets should be masked automatically but we found that is
@@ -1021,7 +1030,7 @@ leg = ax.legend()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/erddapy_tour_40_0.png" src="_images/erddapy_tour_40_0.png" />
+<img alt="_images/quick_intro_40_0.png" src="_images/quick_intro_40_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -1050,7 +1059,7 @@ leg = ax.legend()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/erddapy_tour_41_0.png" src="_images/erddapy_tour_41_0.png" />
+<img alt="_images/quick_intro_41_0.png" src="_images/quick_intro_41_0.png" />
 </div>
 </div>
 <div class="section" id="Extras">
@@ -1086,7 +1095,7 @@ The Pioneer Array is located off the coast of New England, south of Martha&#39;s
 <div class="section" id="netCDF-&quot;file-like&quot;-to-xarray">
 <h3>netCDF “file-like” to xarray<a class="headerlink" href="#netCDF-"file-like"-to-xarray" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">open_dataset</span></code> will download a temporary file, so be careful with the
-constraints to avoid download serveral gigabytes!</p>
+constraints to avoid downloading several gigabytes!</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [27]:
@@ -1117,15 +1126,35 @@ humansize(nbytes)
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;2.05 MB&#39;
+<span></span>&#39;2.11 MB&#39;
 </pre></div>
 </div>
 </div>
-<p>That is the unpacklaged size, so we will download less than b/c ERDDAP
-streams gzip’ed data.</p>
+<p>That is the uncompressed size, we are OK because the download will be
+less than that, <code class="docutils literal"><span class="pre">ERDDAP</span></code> streams gzip’ed data.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span>r.headers[&#39;Content-Encoding&#39;]
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[28]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;gzip&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
@@ -1140,7 +1169,6 @@ download_url = e.get_download_url(
 
 ds = open_dataset(
     download_url,
-    decode_times=False  # xarray fails to convert some CF-dates :-(
 )
 
 ds
@@ -1149,47 +1177,47 @@ ds
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[28]:
+<span></span>Out[29]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
 <span></span>&lt;xarray.Dataset&gt;
 Dimensions:          (row: 16232)
 Coordinates:
-    lat_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    time_uv          (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    latitude         (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
-    depth            (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 ...
-    time             (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
     longitude        (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    depth            (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 ...
+    time_uv          (row) datetime64[ns] NaT NaT NaT NaT NaT NaT NaT NaT ...
+    lat_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    time             (row) datetime64[ns] 2017-01-16T13:03:04.437930 ...
     lon_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    latitude         (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
 Dimensions without coordinates: row
 Data variables:
-    lat_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    pressure_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    conductivity_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    precise_lon      (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
-    salinity         (row) float64 35.45 35.45 35.45 35.45 35.45 35.46 35.46 ...
-    lon_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    salinity_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    pressure         (row) float64 0.51 0.52 1.91 0.35 2.1 8.65 18.68 0.34 ...
-    temperature      (row) float64 14.4 14.42 14.46 14.45 14.47 14.47 14.47 ...
+    conductivity     (row) float64 4.281 4.284 4.287 4.287 4.289 4.29 4.29 ...
     density_qc       (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    u                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    v_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    precise_time     (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
-    longitude_qc     (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    v                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    time_qc          (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    precise_time_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    time_uv_qc       (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    salinity_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
     latitude_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    pressure_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    precise_time     (row) datetime64[ns] 2017-01-16T13:03:04.437930 ...
+    temperature      (row) float64 14.4 14.42 14.46 14.45 14.47 14.47 14.47 ...
+    v                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    lat_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    precise_lat      (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
+    conductivity_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    u                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
+    depth_qc         (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    time_qc          (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    precise_lon      (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    precise_time_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    lon_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    temperature_qc   (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    time_uv_qc       (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    salinity         (row) float64 35.45 35.45 35.45 35.45 35.45 35.46 35.46 ...
+    v_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
+    longitude_qc     (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
+    pressure         (row) float64 0.51 0.52 1.91 0.35 2.1 8.65 18.68 0.34 ...
     u_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
     density          (row) float64 1.026e+03 1.026e+03 1.026e+03 1.026e+03 ...
-    temperature_qc   (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    precise_lat      (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
-    conductivity     (row) float64 4.281 4.284 4.287 4.287 4.289 4.29 4.29 ...
-    depth_qc         (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
 Attributes:
     acknowledgement:               Funding provided by the National Science F...
     cdm_data_type:                 TrajectoryProfile
@@ -1254,7 +1282,7 @@ Attributes:
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [29]:
+<span></span>In [30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
@@ -1264,20 +1292,20 @@ Attributes:
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[29]:
+<span></span>Out[30]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
 <span></span>&lt;xarray.DataArray &#39;temperature&#39; (row: 16232)&gt;
 array([ 14.3976,  14.4236,  14.4596, ...,   4.4004,   4.3975,   4.3978])
 Coordinates:
-    lat_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
-    time_uv    (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
-    latitude   (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
-    depth      (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 18.54 ...
-    time       (row) float64 1.485e+09 1.485e+09 1.485e+09 1.485e+09 ...
     longitude  (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
+    depth      (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 18.54 ...
+    time_uv    (row) datetime64[ns] NaT NaT NaT NaT NaT NaT NaT NaT NaT NaT ...
+    lat_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
+    time       (row) datetime64[ns] 2017-01-16T13:03:04.437930 ...
     lon_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
+    latitude   (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
 Dimensions without coordinates: row
 Attributes:
     _ChunkSizes:          1
@@ -1300,7 +1328,7 @@ Attributes:
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [30]:
+<span></span>In [31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
@@ -1313,7 +1341,7 @@ mask = ~np.ma.masked_invalid(data).mask
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [31]:
+<span></span>In [32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
@@ -1326,7 +1354,7 @@ lat = ds[&#39;latitude&#39;].values[mask]
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [32]:
+<span></span>In [33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
@@ -1346,7 +1374,7 @@ lat = lat[mask]
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [33]:
+<span></span>In [34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
@@ -1362,7 +1390,8 @@ extent = (
 fig, ax = make_map(extent)
 
 cs = ax.scatter(lon, lat, c=data, s=50, alpha=0.5, edgecolor=&#39;none&#39;)
-kw = dict(orientation=&#39;vertical&#39;, fraction=0.1, shrink=0.9, extend=&#39;both&#39;)
+kw = dict(orientation=&#39;vertical&#39;, fraction=0.1,
+          shrink=0.9, extend=&#39;both&#39;)
 cbar = fig.colorbar(cs, **kw)
 </pre></div>
 </div>
@@ -1371,7 +1400,7 @@ cbar = fig.colorbar(cs, **kw)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/erddapy_tour_52_0.png" src="_images/erddapy_tour_52_0.png" />
+<img alt="_images/quick_intro_53_0.png" src="_images/quick_intro_53_0.png" />
 </div>
 </div>
 </div>
@@ -1392,7 +1421,7 @@ cbar = fig.colorbar(cs, **kw)
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/erddapy_tour.ipynb.txt"
+      <a href="_sources/quick_intro.ipynb.txt"
           rel="nofollow">Page source</a>
     </div>
 

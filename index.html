@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy &#8212; erddapy 0.1.1+14.g8914cb3 documentation</title>
+    <title>erddapy: ERDDAP + Python &#8212; erddapy 0.1.1+20.g99d990c documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.1+14.g8914cb3',
+        VERSION:     '0.1.1+20.g99d990c',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="erddapy tour" href="erddapy_tour.html" />
+    <link rel="next" title="erddapy" href="erddapy.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -72,15 +72,17 @@
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="erddapy_tour.html"><code class="docutils literal"><span class="pre">erddapy</span></code> tour</a></li>
-<li class="toctree-l1"><a class="reference internal" href="erddapy_searchfor.html">Search for demostration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="erddapy.html"><code class="docutils literal"><span class="pre">erddapy</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="erddapy.html#module-erddapy.extras"><code class="docutils literal"><span class="pre">extras</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_intro.html">Quick introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searchfor.html">Searching datasets</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="erddapy_tour.html" title="next chapter"><code class="docutils literal"><span class="pre">erddapy</span></code> tour</a></li>
+      <li>Next: <a href="erddapy.html" title="next chapter"><code class="docutils literal"><span class="pre">erddapy</span></code></a></li>
   </ul></li>
 </ul>
 </div>
@@ -100,21 +102,48 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="erddapy">
-<h1>erddapy<a class="headerlink" href="#erddapy" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="erddapy-erddap-python">
+<h1>erddapy: ERDDAP + Python<a class="headerlink" href="#erddapy-erddap-python" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="easier-access-to-scientific-data">
+<h2>Easier access to scientific data<a class="headerlink" href="#easier-access-to-scientific-data" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">erddapy</span></code> takes advantage of ERDDAP’s RESTful web services and creates the ERDDAP URL for any request
+like searching for datasets, acquiring metadata, downloading data, etc.</p>
+</div>
+<div class="section" id="what-is-erddap">
+<h2>What is ERDDAP?<a class="headerlink" href="#what-is-erddap" title="Permalink to this headline">¶</a></h2>
+<p>The Environmental Research Division’s Data Access Program (ERDDAP)
+is a data server that provides a consistent way to download subsets of scientific datasets.</p>
+<p>There are many scientific data server available, like OPeNDAP, WCS, SOS, OBIS, etc.
+They all have their advantages and disadvantages,
+ERDDAP goal is to fill the gaps and unify most of the advantages in a single service.
+The main advantages of ERDDAP are:</p>
+<ul class="simple">
+<li>offers an easy-to-use, consistent way to request data via the OPeNDAP;</li>
+<li>returns data in the common file format of your choice,
+.html table, ESRI .asc and .csv, Google Earth .kml, OPeNDAP binary, .mat, .nc, ODV .txt, .csv, .tsv, .json, and .xhtml,
+and even some image formats (.png and .pdf);</li>
+<li>standardizes the datetimes where string times are always ISO 8601:2004(E) and
+numeric times are always uses “seconds since 1970-01-01T00:00:00Z”;</li>
+<li>acts as a middleman by reformatting the request into the format required by the remote server,
+and reformats the data into the format that you requested.</li>
+</ul>
+<p>See <a class="reference external" href="https://coastwatch.pfeg.noaa.gov/erddap/index.html">https://coastwatch.pfeg.noaa.gov/erddap/index.html</a> for more information.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="erddapy_tour.html"><code class="docutils literal"><span class="pre">erddapy</span></code> tour</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="erddapy_tour.html#Extras">Extras</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="erddapy_tour.html#OPeNDAP-response">OPeNDAP response</a></li>
-<li class="toctree-l3"><a class="reference internal" href="erddapy_tour.html#netCDF-&quot;file-like&quot;-to-xarray">netCDF “file-like” to xarray</a></li>
+<li class="toctree-l1"><a class="reference internal" href="erddapy.html"><code class="docutils literal"><span class="pre">erddapy</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="erddapy.html#module-erddapy.extras"><code class="docutils literal"><span class="pre">extras</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_intro.html">Quick introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick_intro.html#Extras">Extras</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quick_intro.html#OPeNDAP-response">OPeNDAP response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_intro.html#netCDF-&quot;file-like&quot;-to-xarray">netCDF “file-like” to xarray</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="erddapy_searchfor.html">Search for demostration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searchfor.html">Searching datasets</a></li>
 </ul>
+</div>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
