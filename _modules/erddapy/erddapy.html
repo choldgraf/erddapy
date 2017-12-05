@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy.erddapy &#8212; erddapy 0.1.1+20.g99d990c documentation</title>
+    <title>erddapy.erddapy &#8212; erddapy 0.1.1+23.g4c89573 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.1+20.g99d990c',
+        VERSION:     '0.1.1+23.g4c89573',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -104,6 +104,8 @@
             
   <h1>Source code for erddapy.erddapy</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">quote_plus</span>
@@ -378,8 +380,11 @@
 <span class="sd">            [&#39;latitude&#39;, &#39;longitude&#39;, &#39;time&#39;, &#39;depth&#39;]</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">&#39;pandas is needed to use `get_var_by_attr`.&#39;</span><span class="p">)</span>
         <span class="n">info_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_info_url</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span>
@@ -387,7 +392,8 @@
         <span class="c1"># Creates the variables dictionary for the `get_var_by_attr` lookup.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_id</span> <span class="o">!=</span> <span class="n">dataset_id</span><span class="p">:</span>
             <span class="n">variables</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="n">_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">info_url</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">info_url</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_id</span> <span class="o">=</span> <span class="n">dataset_id</span>
             <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">_df</span><span class="p">[</span><span class="s1">&#39;Variable Name&#39;</span><span class="p">]):</span>
                 <span class="n">attributes</span> <span class="o">=</span> <span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
@@ -424,7 +430,7 @@
       &copy;2017, Filipe Fernandes.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
