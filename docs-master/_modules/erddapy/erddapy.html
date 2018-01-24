@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy.erddapy &#8212; erddapy 0.1.1+23.g4c89573 documentation</title>
+    <title>erddapy.erddapy &#8212; erddapy 0.1.2+6.gb5e9494 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.1+23.g4c89573',
+        VERSION:     '0.1.2+6.gb5e9494',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -105,15 +105,16 @@
   <h1>Source code for erddapy.erddapy</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">requests</span>
-
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">quote_plus</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">quote_plus</span>
 
 <span class="kn">from</span> <span class="nn">erddapy.extras</span> <span class="k">import</span> <span class="n">servers</span>
-<span class="kn">from</span> <span class="nn">erddapy.utilities</span> <span class="k">import</span> <span class="n">_check_url_response</span><span class="p">,</span> <span class="n">_clean_response</span><span class="p">,</span> <span class="n">parse_dates</span>
+<span class="kn">from</span> <span class="nn">erddapy.utilities</span> <span class="k">import</span> <span class="p">(</span><span class="n">_check_url_response</span><span class="p">,</span> <span class="n">_clean_response</span><span class="p">,</span>
+                               <span class="n">parse_dates</span><span class="p">,</span> <span class="n">quote_string_constraints</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
 
 
 <div class="viewcode-block" id="ERDDAP"><a class="viewcode-back" href="../../erddapy.html#erddapy.erddapy.ERDDAP">[docs]</a><span class="k">class</span> <span class="nc">ERDDAP</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -315,7 +316,7 @@
 <span class="sd">            download_url (str): the download URL for the `response` chosen.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">download_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">download_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">quote_string_constraints</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
         <span class="n">variables</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>
         <span class="n">base</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s1">&#39;</span><span class="si">{server_url}</span><span class="s1">/</span><span class="si">{protocol}</span><span class="s1">/</span><span class="si">{dataset_id}</span><span class="s1">.</span><span class="si">{response}</span><span class="s1">&#39;</span>
@@ -430,7 +431,7 @@
       &copy;2017, Filipe Fernandes.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
