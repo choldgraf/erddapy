@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Quick introduction &#8212; erddapy 0.1.1+23.g4c89573 documentation</title>
+    <title>Quick introduction &#8212; erddapy 0.1.2+6.gb5e9494 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.1+23.g4c89573',
+        VERSION:     '0.1.2+6.gb5e9494',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -271,7 +271,11 @@ div.nboutput div.output_area.stderr {
 .ansi-white-intense-fg { color: #A1A6B2; }
 .ansi-white-intense-bg { background-color: #A1A6B2; }
 
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
 .ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
 </style>
 <div class="section" id="Quick-introduction">
 <h1>Quick introduction<a class="headerlink" href="#Quick-introduction" title="Permalink to this headline">¶</a></h1>
@@ -381,7 +385,7 @@ df = pd.read_csv(e.get_search_url(response=&#39;csv&#39;, search_for=&#39;all&#3
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;We have 271 tabledap, 0 griddap, and 0 wms endpoints.&#39;
+<span></span>&#39;We have 291 tabledap, 0 griddap, and 0 wms endpoints.&#39;
 </pre></div>
 </div>
 </div>
@@ -426,15 +430,20 @@ standard_name = &#39;sea_water_temperature&#39;
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>kw = dict(
-    standard_name=standard_name,
-    min_lat=min_lat,
-    max_lat=max_lat,
-    min_lon=min_lon,
-    max_lon=max_lon,
-    min_time=min_time,
-    max_time=max_time
-)
+<span></span>kw = {
+    &#39;standard_name&#39;: standard_name,
+    &#39;min_lat&#39;: min_lat,
+    &#39;max_lat&#39;: max_lat,
+    &#39;min_lon&#39;: min_lon,
+    &#39;max_lon&#39;: max_lon,
+    &#39;min_time&#39;: min_time,
+    &#39;max_time&#39;: max_time,
+    &#39;cdm_data_type&#39;: &#39;trajectoryprofile&#39;
+}
+
+search_url = e.get_search_url(response=&#39;html&#39;, **kw)
+
+show_iframe(search_url)
 
 search_url = e.get_search_url(response=&#39;html&#39;, **kw)
 
@@ -448,7 +457,7 @@ show_iframe(search_url)
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<iframe src="https://data.ioos.us/gliders/erddap/search/advanced.html?page=1&itemsPerPage=1000&protocol=(ANY)&cdm_data_type=(ANY)&institution=(ANY)&ioos_category=(ANY)&keywords=(ANY)&long_name=(ANY)&standard_name=sea_water_temperature&variableName=(ANY)&minLon=-72.0&maxLon=-69.0&minLat=38.0&maxLat=41.0&minTime=1468108800.0&maxTime=1486684800.0" width="100%" height="950"></iframe></div>
+<iframe src="https://data.ioos.us/gliders/erddap/search/advanced.html?page=1&itemsPerPage=1000&protocol=(ANY)&cdm_data_type=trajectoryprofile&institution=(ANY)&ioos_category=(ANY)&keywords=(ANY)&long_name=(ANY)&standard_name=sea_water_temperature&variableName=(ANY)&minLon=-72.0&maxLon=-69.0&minLat=38.0&maxLat=41.0&minTime=1468108800.0&maxTime=1486684800.0" width="100%" height="950"></iframe></div>
 </div>
 <p>We can see that the search form above was correctly populated with the
 constraints we provided.</p>
@@ -474,7 +483,7 @@ used.</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>{&#39;cdm_data_type&#39;: &#39;(ANY)&#39;,
+<span></span>{&#39;cdm_data_type&#39;: &#39;trajectoryprofile&#39;,
  &#39;institution&#39;: &#39;(ANY)&#39;,
  &#39;ioos_category&#39;: &#39;(ANY)&#39;,
  &#39;itemsPerPage&#39;: 1000,
@@ -568,17 +577,17 @@ info.head()
 </div>
 <div class="output_area docutils container">
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -690,8 +699,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 131 ms, sys: 4.68 ms, total: 136 ms
-Wall time: 2.2 s
+CPU times: user 166 ms, sys: 7.99 ms, total: 174 ms
+Wall time: 1.8 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -725,8 +734,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 20.9 ms, sys: 11.3 ms, total: 32.1 ms
-Wall time: 825 ms
+CPU times: user 19.1 ms, sys: 12.5 ms, total: 31.6 ms
+Wall time: 787 ms
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -735,7 +744,7 @@ Wall time: 825 ms
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>[]
+<span></span>[&#39;salinity&#39;]
 </pre></div>
 </div>
 </div>
@@ -760,8 +769,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 97.1 ms, sys: 4.45 ms, total: 102 ms
-Wall time: 2.1 s
+CPU times: user 174 ms, sys: 7.3 ms, total: 181 ms
+Wall time: 1.77 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -873,7 +882,7 @@ download_url
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?conductivity,density_qc,longitude,salinity_qc,latitude_qc,depth,pressure_qc,precise_time,temperature,v,lat_uv_qc,time_uv,lat_uv,precise_lat,conductivity_qc,u,depth_qc,time_qc,time,lon_uv,precise_lon,precise_time_qc,lon_uv_qc,temperature_qc,time_uv_qc,salinity,v_qc,latitude,longitude_qc,pressure,u_qc,density&amp;time&gt;=2016-07-10T00:00:00+00:00&amp;time&lt;=2017-02-10T00:00:00+00:00&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&#39;
+<span></span>&#39;https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?precise_lon,pressure_qc,v_qc,depth,density,density_qc,time_uv,depth_qc,conductivity_qc,temperature_qc,latitude_qc,precise_time_qc,lon_uv,time_uv_qc,u,lon_uv_qc,longitude_qc,salinity,u_qc,longitude,pressure,temperature,lat_uv,v,time,salinity_qc,precise_time,conductivity,time_qc,lat_uv_qc,latitude,precise_lat&amp;time&gt;=2016-07-10T00:00:00+00:00&amp;time&lt;=2017-02-10T00:00:00+00:00&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&#39;
 </pre></div>
 </div>
 </div>
@@ -961,7 +970,7 @@ except Exception as err:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?conductivity,density_qc,longitude,salinity_qc,latitude_qc,depth,pressure_qc,precise_time,temperature,v,lat_uv_qc,time_uv,lat_uv,precise_lat,conductivity_qc,u,depth_qc,time_qc,time,lon_uv,precise_lon,precise_time_qc,lon_uv_qc,temperature_qc,time_uv_qc,salinity,v_qc,latitude,longitude_qc,pressure,u_qc,density&amp;time%3E=2016-07-10T00:00:00+00:00&amp;time%3C=2017-02-10T00:00:00+00:00&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0
+500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?precise_lon,pressure_qc,v_qc,depth,density,density_qc,time_uv,depth_qc,conductivity_qc,temperature_qc,latitude_qc,precise_time_qc,lon_uv,time_uv_qc,u,lon_uv_qc,longitude_qc,salinity,u_qc,longitude,pressure,temperature,lat_uv,v,time,salinity_qc,precise_time,conductivity,time_qc,lat_uv_qc,latitude,precise_lat&amp;time%3E=2016-07-10T00:00:00+00:00&amp;time%3C=2017-02-10T00:00:00+00:00&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0
 </pre></div></div>
 </div>
 <p>The glider datasets should be masked automatically but we found that is
@@ -1126,7 +1135,7 @@ humansize(nbytes)
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;2.11 MB&#39;
+<span></span>&#39;2.1 MB&#39;
 </pre></div>
 </div>
 </div>
@@ -1184,40 +1193,40 @@ ds
 <span></span>&lt;xarray.Dataset&gt;
 Dimensions:          (row: 16232)
 Coordinates:
-    longitude        (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
-    depth            (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 ...
-    time_uv          (row) datetime64[ns] NaT NaT NaT NaT NaT NaT NaT NaT ...
-    lat_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    time             (row) datetime64[ns] 2017-01-16T13:03:04.437930 ...
-    lon_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    latitude         (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
+    depth            (row) float64 ...
+    time_uv          (row) datetime64[ns] ...
+    lon_uv           (row) float64 ...
+    longitude        (row) float64 ...
+    lat_uv           (row) float64 ...
+    time             (row) datetime64[ns] ...
+    latitude         (row) float64 ...
 Dimensions without coordinates: row
 Data variables:
-    conductivity     (row) float64 4.281 4.284 4.287 4.287 4.289 4.29 4.29 ...
-    density_qc       (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    salinity_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    latitude_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    pressure_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    precise_time     (row) datetime64[ns] 2017-01-16T13:03:04.437930 ...
-    temperature      (row) float64 14.4 14.42 14.46 14.45 14.47 14.47 14.47 ...
-    v                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    lat_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    precise_lat      (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
-    conductivity_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    u                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    depth_qc         (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    time_qc          (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    precise_lon      (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
-    precise_time_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    lon_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    temperature_qc   (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    time_uv_qc       (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    salinity         (row) float64 35.45 35.45 35.45 35.45 35.45 35.46 35.46 ...
-    v_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    longitude_qc     (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    pressure         (row) float64 0.51 0.52 1.91 0.35 2.1 8.65 18.68 0.34 ...
-    u_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    density          (row) float64 1.026e+03 1.026e+03 1.026e+03 1.026e+03 ...
+    precise_lon      (row) float64 ...
+    pressure_qc      (row) float64 ...
+    v_qc             (row) float64 ...
+    density          (row) float64 ...
+    density_qc       (row) float64 ...
+    depth_qc         (row) float64 ...
+    conductivity_qc  (row) float64 ...
+    temperature_qc   (row) float64 ...
+    latitude_qc      (row) float64 ...
+    precise_time_qc  (row) float64 ...
+    time_uv_qc       (row) float64 ...
+    u                (row) float64 ...
+    lon_uv_qc        (row) float64 ...
+    longitude_qc     (row) float64 ...
+    salinity         (row) float64 ...
+    u_qc             (row) float64 ...
+    pressure         (row) float64 ...
+    temperature      (row) float64 ...
+    v                (row) float64 ...
+    salinity_qc      (row) float64 ...
+    precise_time     (row) datetime64[ns] ...
+    conductivity     (row) float64 ...
+    time_qc          (row) float64 ...
+    lat_uv_qc        (row) float64 ...
+    precise_lat      (row) float64 ...
 Attributes:
     acknowledgement:               Funding provided by the National Science F...
     cdm_data_type:                 TrajectoryProfile
@@ -1233,17 +1242,17 @@ Attributes:
     date_issued:                   2017-04-19T14:33:41Z
     date_modified:                 2017-04-19T14:33:41Z
     deployment_number:             4
-    Easternmost_Easting:           -69.9830368207
+    Easternmost_Easting:           -69.98303682074565
     featureType:                   TrajectoryProfile
     format_version:                https://github.com/ioos/ioosngdac/tree/mas...
-    geospatial_lat_max:            39.9172641723
-    geospatial_lat_min:            39.3237067304
+    geospatial_lat_max:            39.91726417227544
+    geospatial_lat_min:            39.32370673037986
     geospatial_lat_units:          degrees_north
-    geospatial_lon_max:            -69.9830368207
-    geospatial_lon_min:            -71.182596026
+    geospatial_lon_max:            -69.98303682074565
+    geospatial_lon_min:            -71.18259602604894
     geospatial_lon_units:          degrees_east
     geospatial_vertical_max:       976.756
-    geospatial_vertical_min:       -0.0396958
+    geospatial_vertical_min:       -0.03969577
     geospatial_vertical_positive:  down
     geospatial_vertical_units:     m
     history:                       2017-04-19T14:33:35Z: Data Source /Users/k...
@@ -1258,7 +1267,7 @@ Attributes:
     Metadata_Conventions:          Unidata Dataset Discovery v1.0, COARDS, CF...
     metadata_link:                 http://ooi.visualocean.net/sites/view/CP05...
     naming_authority:              org.oceanobservatories
-    Northernmost_Northing:         39.9172641723
+    Northernmost_Northing:         39.91726417227544
     platform_type:                 Slocum Glider
     processing_level:              Contains any/all of the following: L0 Data...
     project:                       Ocean Observatories Initiative
@@ -1269,14 +1278,14 @@ Attributes:
     sea_name:                      Mid-Atlantic Bight
     source:                        Observational data from a profiling glider
     sourceUrl:                     (local files)
-    Southernmost_Northing:         39.3237067304
+    Southernmost_Northing:         39.32370673037986
     standard_name_vocabulary:      CF Standard Name Table v27
     subsetVariables:               trajectory, wmo_id, profile_id, time, lati...
     summary:                       The Pioneer Array is located off the coast...
     time_coverage_end:             2017-02-09T23:03:25Z
     time_coverage_start:           2017-01-16T13:03:04Z
     title:                         cp_336-20170116T1254
-    Westernmost_Easting:           -71.182596026
+    Westernmost_Easting:           -71.18259602604894
 </pre></div>
 </div>
 </div>
@@ -1297,19 +1306,19 @@ Attributes:
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
 <span></span>&lt;xarray.DataArray &#39;temperature&#39; (row: 16232)&gt;
-array([ 14.3976,  14.4236,  14.4596, ...,   4.4004,   4.3975,   4.3978])
+array([14.3976, 14.4236, 14.4596, ...,  4.4004,  4.3975,  4.3978])
 Coordinates:
-    longitude  (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
-    depth      (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 18.54 ...
-    time_uv    (row) datetime64[ns] NaT NaT NaT NaT NaT NaT NaT NaT NaT NaT ...
-    lat_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
-    time       (row) datetime64[ns] 2017-01-16T13:03:04.437930 ...
-    lon_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
-    latitude   (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
+    depth      (row) float64 ...
+    time_uv    (row) datetime64[ns] ...
+    lon_uv     (row) float64 ...
+    longitude  (row) float64 ...
+    lat_uv     (row) float64 ...
+    time       (row) datetime64[ns] ...
+    latitude   (row) float64 ...
 Dimensions without coordinates: row
 Attributes:
     _ChunkSizes:          1
-    actual_range:         [  0.          17.26519966]
+    actual_range:         [ 0.     17.2652]
     ancillary_variables:  temperature_qc
     colorBarMaximum:      32.0
     colorBarMinimum:      0.0
@@ -1417,7 +1426,7 @@ cbar = fig.colorbar(cs, **kw)
       &copy;2017, Filipe Fernandes.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
