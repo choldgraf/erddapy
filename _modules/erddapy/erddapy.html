@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy.erddapy &#8212; erddapy 0.1.2+6.gb5e9494 documentation</title>
+    <title>erddapy.erddapy &#8212; erddapy 0.1.2+8.gfbea128 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.2+6.gb5e9494',
+        VERSION:     '0.1.2+8.gfbea128',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -169,8 +169,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server_url</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">server_url</span> <span class="ow">in</span> <span class="n">servers</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="n">server_url</span> <span class="o">=</span> <span class="n">servers</span><span class="p">[</span><span class="n">server_url</span><span class="p">]</span><span class="o">.</span><span class="n">url</span>
-        <span class="n">_check_url_response</span><span class="p">(</span><span class="n">server_url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">server_url</span> <span class="o">=</span> <span class="n">server_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_url</span> <span class="o">=</span> <span class="n">_check_url_response</span><span class="p">(</span><span class="n">server_url</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">search_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">download_options</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># Caching the last `dataset_id` request for quicker multiple accesses,</span>
@@ -273,8 +272,7 @@
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">search_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">search_options</span><span class="p">)</span>
         <span class="n">search_url</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">search_options</span><span class="p">)</span>
-        <span class="n">_check_url_response</span><span class="p">(</span><span class="n">search_url</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">search_url</span></div>
+        <span class="k">return</span> <span class="n">_check_url_response</span><span class="p">(</span><span class="n">search_url</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ERDDAP.get_info_url"><a class="viewcode-back" href="../../erddapy.html#erddapy.erddapy.ERDDAP.get_info_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_info_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_id</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Compose the info URL for the `server_url` endpoint.</span>
@@ -298,8 +296,7 @@
             <span class="s1">&#39;response&#39;</span><span class="p">:</span> <span class="n">response</span>
         <span class="p">}</span>
         <span class="n">info_url</span> <span class="o">=</span> <span class="n">base</span><span class="p">(</span><span class="o">**</span><span class="n">info_options</span><span class="p">)</span>
-        <span class="n">_check_url_response</span><span class="p">(</span><span class="n">info_url</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">info_url</span></div>
+        <span class="k">return</span> <span class="n">_check_url_response</span><span class="p">(</span><span class="n">info_url</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ERDDAP.get_download_url"><a class="viewcode-back" href="../../erddapy.html#erddapy.erddapy.ERDDAP.get_download_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_download_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_id</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tabledap&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Compose the download URL for the `server_url` endpoint.</span>
@@ -333,8 +330,7 @@
             <span class="n">variables</span><span class="o">=</span><span class="n">variables</span><span class="p">,</span>
             <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span>
         <span class="p">)</span>
-        <span class="n">_check_url_response</span><span class="p">(</span><span class="n">download_url</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">download_url</span></div>
+        <span class="k">return</span> <span class="n">_check_url_response</span><span class="p">(</span><span class="n">download_url</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ERDDAP.get_opendap_url"><a class="viewcode-back" href="../../erddapy.html#erddapy.erddapy.ERDDAP.get_opendap_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_opendap_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_id</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tabledap&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Compose the opendap URL for the `server_url` the endpoint.</span>
@@ -351,8 +347,7 @@
             <span class="n">protocol</span><span class="o">=</span><span class="n">protocol</span><span class="p">,</span>
             <span class="n">dataset_id</span><span class="o">=</span><span class="n">dataset_id</span>
             <span class="p">)</span>
-        <span class="n">_check_url_response</span><span class="p">(</span><span class="n">opendap_url</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">opendap_url</span></div>
+        <span class="k">return</span> <span class="n">_check_url_response</span><span class="p">(</span><span class="n">opendap_url</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ERDDAP.get_var_by_attr"><a class="viewcode-back" href="../../erddapy.html#erddapy.erddapy.ERDDAP.get_var_by_attr">[docs]</a>    <span class="k">def</span> <span class="nf">get_var_by_attr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Similar to netCDF4-python `get_variables_by_attributes` for an ERDDAP</span>
