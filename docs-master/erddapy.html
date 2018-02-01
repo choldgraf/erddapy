@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy &#8212; erddapy 0.1.2+10.gcae693c documentation</title>
+    <title>erddapy &#8212; erddapy 0.1.2+12.g651753e documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.2+10.gcae693c',
+        VERSION:     '0.1.2+12.g651753e',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -74,7 +74,7 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal"><span class="pre">erddapy</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="#module-erddapy.extras"><code class="docutils literal"><span class="pre">extras</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#extras"><code class="docutils literal"><span class="pre">extras</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="quick_intro.html">Quick introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="searchfor.html">Searching datasets</a></li>
 </ul>
@@ -106,26 +106,38 @@
             
   <div class="section" id="module-erddapy.erddapy">
 <span id="erddapy"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">erddapy</span></code><a class="headerlink" href="#module-erddapy.erddapy" title="Permalink to this headline">¶</a></h1>
+<p>erddapy</p>
+<p>Pythonic way to access ERDDAP data</p>
 <dl class="class">
 <dt id="erddapy.erddapy.ERDDAP">
-<em class="property">class </em><code class="descclassname">erddapy.erddapy.</code><code class="descname">ERDDAP</code><span class="sig-paren">(</span><em>server_url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">erddapy.erddapy.</code><code class="descname">ERDDAP</code><span class="sig-paren">(</span><em>server</em>, <em>dataset_id=None</em>, <em>protocol=None</em>, <em>variables=''</em>, <em>response='html'</em>, <em>constraints=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Creates an ERDDAP instance for the user defined server endpoint.</p>
+<p>Creates an ERDDAP instance for a specific server endpoint.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>server_url</strong> (<em>str</em>) – an ERDDAP server URL or an acronym for the builtin servers.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>server</strong> (<em>str</em>) – an ERDDAP server URL or an acronym for one of the builtin servers.</li>
+<li><strong>dataset_id</strong> (<em>str</em>) – a dataset unique id.</li>
+<li><strong>protocol</strong> (<em>str</em>) – tabledap or griddap.</li>
+<li><strong>variables</strong> (<code class="xref py py-obj docutils literal"><span class="pre">list</span></code>/<cite>tuple</cite>) – a list variables to download.</li>
+<li><strong>response</strong> (<em>str</em>) – default is HTML.</li>
+<li><strong>constraints</strong> (<code class="xref py py-obj docutils literal"><span class="pre">dict</span></code>) – download constraints, default None (opendap-like url)</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the ERDDAP URL builder.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the ERDDAP URL builder.</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">instance</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">instance</p>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
 <p>Specifying the server URL</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span><span class="n">server_url</span><span class="o">=</span><span class="s1">&#39;https://data.ioos.us/gliders/erddap&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;https://data.ioos.us/gliders/erddap&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>let’s search for glider <cite>ru29</cite> and read the csv response with pandas.</p>
@@ -138,7 +150,9 @@
 </pre></div>
 </div>
 <p>there are “shortcuts” for some servers</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span><span class="n">server_url</span><span class="o">=</span><span class="s1">&#39;SECOORA&#39;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;SECOORA&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span><span class="o">.</span><span class="n">server</span>
+<span class="go">&#39;http://erddap.secoora.org/erddap&#39;</span>
 </pre></div>
 </div>
 <p>to get a list of the shortcuts available servers:</p>
@@ -164,141 +178,22 @@
 </div>
 <dl class="method">
 <dt id="erddapy.erddapy.ERDDAP.get_download_url">
-<code class="descname">get_download_url</code><span class="sig-paren">(</span><em>dataset_id</em>, <em>variables</em>, <em>response='csv'</em>, <em>protocol='tabledap'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_download_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_download_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compose the download URL for the <cite>server_url</cite> endpoint.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dataset_id</strong> (<em>str</em>) – a dataset unique id.</li>
-<li><strong>variables</strong> (<em>list/tuple</em>) – a list of the variables to download.</li>
-<li><strong>response</strong> (<em>str</em>) – <p>default is a Comma Separated Value (‘csv’).
-See ERDDAP docs for all the options,</p>
-<ul>
-<li>tabledap: <a class="reference external" href="http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html">http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html</a></li>
-<li>griddap: <a class="reference external" href="http://coastwatch.pfeg.noaa.gov/erddap/griddap/documentation.html">http://coastwatch.pfeg.noaa.gov/erddap/griddap/documentation.html</a></li>
-</ul>
-</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the download URL for the <cite>response</cite> chosen.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">download_url (str)</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_download_url</code><span class="sig-paren">(</span><em>dataset_id=None</em>, <em>protocol=None</em>, <em>variables=None</em>, <em>response=None</em>, <em>constraints=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_download_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_download_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="erddapy.erddapy.ERDDAP.get_info_url">
-<code class="descname">get_info_url</code><span class="sig-paren">(</span><em>dataset_id</em>, <em>response='csv'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_info_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_info_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compose the info URL for the <cite>server_url</cite> endpoint.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dataset_id</strong> (<em>str</em>) – a dataset unique id.</li>
-<li><strong>response</strong> (<em>str</em>) – <p>default is a Comma Separated Value (‘csv’).
-See ERDDAP docs for all the options,</p>
-<ul>
-<li>tabledap: <a class="reference external" href="http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html">http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html</a></li>
-<li>griddap: <a class="reference external" href="http://coastwatch.pfeg.noaa.gov/erddap/griddap/documentation.html">http://coastwatch.pfeg.noaa.gov/erddap/griddap/documentation.html</a></li>
-</ul>
-</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the info URL for the <cite>response</cite> chosen.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">info_url (str)</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="erddapy.erddapy.ERDDAP.get_opendap_url">
-<code class="descname">get_opendap_url</code><span class="sig-paren">(</span><em>dataset_id</em>, <em>protocol='tabledap'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_opendap_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_opendap_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compose the opendap URL for the <cite>server_url</cite> the endpoint.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dataset_id</strong> (<em>str</em>) – a dataset unique id.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the download URL for the <cite>response</cite> chosen.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">download_url (str)</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_info_url</code><span class="sig-paren">(</span><em>dataset_id=None</em>, <em>response=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_info_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_info_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="erddapy.erddapy.ERDDAP.get_search_url">
-<code class="descname">get_search_url</code><span class="sig-paren">(</span><em>response='csv'</em>, <em>search_for=None</em>, <em>items_per_page=1000</em>, <em>page=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_search_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_search_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compose the search URL for the <cite>server_url</cite> endpoint provided.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>search_for</strong> (<em>str</em>) – <p>“Google-like” search of the datasets’ metadata.</p>
-<ul>
-<li>Type the words you want to search for, with spaces between the words.
-ERDDAP will search for the words separately, not as a phrase.</li>
-<li>To search for a phrase, put double quotes around the phrase
-(for example, <cite>“wind speed”</cite>).</li>
-<li>To exclude datasets with a specific word, use <cite>-excludedWord</cite>.</li>
-<li>To exclude datasets with a specific phrase, use <cite>-“excluded phrase”</cite></li>
-<li>Searches are not case-sensitive.</li>
-<li>To find just grid or just table datasets, include <cite>protocol=griddap</cite>
-or <cite>protocol=tabledap</cite> in your search.</li>
-<li>You can search for any part of a word. For example,
-searching for <cite>spee</cite> will find datasets with <cite>speed</cite> and datasets with
-<cite>WindSpeed</cite></li>
-<li>The last word in a phrase may be a partial word. For example,
-to find datasets from a specific website (usually the start of the datasetID),
-include (for example) <cite>“datasetID=erd”</cite> in your search.</li>
-</ul>
-</li>
-<li><strong>response</strong> (<em>str</em>) – <p>default is a Comma Separated Value (‘csv’).
-See ERDDAP docs for all the options,</p>
-<ul>
-<li>tabledap: <a class="reference external" href="http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html">http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html</a></li>
-<li>griddap: <a class="reference external" href="http://coastwatch.pfeg.noaa.gov/erddap/griddap/documentation.html">http://coastwatch.pfeg.noaa.gov/erddap/griddap/documentation.html</a></li>
-</ul>
-</li>
-<li><strong>items_per_page</strong> (<em>int</em>) – how many items per page in the return,
-default is 1000.</li>
-<li><strong>page</strong> (<em>int</em>) – which page to display, defatul is the first page (1).</li>
-<li><strong>kwargs</strong> (<em>dict</em>) – extra search constraints based on metadata and/or coordinates ke/value.
-metadata: <cite>cdm_data_type</cite>, <cite>institution</cite>, <cite>ioos_category</cite>,
-<cite>keywords</cite>, <cite>long_name</cite>, <cite>standard_name</cite>, and <cite>variableName</cite>.
-coordinates: <cite>minLon</cite>, <cite>maxLon</cite>, <cite>minLat</cite>, <cite>maxLat</cite>, <cite>minTime</cite>, and <cite>maxTime</cite>.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the search URL for the <cite>response</cite> chosen.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">search_url (str)</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_search_url</code><span class="sig-paren">(</span><em>response=None</em>, <em>search_for=None</em>, <em>items_per_page=1000</em>, <em>page=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_search_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_search_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="erddapy.erddapy.ERDDAP.get_var_by_attr">
-<code class="descname">get_var_by_attr</code><span class="sig-paren">(</span><em>dataset_id</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_var_by_attr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_var_by_attr" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_var_by_attr</code><span class="sig-paren">(</span><em>dataset_id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_var_by_attr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_var_by_attr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Similar to netCDF4-python <cite>get_variables_by_attributes</cite> for an ERDDAP
 <cite>dataset_id</cite>.</p>
 <p>The <cite>get_var_by_attr</cite> method will create an info <cite>csv</cite> return,
@@ -328,15 +223,8 @@ for the <cite>dataset_id</cite>, and the variables attribute dictionary.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-erddapy.extras">
-<span id="extras"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">extras</span></code><a class="headerlink" href="#module-erddapy.extras" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="erddapy.extras.open_dataset">
-<code class="descclassname">erddapy.extras.</code><code class="descname">open_dataset</code><span class="sig-paren">(</span><em>url</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/extras.html#open_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.extras.open_dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load data as a xarray dataset from the .nc response.</p>
-<p>Caveat: this downloads a temporary file! Be careful with the size of the request.</p>
-</dd></dl>
-
+<div class="section" id="extras">
+<h1><code class="xref py py-mod docutils literal"><span class="pre">extras</span></code><a class="headerlink" href="#extras" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
