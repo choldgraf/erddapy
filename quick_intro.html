@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Quick introduction &#8212; erddapy 0.1.2+18.gcf8cc72 documentation</title>
+    <title>Quick introduction &#8212; erddapy 0.1.2+20.ge748ec7 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.2+18.gcf8cc72',
+        VERSION:     '0.1.2+20.ge748ec7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -336,14 +336,11 @@ https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitu
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-    <span class="n">url</span><span class="p">,</span>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">(</span>
     <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span>
     <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">skiprows</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>  <span class="c1"># units information can be dropped.</span>
-<span class="p">)</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -508,6 +505,8 @@ server. In this example we will use <a class="reference external" href="https://
  &#39;protocol&#39;,
  &#39;response&#39;,
  &#39;server&#39;,
+ &#39;to_pandas&#39;,
+ &#39;to_xarray&#39;,
  &#39;variables&#39;]
 </pre></div>
 </div>
@@ -824,8 +823,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 158 ms, sys: 8.65 ms, total: 167 ms
-Wall time: 1.69 s
+CPU times: user 99.5 ms, sys: 352 µs, total: 99.8 ms
+Wall time: 2.02 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -859,8 +858,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 32.7 ms, sys: 160 µs, total: 32.8 ms
-Wall time: 708 ms
+CPU times: user 18.7 ms, sys: 325 µs, total: 19 ms
+Wall time: 739 ms
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -894,8 +893,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 21.6 ms, sys: 3.87 ms, total: 25.5 ms
-Wall time: 752 ms
+CPU times: user 32.1 ms, sys: 3.82 ms, total: 35.9 ms
+Wall time: 801 ms
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1012,7 +1011,7 @@ method.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?time_uv_qc,latitude_qc,precise_time,pressure_qc,lon_uv_qc,temperature,time_uv,temperature_qc,precise_time_qc,salinity,v,precise_lon,lat_uv,time,conductivity,u,lat_uv_qc,depth_qc,density,density_qc,depth,precise_lat,longitude_qc,latitude,lon_uv,conductivity_qc,time_qc,salinity_qc,longitude,v_qc,u_qc,pressure&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0
+https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?salinity_qc,density,conductivity,lon_uv,conductivity_qc,time_qc,lon_uv_qc,latitude_qc,time_uv_qc,depth,precise_lat,u_qc,v,lat_uv,temperature_qc,u,time,density_qc,time_uv,latitude,v_qc,pressure,longitude,precise_time_qc,longitude_qc,precise_lon,precise_time,salinity,temperature,pressure_qc,depth_qc,lat_uv_qc&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0
 </pre></div></div>
 </div>
 <p>Putting everything in <code class="docutils literal"><span class="pre">DataFrame</span></code>s.</p>
@@ -1081,7 +1080,7 @@ constraints provided but failed to generate an URL for the download.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?time_uv_qc,latitude_qc,precise_time,pressure_qc,lon_uv_qc,temperature,time_uv,temperature_qc,precise_time_qc,salinity,v,precise_lon,lat_uv,time,conductivity,u,lat_uv_qc,depth_qc,density,density_qc,depth,precise_lat,longitude_qc,latitude,lon_uv,conductivity_qc,time_qc,salinity_qc,longitude,v_qc,u_qc,pressure&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;time%3E=1468108800.0&amp;time%3C=1486684800.0
+500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?salinity_qc,density,conductivity,lon_uv,conductivity_qc,time_qc,lon_uv_qc,latitude_qc,time_uv_qc,depth,precise_lat,u_qc,v,lat_uv,temperature_qc,u,time,density_qc,time_uv,latitude,v_qc,pressure,longitude,precise_time_qc,longitude_qc,precise_lon,precise_time,salinity,temperature,pressure_qc,depth_qc,lat_uv_qc&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;time%3E=1468108800.0&amp;time%3C=1486684800.0
 </pre></div></div>
 </div>
 <p>The glider datasets should be masked automatically but we found that is
@@ -1243,12 +1242,12 @@ constraints to avoid downloading several gigabytes!</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span><span class="n">download_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">(</span>
-    <span class="n">dataset_id</span><span class="o">=</span><span class="s1">&#39;cp_336-20170116T1254&#39;</span><span class="p">,</span>
-    <span class="n">response</span><span class="o">=</span><span class="s1">&#39;nc&#39;</span><span class="p">,</span>
-    <span class="n">variables</span><span class="o">=</span><span class="n">common_variables</span><span class="p">,</span>
-    <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
-<span class="p">)</span>
+<span></span><span class="n">e</span><span class="o">.</span><span class="n">dataset_id</span> <span class="o">=</span> <span class="s1">&#39;cp_336-20170116T1254&#39;</span>
+<span class="n">e</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="s1">&#39;nc&#39;</span>
+<span class="n">e</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">common_variables</span>
+<span class="n">e</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="n">constraints</span>
+
+<span class="n">download_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1282,7 +1281,7 @@ constraints to avoid downloading several gigabytes!</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;602.85 KB&#39;
+<span></span>&#39;601.96 KB&#39;
 </pre></div>
 </div>
 </div>
@@ -1314,22 +1313,7 @@ less than that, <code class="docutils literal"><span class="pre">ERDDAP</span></
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">erddapy.utilities</span> <span class="k">import</span> <span class="n">_urlopen</span>
-
-
-<span class="k">def</span> <span class="nf">to_xarray</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
-    <span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">NamedTemporaryFile</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">_urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="k">with</span> <span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.nc&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;erddapy_&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
-        <span class="n">tmp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">tmp</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-
-<span class="n">ds</span> <span class="o">=</span> <span class="n">to_xarray</span><span class="p">(</span>
-    <span class="n">download_url</span><span class="p">,</span>
-<span class="p">)</span>
-
+<span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">to_xarray</span><span class="p">(</span><span class="n">decode_times</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">ds</span>
 </pre></div>
 </div>
@@ -1343,40 +1327,40 @@ less than that, <code class="docutils literal"><span class="pre">ERDDAP</span></
 <span></span>&lt;xarray.Dataset&gt;
 Dimensions:          (row: 16232)
 Coordinates:
-    time_uv          (row) datetime64[ns] ...
-    lat_uv           (row) float64 ...
-    time             (row) datetime64[ns] ...
-    depth            (row) float64 ...
-    latitude         (row) float64 ...
     lon_uv           (row) float64 ...
+    depth            (row) float64 ...
+    lat_uv           (row) float64 ...
+    time             (row) float64 ...
+    time_uv          (row) float64 ...
+    latitude         (row) float64 ...
     longitude        (row) float64 ...
 Dimensions without coordinates: row
 Data variables:
-    time_uv_qc       (row) float64 ...
-    latitude_qc      (row) float64 ...
-    precise_time     (row) datetime64[ns] ...
-    pressure_qc      (row) float64 ...
-    lon_uv_qc        (row) float64 ...
-    temperature      (row) float64 ...
-    temperature_qc   (row) float64 ...
-    precise_time_qc  (row) float64 ...
-    salinity         (row) float64 ...
-    v                (row) float64 ...
-    precise_lon      (row) float64 ...
-    conductivity     (row) float64 ...
-    u                (row) float64 ...
-    lat_uv_qc        (row) float64 ...
-    depth_qc         (row) float64 ...
+    salinity_qc      (row) float64 ...
     density          (row) float64 ...
-    density_qc       (row) float64 ...
-    precise_lat      (row) float64 ...
-    longitude_qc     (row) float64 ...
+    conductivity     (row) float64 ...
     conductivity_qc  (row) float64 ...
     time_qc          (row) float64 ...
-    salinity_qc      (row) float64 ...
-    v_qc             (row) float64 ...
+    lon_uv_qc        (row) float64 ...
+    latitude_qc      (row) float64 ...
+    time_uv_qc       (row) float64 ...
+    precise_lat      (row) float64 ...
     u_qc             (row) float64 ...
+    v                (row) float64 ...
+    temperature_qc   (row) float64 ...
+    u                (row) float64 ...
+    density_qc       (row) float64 ...
+    v_qc             (row) float64 ...
     pressure         (row) float64 ...
+    precise_time_qc  (row) float64 ...
+    longitude_qc     (row) float64 ...
+    precise_lon      (row) float64 ...
+    precise_time     (row) float64 ...
+    salinity         (row) float64 ...
+    temperature      (row) float64 ...
+    pressure_qc      (row) float64 ...
+    depth_qc         (row) float64 ...
+    lat_uv_qc        (row) float64 ...
 Attributes:
     acknowledgement:               Funding provided by the National Science F...
     cdm_data_type:                 TrajectoryProfile
@@ -1439,6 +1423,25 @@ Attributes:
 </pre></div>
 </div>
 </div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">erddapy.utilities</span> <span class="kn">import</span> <span class="n">_urlopen</span>
+
+
+<span class="k">def</span> <span class="nf">to_xarray</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">xarray</span> <span class="kn">as</span> <span class="nn">xr</span>
+    <span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">NamedTemporaryFile</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.nc&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;erddapy_&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
+        <span class="n">tmp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">tmp</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">to_xarray</span><span class="p">(</span>
+    <span class="n">download_url</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ds</span>
+</pre></div>
+</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [32]:
@@ -1458,12 +1461,12 @@ Attributes:
 <span></span>&lt;xarray.DataArray &#39;temperature&#39; (row: 16232)&gt;
 array([14.3976, 14.4236, 14.4596, ...,  4.4004,  4.3975,  4.3978])
 Coordinates:
-    time_uv    (row) datetime64[ns] ...
-    lat_uv     (row) float64 ...
-    time       (row) datetime64[ns] ...
-    depth      (row) float64 ...
-    latitude   (row) float64 ...
     lon_uv     (row) float64 ...
+    depth      (row) float64 ...
+    lat_uv     (row) float64 ...
+    time       (row) float64 ...
+    time_uv    (row) float64 ...
+    latitude   (row) float64 ...
     longitude  (row) float64 ...
 Dimensions without coordinates: row
 Attributes:
@@ -1542,6 +1545,7 @@ Attributes:
 <span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
 
 
+<span class="n">dx</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">=</span> <span class="mf">1.5</span>
 <span class="n">extent</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">ds</span><span class="o">.</span><span class="n">geospatial_lon_min</span><span class="o">-</span><span class="n">dx</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">geospatial_lon_max</span><span class="o">+</span><span class="n">dx</span><span class="p">,</span>
     <span class="n">ds</span><span class="o">.</span><span class="n">geospatial_lat_min</span><span class="o">-</span><span class="n">dy</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">geospatial_lat_max</span><span class="o">+</span><span class="n">dy</span>
@@ -1551,6 +1555,7 @@ Attributes:
 <span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
 <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span>
                     <span class="n">fraction</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="s1">&#39;10m&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1558,7 +1563,7 @@ Attributes:
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/quick_intro_56_0.png" src="_images/quick_intro_56_0.png" />
+<img alt="_images/quick_intro_57_0.png" src="_images/quick_intro_57_0.png" />
 </div>
 </div>
 </div>
