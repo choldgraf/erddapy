@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy &#8212; erddapy 0.1.2+20.ge748ec7 documentation</title>
+    <title>erddapy &#8212; erddapy 0.1.2+22.g4318dd5 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.2+20.ge748ec7',
+        VERSION:     '0.1.2+22.g4318dd5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -111,7 +111,7 @@
 <p>Pythonic way to access ERDDAP data</p>
 <dl class="class">
 <dt id="erddapy.erddapy.ERDDAP">
-<em class="property">class </em><code class="descclassname">erddapy.erddapy.</code><code class="descname">ERDDAP</code><span class="sig-paren">(</span><em>server</em>, <em>dataset_id=None</em>, <em>protocol=None</em>, <em>variables=''</em>, <em>response='html'</em>, <em>constraints=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">erddapy.erddapy.</code><code class="descname">ERDDAP</code><span class="sig-paren">(</span><em>server</em>, <em>dataset_id=None</em>, <em>protocol=None</em>, <em>variables=''</em>, <em>response='html'</em>, <em>constraints=None</em>, <em>params=None</em>, <em>requests_kwargs=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Creates an ERDDAP instance for a specific server endpoint.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -125,6 +125,7 @@
 <li><strong>variables</strong> (<code class="xref py py-obj docutils literal"><span class="pre">list</span></code>/<cite>tuple</cite>) – a list variables to download.</li>
 <li><strong>response</strong> (<em>str</em>) – default is HTML.</li>
 <li><strong>constraints</strong> (<code class="xref py py-obj docutils literal"><span class="pre">dict</span></code>) – download constraints, default None (opendap-like url)</li>
+<li><strong>and requests_kwargs</strong> (<em>params</em>) – <cite>request.get</cite> options</li>
 </ul>
 </td>
 </tr>
@@ -224,15 +225,15 @@ for the <cite>dataset_id</cite>, and the variables attribute dictionary.</p>
 <dl class="method">
 <dt id="erddapy.erddapy.ERDDAP.to_pandas">
 <code class="descname">to_pandas</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.to_pandas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.to_pandas" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a data request to a pandas.DataFrame.
-Accepts any <cite>pandas.read_csv</cite> keyword arguments.</p>
+<dd><p>Save a data request to a pandas.DataFrame.</p>
+<p>Accepts any <cite>pandas.read_csv</cite> keyword arguments.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="erddapy.erddapy.ERDDAP.to_xarray">
 <code class="descname">to_xarray</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.to_xarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.to_xarray" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a data request to a xarray.Dataset.
-Accepts any <cite>pandas.read_csv</cite> keyword arguments.</p>
+<dd><p>Save a data request to a xarray.Dataset.</p>
+<p>Accepts any <cite>xr.open_dataset</cite> keyword arguments.</p>
 </dd></dl>
 
 </dd></dl>
