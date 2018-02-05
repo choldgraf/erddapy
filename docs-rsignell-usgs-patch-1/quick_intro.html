@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Quick introduction &#8212; erddapy 0.1.1+24.g533e06c documentation</title>
+    <title>Quick introduction &#8212; erddapy 0.1.3+1.ge189795 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.1+24.g533e06c',
+        VERSION:     '0.1.3+1.ge189795',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -74,8 +74,9 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="erddapy.html"><code class="docutils literal"><span class="pre">erddapy</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="erddapy.html#module-erddapy.extras"><code class="docutils literal"><span class="pre">extras</span></code></a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick introduction</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="erddapy.html#extras"><code class="docutils literal"><span class="pre">extras</span></code></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#Longer-introduction">Longer introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Extras">Extras</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#OPeNDAP-response">OPeNDAP response</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#netCDF-“file-like”-to-xarray">netCDF “file-like” to xarray</a></li>
@@ -271,35 +272,77 @@ div.nboutput div.output_area.stderr {
 .ansi-white-intense-fg { color: #A1A6B2; }
 .ansi-white-intense-bg { background-color: #A1A6B2; }
 
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
 .ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
 </style>
 <div class="section" id="Quick-introduction">
 <h1>Quick introduction<a class="headerlink" href="#Quick-introduction" title="Permalink to this headline">¶</a></h1>
-<p>First we need to instantiate the <code class="docutils literal"><span class="pre">ERDDAP</span></code> URL constructor for a
-server. In this example we will use <a class="reference external" href="https://data.ioos.us/gliders/erddap">https://data.ioos.us/gliders/erddap</a>.</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>from erddapy import ERDDAP
+<span></span><span class="kn">from</span> <span class="nn">erddapy</span> <span class="k">import</span> <span class="n">ERDDAP</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
-server_url = &#39;https://data.ioos.us/gliders/erddap&#39;
+<span class="n">constraints</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;time&gt;=&#39;</span><span class="p">:</span> <span class="s1">&#39;2016-07-10T00:00:00Z&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;time&lt;=&#39;</span><span class="p">:</span> <span class="s1">&#39;2017-02-10T00:00:00Z&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;latitude&gt;=&#39;</span><span class="p">:</span> <span class="mf">38.0</span><span class="p">,</span>
+    <span class="s1">&#39;latitude&lt;=&#39;</span><span class="p">:</span> <span class="mf">41.0</span><span class="p">,</span>
+    <span class="s1">&#39;longitude&gt;=&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">72.0</span><span class="p">,</span>
+    <span class="s1">&#39;longitude&lt;=&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">69.0</span><span class="p">,</span>
+<span class="p">}</span>
 
-e = ERDDAP(server_url=server_url)
+<span class="n">variables</span> <span class="o">=</span> <span class="p">[</span>
+ <span class="s1">&#39;depth&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;longitude&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;salinity&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;temperature&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;time&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span>
+    <span class="n">server</span><span class="o">=</span><span class="s1">&#39;https://data.ioos.us/gliders/erddap&#39;</span><span class="p">,</span>
+    <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tabledap&#39;</span><span class="p">,</span>
+    <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span>
+    <span class="n">dataset_id</span><span class="o">=</span><span class="s1">&#39;blue-20160818T1448&#39;</span><span class="p">,</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
+    <span class="n">variables</span><span class="o">=</span><span class="n">variables</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p>What are the methods/attributes available?</p>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitude,longitude,salinity,temperature,time&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0
+</pre></div></div>
+</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>[method for method in dir(e) if not method.startswith(&#39;_&#39;)]
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">(</span>
+    <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span>
+    <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">skiprows</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>  <span class="c1"># units information can be dropped.</span>
+<span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -308,15 +351,163 @@ e = ERDDAP(server_url=server_url)
 <span></span>Out[2]:
 </pre></div>
 </div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>depth</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>salinity</th>
+      <th>temperature</th>
+    </tr>
+    <tr>
+      <th>time</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-08-19 17:41:53</th>
+      <td>4.58</td>
+      <td>40.997572</td>
+      <td>-70.953544</td>
+      <td>32.241924</td>
+      <td>22.1122</td>
+    </tr>
+    <tr>
+      <th>2016-08-19 17:41:53</th>
+      <td>5.92</td>
+      <td>40.997572</td>
+      <td>-70.953544</td>
+      <td>32.231640</td>
+      <td>21.9331</td>
+    </tr>
+    <tr>
+      <th>2016-08-19 17:41:53</th>
+      <td>7.09</td>
+      <td>40.997572</td>
+      <td>-70.953544</td>
+      <td>32.225613</td>
+      <td>21.7394</td>
+    </tr>
+    <tr>
+      <th>2016-08-19 17:41:53</th>
+      <td>8.25</td>
+      <td>40.997572</td>
+      <td>-70.953544</td>
+      <td>32.231335</td>
+      <td>21.3219</td>
+    </tr>
+    <tr>
+      <th>2016-08-19 17:41:53</th>
+      <td>10.11</td>
+      <td>40.997572</td>
+      <td>-70.953544</td>
+      <td>32.286210</td>
+      <td>19.7151</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">xfmt</span> <span class="o">=</span> <span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s1">&#39;%H:%Mh</span><span class="se">\n</span><span class="si">%d</span><span class="s1">-%b&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">xfmt</span><span class="p">)</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Temperature ($^\circ$C)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Depth (m)&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/quick_intro_3_0.png" src="_images/quick_intro_3_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Longer-introduction">
+<h1>Longer introduction<a class="headerlink" href="#Longer-introduction" title="Permalink to this headline">¶</a></h1>
+<p>First we need to instantiate the <code class="docutils literal"><span class="pre">ERDDAP</span></code> URL constructor for a
+server. In this example we will use <a class="reference external" href="https://data.ioos.us/gliders/erddap">https://data.ioos.us/gliders/erddap</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">erddapy</span> <span class="k">import</span> <span class="n">ERDDAP</span>
+
+
+<span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;https://data.ioos.us/gliders/erddap&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>What are the methods/attributes available?</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="p">[</span><span class="n">method</span> <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">method</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[5]:
+</pre></div>
+</div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>[&#39;download_options&#39;,
+<span></span>[&#39;constraints&#39;,
+ &#39;dataset_id&#39;,
  &#39;get_download_url&#39;,
  &#39;get_info_url&#39;,
- &#39;get_opendap_url&#39;,
  &#39;get_search_url&#39;,
  &#39;get_var_by_attr&#39;,
- &#39;search_options&#39;,
- &#39;server_url&#39;]
+ &#39;protocol&#39;,
+ &#39;response&#39;,
+ &#39;server&#39;,
+ &#39;to_pandas&#39;,
+ &#39;to_xarray&#39;,
+ &#39;variables&#39;]
 </pre></div>
 </div>
 </div>
@@ -325,11 +516,11 @@ requested response and options. <code class="docutils literal"><span class="pre"
 URL HEADER cannot be validated.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [3]:
+<span></span>In [6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>print(e.get_search_url(response=&#39;.html&#39;, search_for=&#39;all&#39;))
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">get_search_url</span><span class="p">(</span><span class="n">search_for</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -350,73 +541,14 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 <p>Let’s load the <code class="docutils literal"><span class="pre">csv</span></code> reponse directly with <code class="docutils literal"><span class="pre">pandas</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>import pandas as pd
-
-
-df = pd.read_csv(e.get_search_url(response=&#39;csv&#39;, search_for=&#39;all&#39;))
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>&#39;We have {} tabledap, {} griddap, and {} wms endpoints.&#39;.format(
-    len(set(df[&#39;tabledap&#39;].dropna())),
-    len(set(df[&#39;griddap&#39;].dropna())),
-    len(set(df[&#39;wms&#39;].dropna()))
-)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[5]:
-</pre></div>
-</div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;We have 271 tabledap, 0 griddap, and 0 wms endpoints.&#39;
-</pre></div>
-</div>
-</div>
-<p>We can refine our search by providing some constraints.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [6]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>def show_iframe(src):
-    &quot;&quot;&quot;Helper function to show HTML returns.&quot;&quot;&quot;
-    from IPython.display import HTML
-    iframe = &#39;&lt;iframe src=&quot;{src}&quot; width=&quot;100%&quot; height=&quot;950&quot;&gt;&lt;/iframe&gt;&#39;.format
-    return HTML(iframe(src=src))
-</pre></div>
-</div>
-</div>
-<p>Let’s narrow the search area, time span, and look for
-<code class="docutils literal"><span class="pre">sea_water_temperature</span></code> only.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>import pendulum
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-min_time = pendulum.parse(&#39;2016-07-10T00:00:00Z&#39;)
-max_time = pendulum.parse(&#39;2017-02-10T00:00:00Z&#39;)
 
-min_lat, max_lat =  38.0, 41.0
-min_lon, max_lon = -72.0, -69.0
-
-standard_name = &#39;sea_water_temperature&#39;
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">get_search_url</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="n">search_for</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -426,19 +558,11 @@ standard_name = &#39;sea_water_temperature&#39;
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>kw = dict(
-    standard_name=standard_name,
-    min_lat=min_lat,
-    max_lat=max_lat,
-    min_lon=min_lon,
-    max_lon=max_lon,
-    min_time=min_time,
-    max_time=max_time
-)
-
-search_url = e.get_search_url(response=&#39;html&#39;, **kw)
-
-show_iframe(search_url)
+<span></span><span class="s1">&#39;We have </span><span class="si">{}</span><span class="s1"> tabledap, </span><span class="si">{}</span><span class="s1"> griddap, and </span><span class="si">{}</span><span class="s1"> wms endpoints.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tabledap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())),</span>
+    <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;griddap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())),</span>
+    <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wms&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()))</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -447,66 +571,75 @@ show_iframe(search_url)
 <span></span>Out[8]:
 </pre></div>
 </div>
-<div class="output_area docutils container">
-<iframe src="https://data.ioos.us/gliders/erddap/search/advanced.html?page=1&itemsPerPage=1000&protocol=(ANY)&cdm_data_type=(ANY)&institution=(ANY)&ioos_category=(ANY)&keywords=(ANY)&long_name=(ANY)&standard_name=sea_water_temperature&variableName=(ANY)&minLon=-72.0&maxLon=-69.0&minLat=38.0&maxLat=41.0&minTime=1468108800.0&maxTime=1486684800.0" width="100%" height="950"></iframe></div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;We have 293 tabledap, 0 griddap, and 0 wms endpoints.&#39;
+</pre></div>
 </div>
-<p>We can see that the search form above was correctly populated with the
-constraints we provided.</p>
-<p>Let us change the response from <code class="docutils literal"><span class="pre">.html</span></code> to <code class="docutils literal"><span class="pre">.csv</span></code>, so we load it as
-a <code class="docutils literal"><span class="pre">pandas.DataFrame</span></code>, and inspect what are the <code class="docutils literal"><span class="pre">Dataset</span> <span class="pre">ID</span></code>s
-available for download.</p>
-<p>Note that the optional constraints are kept in a <code class="docutils literal"><span class="pre">dict</span></code>, making if
-easy to reuse, update or just inspect what where the original parameters
-used.</p>
-<div class="nbinput docutils container">
+</div>
+<p>We can refine our search by providing some constraints.</p>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>e.search_options
+<span></span><span class="k">def</span> <span class="nf">show_iframe</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function to show HTML returns.&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">HTML</span>
+    <span class="n">iframe</span> <span class="o">=</span> <span class="s1">&#39;&lt;iframe src=&quot;</span><span class="si">{src}</span><span class="s1">&quot; width=&quot;100%&quot; height=&quot;950&quot;&gt;&lt;/iframe&gt;&#39;</span><span class="o">.</span><span class="n">format</span>
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">iframe</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">src</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[9]:
-</pre></div>
-</div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>{&#39;cdm_data_type&#39;: &#39;(ANY)&#39;,
- &#39;institution&#39;: &#39;(ANY)&#39;,
- &#39;ioos_category&#39;: &#39;(ANY)&#39;,
- &#39;itemsPerPage&#39;: 1000,
- &#39;keywords&#39;: &#39;(ANY)&#39;,
- &#39;long_name&#39;: &#39;(ANY)&#39;,
- &#39;maxLat&#39;: 41.0,
- &#39;maxLon&#39;: -69.0,
- &#39;maxTime&#39;: 1486684800.0,
- &#39;minLat&#39;: 38.0,
- &#39;minLon&#39;: -72.0,
- &#39;minTime&#39;: 1468108800.0,
- &#39;page&#39;: 1,
- &#39;protocol&#39;: &#39;(ANY)&#39;,
- &#39;response&#39;: &#39;html&#39;,
- &#39;searchFor&#39;: None,
- &#39;server_url&#39;: &#39;https://data.ioos.us/gliders/erddap&#39;,
- &#39;standard_name&#39;: &#39;sea_water_temperature&#39;,
- &#39;variableName&#39;: &#39;(ANY)&#39;}
-</pre></div>
-</div>
-</div>
+<p>Let’s narrow the search area, time span, and look for
+<code class="docutils literal"><span class="pre">sea_water_temperature</span></code> only.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>search_url = e.get_search_url(response=&#39;csv&#39;, **kw)
-search = pd.read_csv(search_url)
-gliders = search[&#39;Dataset ID&#39;].values
+<span></span><span class="n">kw</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;standard_name&#39;</span><span class="p">:</span> <span class="s1">&#39;sea_water_temperature&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;min_lon&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">72.0</span><span class="p">,</span>
+    <span class="s1">&#39;max_lon&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">69.0</span><span class="p">,</span>
+    <span class="s1">&#39;min_lat&#39;</span><span class="p">:</span> <span class="mf">38.0</span><span class="p">,</span>
+    <span class="s1">&#39;max_lat&#39;</span><span class="p">:</span> <span class="mf">41.0</span><span class="p">,</span>
+    <span class="s1">&#39;min_time&#39;</span><span class="p">:</span> <span class="s1">&#39;2016-07-10T00:00:00Z&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;max_time&#39;</span><span class="p">:</span> <span class="s1">&#39;2017-02-10T00:00:00Z&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cdm_data_type&#39;</span><span class="p">:</span> <span class="s1">&#39;trajectoryprofile&#39;</span>
+<span class="p">}</span>
 
-print(&#39;Found {} Glider Datasets:\n{}&#39;.format(len(gliders), &#39;\n&#39;.join(gliders)))
+<span class="n">search_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_search_url</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+<span class="n">show_iframe</span><span class="p">(</span><span class="n">search_url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<iframe src="https://data.ioos.us/gliders/erddap/search/advanced.html?page=1&itemsPerPage=1000&protocol=(ANY)&cdm_data_type=trajectoryprofile&institution=(ANY)&ioos_category=(ANY)&keywords=(ANY)&long_name=(ANY)&standard_name=sea_water_temperature&variableName=(ANY)&minLon=-72.0&maxLon=-69.0&minLat=38.0&maxLat=41.0&minTime=1468108800.0&maxTime=1486684800.0" width="100%" height="950"></iframe></div>
+</div>
+<p>We can see that the search form above was correctly populated with the
+constraints we provided.</p>
+<p>Let us change the response from <code class="docutils literal"><span class="pre">.html</span></code> to <code class="docutils literal"><span class="pre">.csv</span></code>, so we load it as
+a <code class="docutils literal"><span class="pre">pandas.DataFrame</span></code>, and inspect what are the <code class="docutils literal"><span class="pre">Dataset</span> <span class="pre">ID</span></code>s
+available for download.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">search_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_search_url</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+<span class="n">search</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">search_url</span><span class="p">)</span>
+<span class="n">gliders</span> <span class="o">=</span> <span class="n">search</span><span class="p">[</span><span class="s1">&#39;Dataset ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found </span><span class="si">{}</span><span class="s1"> Glider Datasets:</span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gliders</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gliders</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -527,37 +660,13 @@ whoi_406-20160902T1700
 with the <code class="docutils literal"><span class="pre">get_info_url</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>info_url = e.get_info_url(dataset_id=gliders[0], response=&#39;html&#39;)
-
-show_iframe(src=info_url)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[11]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<iframe src="https://data.ioos.us/gliders/erddap/info/blue-20160818T1448/index.html" width="100%" height="950"></iframe></div>
-</div>
-<p>Again, with the <code class="docutils literal"><span class="pre">csv</span></code> response, we can manipulate the metadata and
-find the variables that have the <code class="docutils literal"><span class="pre">cdm_profile_variables</span></code> attribute.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>info_url = e.get_info_url(dataset_id=gliders[0], response=&#39;csv&#39;)
+<span></span><span class="n">info_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_info_url</span><span class="p">(</span><span class="n">dataset_id</span><span class="o">=</span><span class="n">gliders</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;html&#39;</span><span class="p">)</span>
 
-info = pd.read_csv(info_url)
-
-info.head()
+<span class="n">show_iframe</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">info_url</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -567,18 +676,42 @@ info.head()
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
+<iframe src="https://data.ioos.us/gliders/erddap/info/blue-20160818T1448/index.html" width="100%" height="950"></iframe></div>
+</div>
+<p>Again, with the <code class="docutils literal"><span class="pre">csv</span></code> response, we can manipulate the metadata and
+find the variables that have the <code class="docutils literal"><span class="pre">cdm_profile_variables</span></code> attribute.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">info_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_info_url</span><span class="p">(</span><span class="n">dataset_id</span><span class="o">=</span><span class="n">gliders</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span>
 
-    .dataframe thead th {
-        text-align: left;
+<span class="n">info</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">info_url</span><span class="p">)</span>
+
+<span class="n">info</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -639,17 +772,17 @@ info.head()
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [13]:
+<span></span>In [14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>&#39;&#39;.join(info.loc[info[&#39;Attribute Name&#39;] == &#39;cdm_profile_variables&#39;, &#39;Value&#39;])
+<span></span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;Attribute Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;cdm_profile_variables&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[13]:
+<span></span>Out[14]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
@@ -671,11 +804,11 @@ request is made.</p>
 <p>(See the execution times below.)</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [14]:
+<span></span>In [15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>%%time
+<span></span><span class="o">%%</span><span class="k">time</span>
 
 # First one, slow.
 e.get_var_by_attr(
@@ -690,13 +823,13 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 131 ms, sys: 4.68 ms, total: 136 ms
-Wall time: 2.2 s
+CPU times: user 99.5 ms, sys: 352 µs, total: 99.8 ms
+Wall time: 2.02 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[14]:
+<span></span>Out[15]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
@@ -706,11 +839,11 @@ Wall time: 2.2 s
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [15]:
+<span></span>In [16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>%%time
+<span></span><span class="o">%%</span><span class="k">time</span>
 
 # Second one on the same glider, fast.
 e.get_var_by_attr(
@@ -725,27 +858,27 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 20.9 ms, sys: 11.3 ms, total: 32.1 ms
-Wall time: 825 ms
+CPU times: user 18.7 ms, sys: 325 µs, total: 19 ms
+Wall time: 739 ms
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[15]:
+<span></span>Out[16]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>[]
+<span></span>[&#39;salinity&#39;]
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [16]:
+<span></span>In [17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>%%time
+<span></span><span class="o">%%</span><span class="k">time</span>
 
 # New one, slow.
 e.get_var_by_attr(
@@ -760,13 +893,13 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 97.1 ms, sys: 4.45 ms, total: 102 ms
-Wall time: 2.1 s
+CPU times: user 32.1 ms, sys: 3.82 ms, total: 35.9 ms
+Wall time: 801 ms
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[16]:
+<span></span>Out[17]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
@@ -778,11 +911,11 @@ Wall time: 2.1 s
 variables with <code class="docutils literal"><span class="pre">standard_names</span></code></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [17]:
+<span></span>In [18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>variables = [e.get_var_by_attr(dataset_id=glider, standard_name=lambda v: v is not None) for glider in gliders]
+<span></span><span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">get_var_by_attr</span><span class="p">(</span><span class="n">dataset_id</span><span class="o">=</span><span class="n">glider</span><span class="p">,</span> <span class="n">standard_name</span><span class="o">=</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">glider</span> <span class="ow">in</span> <span class="n">gliders</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -790,19 +923,19 @@ variables with <code class="docutils literal"><span class="pre">standard_names</
 <code class="docutils literal"><span class="pre">dataset_id</span></code>s.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [18]:
+<span></span>In [19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>common_variables = set(variables[0]).intersection(*variables[1:])
+<span></span><span class="n">common_variables</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">variables</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="n">variables</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 
-common_variables
+<span class="n">common_variables</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[18]:
+<span></span>Out[19]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
@@ -847,60 +980,39 @@ variables names and not the standardized ones for the <code class="docutils lite
 method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [19]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>kwargs = {
-    &#39;time&gt;=&#39;: min_time,
-    &#39;time&lt;=&#39;: max_time,
-    &#39;latitude&gt;=&#39;: min_lat,
-    &#39;latitude&lt;=&#39;: max_lat,
-    &#39;longitude&gt;=&#39;: min_lon,
-    &#39;longitude&lt;=&#39;: max_lon,
-}
-
-
-download_url = e.get_download_url(dataset_id=gliders[0], variables=common_variables, response=&#39;html&#39;, **kwargs)
-
-download_url
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[19]:
-</pre></div>
-</div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?conductivity,density_qc,longitude,salinity_qc,latitude_qc,depth,pressure_qc,precise_time,temperature,v,lat_uv_qc,time_uv,lat_uv,precise_lat,conductivity_qc,u,depth_qc,time_qc,time,lon_uv,precise_lon,precise_time_qc,lon_uv_qc,temperature_qc,time_uv_qc,salinity,v_qc,latitude,longitude_qc,pressure,u_qc,density&amp;time&gt;=2016-07-10T00:00:00+00:00&amp;time&lt;=2017-02-10T00:00:00+00:00&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&#39;
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>e.download_options
+<span></span><span class="n">constraints</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;longitude&gt;=&#39;</span><span class="p">:</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;min_lon&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;longitude&lt;=&#39;</span><span class="p">:</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;max_lon&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;latitude&gt;=&#39;</span><span class="p">:</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;min_lat&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;latitude&lt;=&#39;</span><span class="p">:</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;max_lat&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;time&gt;=&#39;</span><span class="p">:</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;min_time&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;time&lt;=&#39;</span><span class="p">:</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;max_time&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+
+
+
+<span class="n">download_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">(</span>
+    <span class="n">dataset_id</span><span class="o">=</span><span class="n">gliders</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tabledap&#39;</span><span class="p">,</span>
+    <span class="n">variables</span><span class="o">=</span><span class="n">common_variables</span><span class="p">,</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">download_url</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[20]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>{&#39;latitude&lt;=&#39;: 41.0,
- &#39;latitude&gt;=&#39;: 38.0,
- &#39;longitude&lt;=&#39;: -69.0,
- &#39;longitude&gt;=&#39;: -72.0,
- &#39;time&lt;=&#39;: &lt;Pendulum [2017-02-10T00:00:00+00:00]&gt;,
- &#39;time&gt;=&#39;: &lt;Pendulum [2016-07-10T00:00:00+00:00]&gt;}
-</pre></div>
-</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.html?salinity_qc,density,conductivity,lon_uv,conductivity_qc,time_qc,lon_uv_qc,latitude_qc,time_uv_qc,depth,precise_lat,u_qc,v,lat_uv,temperature_qc,u,time,density_qc,time_uv,latitude,v_qc,pressure,longitude,precise_time_qc,longitude_qc,precise_lon,precise_time,salinity,temperature,pressure_qc,depth_qc,lat_uv_qc&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0
+</pre></div></div>
 </div>
 <p>Putting everything in <code class="docutils literal"><span class="pre">DataFrame</span></code>s.</p>
 <div class="nbinput docutils container">
@@ -909,21 +1021,27 @@ download_url
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>from requests.exceptions import HTTPError
+<span></span><span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="k">import</span> <span class="n">HTTPError</span>
 
 
-def download_csv(url):
-    return pd.read_csv(url, index_col=&#39;time&#39;, parse_dates=True, skiprows=[1])
+<span class="k">def</span> <span class="nf">download_csv</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 
-dfs = {}
-for glider in gliders:
-    try:
-        download_url = e.get_download_url(dataset_id=glider, variables=common_variables, response=&#39;csv&#39;, **kwargs)
-    except HTTPError:
-        print(&#39;Failed to download {}&#39;.format(glider))
-        continue
-    dfs.update({glider: download_csv(download_url)})
+<span class="n">dfs</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">glider</span> <span class="ow">in</span> <span class="n">gliders</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">download_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">(</span>
+            <span class="n">dataset_id</span><span class="o">=</span><span class="n">glider</span><span class="p">,</span>
+            <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tabledap&#39;</span><span class="p">,</span>
+            <span class="n">variables</span><span class="o">=</span><span class="n">common_variables</span><span class="p">,</span>
+            <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span>
+            <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Failed to download </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">glider</span><span class="p">))</span>
+        <span class="k">continue</span>
+    <span class="n">dfs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">glider</span><span class="p">:</span> <span class="n">download_csv</span><span class="p">(</span><span class="n">download_url</span><span class="p">)})</span>
 </pre></div>
 </div>
 </div>
@@ -944,15 +1062,16 @@ constraints provided but failed to generate an URL for the download.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>try:
-    e.get_download_url(
-        dataset_id=&#39;silbo-20160413T1534&#39;,
-        variables=common_variables,
-        response=&#39;csv&#39;,
-        **kwargs
-    )
-except Exception as err:
-    print(err)
+<span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">(</span>
+        <span class="n">dataset_id</span><span class="o">=</span><span class="s1">&#39;silbo-20160413T1534&#39;</span><span class="p">,</span>
+        <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tabledap&#39;</span><span class="p">,</span>
+        <span class="n">variables</span><span class="o">=</span><span class="n">common_variables</span><span class="p">,</span>
+        <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span>
+        <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -961,7 +1080,7 @@ except Exception as err:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?conductivity,density_qc,longitude,salinity_qc,latitude_qc,depth,pressure_qc,precise_time,temperature,v,lat_uv_qc,time_uv,lat_uv,precise_lat,conductivity_qc,u,depth_qc,time_qc,time,lon_uv,precise_lon,precise_time_qc,lon_uv_qc,temperature_qc,time_uv_qc,salinity,v_qc,latitude,longitude_qc,pressure,u_qc,density&amp;time%3E=2016-07-10T00:00:00+00:00&amp;time%3C=2017-02-10T00:00:00+00:00&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0
+500 Server Error: Internal Server Error for url: https://data.ioos.us/gliders/erddap/tabledap/silbo-20160413T1534.csv?salinity_qc,density,conductivity,lon_uv,conductivity_qc,time_qc,lon_uv_qc,latitude_qc,time_uv_qc,depth,precise_lat,u_qc,v,lat_uv,temperature_qc,u,time,density_qc,time_uv,latitude,v_qc,pressure,longitude,precise_time_qc,longitude_qc,precise_lon,precise_time,salinity,temperature,pressure_qc,depth_qc,lat_uv_qc&amp;longitude%3E=-72.0&amp;longitude%3C=-69.0&amp;latitude%3E=38.0&amp;latitude%3C=41.0&amp;time%3E=1468108800.0&amp;time%3C=1486684800.0
 </pre></div></div>
 </div>
 <p>The glider datasets should be masked automatically but we found that is
@@ -973,14 +1092,14 @@ flag.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>import numpy as np
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-for glider in dfs.keys():
-    dfs[glider].loc[dfs[glider][&#39;salinity_qc&#39;] == 9, &#39;salinity&#39;] = np.NaN
-    dfs[glider].loc[dfs[glider][&#39;pressure_qc&#39;] == 9, &#39;pressure&#39;] = np.NaN
-    dfs[glider].loc[dfs[glider][&#39;temperature_qc&#39;] == 9, &#39;temperature&#39;] = np.NaN
-    dfs[glider].loc[dfs[glider][&#39;salinity&#39;] &lt;= 0, &#39;salinity&#39;] = np.NaN
+<span class="k">for</span> <span class="n">glider</span> <span class="ow">in</span> <span class="n">dfs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">dfs</span><span class="p">[</span><span class="n">glider</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dfs</span><span class="p">[</span><span class="n">glider</span><span class="p">][</span><span class="s1">&#39;salinity_qc&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">&#39;salinity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+    <span class="n">dfs</span><span class="p">[</span><span class="n">glider</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dfs</span><span class="p">[</span><span class="n">glider</span><span class="p">][</span><span class="s1">&#39;pressure_qc&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">&#39;pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+    <span class="n">dfs</span><span class="p">[</span><span class="n">glider</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dfs</span><span class="p">[</span><span class="n">glider</span><span class="p">][</span><span class="s1">&#39;temperature_qc&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">&#39;temperature&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+    <span class="n">dfs</span><span class="p">[</span><span class="n">glider</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dfs</span><span class="p">[</span><span class="n">glider</span><span class="p">][</span><span class="s1">&#39;salinity&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;salinity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
 </pre></div>
 </div>
 </div>
@@ -991,67 +1110,38 @@ for glider in dfs.keys():
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>%matplotlib inline
-import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
-from cartopy.mpl.ticker import LongitudeFormatter, LatitudeFormatter
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">from</span> <span class="nn">cartopy.mpl.ticker</span> <span class="k">import</span> <span class="n">LongitudeFormatter</span><span class="p">,</span> <span class="n">LatitudeFormatter</span>
 
 
-def make_map(extent):
-    fig, ax = plt.subplots(
-        figsize=(9, 9),
-        subplot_kw=dict(projection=ccrs.PlateCarree())
-    )
-    ax.coastlines(resolution=&#39;10m&#39;)
-    ax.set_extent(extent)
+<span class="k">def</span> <span class="nf">make_map</span><span class="p">(</span><span class="n">extent</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+        <span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;10m&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
 
-    ax.set_xticks([extent[0], extent[1]], crs=ccrs.PlateCarree())
-    ax.set_yticks([extent[2], extent[3]], crs=ccrs.PlateCarree())
-    lon_formatter = LongitudeFormatter(zero_direction_label=True)
-    lat_formatter = LatitudeFormatter()
-    ax.xaxis.set_major_formatter(lon_formatter)
-    ax.yaxis.set_major_formatter(lat_formatter)
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="n">extent</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">extent</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="n">extent</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">extent</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+    <span class="n">lon_formatter</span> <span class="o">=</span> <span class="n">LongitudeFormatter</span><span class="p">(</span><span class="n">zero_direction_label</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">lat_formatter</span> <span class="o">=</span> <span class="n">LatitudeFormatter</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">lon_formatter</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">lat_formatter</span><span class="p">)</span>
 
-    return fig, ax
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span>
 
 
-dx = dy = 0.5
-extent = min_lon-dx, max_lon+dx, min_lat+dy, max_lat+dy
+<span class="n">dx</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">extent</span> <span class="o">=</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;min_lon&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">dx</span><span class="p">,</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;max_lon&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">dx</span><span class="p">,</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;min_lat&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">dy</span><span class="p">,</span> <span class="n">kw</span><span class="p">[</span><span class="s1">&#39;max_lat&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">dy</span>
 
-fig, ax = make_map(extent)
-for glider, df in dfs.items():
-    ax.plot(df[&#39;longitude&#39;], df[&#39;latitude&#39;], label=glider)
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_map</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">glider</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">glider</span><span class="p">)</span>
 
-leg = ax.legend()
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/quick_intro_40_0.png" src="_images/quick_intro_40_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [25]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>def glider_scatter(df, ax, glider):
-    ax.scatter(df[&#39;temperature&#39;], df[&#39;salinity&#39;],
-               s=10, alpha=0.5, label=glider)
-
-fig, ax = plt.subplots(figsize=(9, 9))
-ax.set_ylabel(&#39;salinity&#39;)
-ax.set_xlabel(&#39;temperature&#39;)
-ax.grid(True)
-
-for glider, df in dfs.items():
-    glider_scatter(df, ax, glider)
-
-leg = ax.legend()
+<span class="n">leg</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1060,6 +1150,35 @@ leg = ax.legend()
 </div>
 <div class="output_area docutils container">
 <img alt="_images/quick_intro_41_0.png" src="_images/quick_intro_41_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">glider_scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">glider</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;salinity&#39;</span><span class="p">],</span>
+               <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">glider</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;salinity&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">glider</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">glider_scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">glider</span><span class="p">)</span>
+
+<span class="n">leg</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/quick_intro_42_0.png" src="_images/quick_intro_42_0.png" />
 </div>
 </div>
 <div class="section" id="Extras">
@@ -1072,12 +1191,14 @@ leg = ax.legend()
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>from netCDF4 import Dataset
+<span></span><span class="n">e</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">e</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="s1">&#39;tabledap&#39;</span>
 
-opendap_url = e.get_opendap_url(&#39;cp_336-20170116T1254&#39;)
-print(&#39;Getting data from {}\n&#39;.format(opendap_url))
-with Dataset(opendap_url) as nc:
-    print(nc.summary)
+<span class="n">opendap_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">(</span>
+    <span class="n">dataset_id</span><span class="o">=</span><span class="s1">&#39;cp_336-20170116T1254&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">opendap_url</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1086,8 +1207,27 @@ with Dataset(opendap_url) as nc:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Getting data from https://data.ioos.us/gliders/erddap/tabledap/cp_336-20170116T1254
+https://data.ioos.us/gliders/erddap/tabledap/cp_336-20170116T1254
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">netCDF4</span> <span class="k">import</span> <span class="n">Dataset</span>
 
+<span class="k">with</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">opendap_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">nc</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">nc</span><span class="o">.</span><span class="n">summary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
 The Pioneer Array is located off the coast of New England, south of Martha&#39;s Vineyard. The Continental Shelf-Slope area off the New England coast is a highly productive area and one that is located at a dynamic intersection where ocean currents meet in weather-like &#39;fronts&#39;, and where nutrients, pollutants, and other properties are exchanged between the coast and the deep ocean. Data from the inshore, shelf area helps to examine exchanges between the shelf and slope and the shelf ecosystem, as well as provide broader insight into the issues of air-sea gas exchange, including Carbon Dioxide. In order to provide synoptic, multi-scale observations of the outer continental shelf, shelf break region, and continental slope, the moored portion of the Pioneer Array is supplemented by six Coastal Gliders. The role of the Coastal Gliders is to monitor the mesoscale field of the slope sea and outer shelf, resolving rings, eddies and meanders from the Gulf Stream as they impinge on the shelf break front.  This dataset contains profiles of conductivity, temperature, depth, salinity and density, which are either measured or derived from the CTD measurements.
 </pre></div></div>
 </div>
@@ -1096,59 +1236,18 @@ The Pioneer Array is located off the coast of New England, south of Martha&#39;s
 <h3>netCDF “file-like” to xarray<a class="headerlink" href="#netCDF-“file-like”-to-xarray" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal"><span class="pre">open_dataset</span></code> will download a temporary file, so be careful with the
 constraints to avoid downloading several gigabytes!</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [27]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>import requests
-
-
-def humansize(nbytes):
-    suffixes = [&#39;B&#39;, &#39;KB&#39;, &#39;MB&#39;, &#39;GB&#39;, &#39;TB&#39;, &#39;PB&#39;]
-    k = 0
-    while nbytes &gt;= 1024 and k &lt; len(suffixes)-1:
-        nbytes /= 1024.
-        k += 1
-    f = (&#39;%.2f&#39; % nbytes).rstrip(&#39;0&#39;).rstrip(&#39;.&#39;)
-    return &#39;%s %s&#39; % (f, suffixes[k])
-
-r = requests.head(download_url)
-nbytes = float(r.headers[&#39;Content-Length&#39;])
-humansize(nbytes)
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[27]:
-</pre></div>
-</div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;2.11 MB&#39;
-</pre></div>
-</div>
-</div>
-<p>That is the uncompressed size, we are OK because the download will be
-less than that, <code class="docutils literal"><span class="pre">ERDDAP</span></code> streams gzip’ed data.</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>r.headers[&#39;Content-Encoding&#39;]
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[28]:
-</pre></div>
-</div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>&#39;gzip&#39;
+<span></span><span class="n">e</span><span class="o">.</span><span class="n">dataset_id</span> <span class="o">=</span> <span class="s1">&#39;cp_336-20170116T1254&#39;</span>
+<span class="n">e</span><span class="o">.</span><span class="n">response</span> <span class="o">=</span> <span class="s1">&#39;nc&#39;</span>
+<span class="n">e</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">common_variables</span>
+<span class="n">e</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="n">constraints</span>
+
+<span class="n">download_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1158,20 +1257,21 @@ less than that, <code class="docutils literal"><span class="pre">ERDDAP</span></
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>from erddapy import open_dataset
+<span></span><span class="kn">import</span> <span class="nn">requests</span>
 
-download_url = e.get_download_url(
-    dataset_id=&#39;cp_336-20170116T1254&#39;,
-    response=&#39;nc&#39;,
-    variables=common_variables,
-    **kwargs,
-)
 
-ds = open_dataset(
-    download_url,
-)
+<span class="k">def</span> <span class="nf">humansize</span><span class="p">(</span><span class="n">nbytes</span><span class="p">):</span>
+    <span class="n">suffixes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;KB&#39;</span><span class="p">,</span> <span class="s1">&#39;MB&#39;</span><span class="p">,</span> <span class="s1">&#39;GB&#39;</span><span class="p">,</span> <span class="s1">&#39;TB&#39;</span><span class="p">,</span> <span class="s1">&#39;PB&#39;</span><span class="p">]</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">nbytes</span> <span class="o">&gt;=</span> <span class="mi">1024</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">suffixes</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">nbytes</span> <span class="o">/=</span> <span class="mf">1024.</span>
+        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">nbytes</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">suffixes</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
 
-ds
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">download_url</span><span class="p">)</span>
+<span class="n">nbytes</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">])</span>
+<span class="n">humansize</span><span class="p">(</span><span class="n">nbytes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1181,43 +1281,86 @@ ds
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;601.96 KB&#39;
+</pre></div>
+</div>
+</div>
+<p>That is the uncompressed size, we are OK because the download will be
+less than that, <code class="docutils literal"><span class="pre">ERDDAP</span></code> streams gzip’ed data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-Encoding&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[30]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&#39;gzip&#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">to_xarray</span><span class="p">(</span><span class="n">decode_times</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ds</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[31]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
 <span></span>&lt;xarray.Dataset&gt;
 Dimensions:          (row: 16232)
 Coordinates:
-    longitude        (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
-    depth            (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 ...
-    time_uv          (row) datetime64[ns] NaT NaT NaT NaT NaT NaT NaT NaT ...
-    lat_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    time             (row) datetime64[ns] 2017-01-16T13:03:04.437930 ...
-    lon_uv           (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    latitude         (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
+    lon_uv           (row) float64 ...
+    depth            (row) float64 ...
+    lat_uv           (row) float64 ...
+    time             (row) float64 ...
+    time_uv          (row) float64 ...
+    latitude         (row) float64 ...
+    longitude        (row) float64 ...
 Dimensions without coordinates: row
 Data variables:
-    conductivity     (row) float64 4.281 4.284 4.287 4.287 4.289 4.29 4.29 ...
-    density_qc       (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    salinity_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    latitude_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    pressure_qc      (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    precise_time     (row) datetime64[ns] 2017-01-16T13:03:04.437930 ...
-    temperature      (row) float64 14.4 14.42 14.46 14.45 14.47 14.47 14.47 ...
-    v                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    lat_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    precise_lat      (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
-    conductivity_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    u                (row) float64 nan nan nan nan nan nan nan nan nan nan ...
-    depth_qc         (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    time_qc          (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    precise_lon      (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
-    precise_time_qc  (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    lon_uv_qc        (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    temperature_qc   (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    time_uv_qc       (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    salinity         (row) float64 35.45 35.45 35.45 35.45 35.45 35.46 35.46 ...
-    v_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    longitude_qc     (row) float64 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 ...
-    pressure         (row) float64 0.51 0.52 1.91 0.35 2.1 8.65 18.68 0.34 ...
-    u_qc             (row) float64 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 9.0 ...
-    density          (row) float64 1.026e+03 1.026e+03 1.026e+03 1.026e+03 ...
+    salinity_qc      (row) float64 ...
+    density          (row) float64 ...
+    conductivity     (row) float64 ...
+    conductivity_qc  (row) float64 ...
+    time_qc          (row) float64 ...
+    lon_uv_qc        (row) float64 ...
+    latitude_qc      (row) float64 ...
+    time_uv_qc       (row) float64 ...
+    precise_lat      (row) float64 ...
+    u_qc             (row) float64 ...
+    v                (row) float64 ...
+    temperature_qc   (row) float64 ...
+    u                (row) float64 ...
+    density_qc       (row) float64 ...
+    v_qc             (row) float64 ...
+    pressure         (row) float64 ...
+    precise_time_qc  (row) float64 ...
+    longitude_qc     (row) float64 ...
+    precise_lon      (row) float64 ...
+    precise_time     (row) float64 ...
+    salinity         (row) float64 ...
+    temperature      (row) float64 ...
+    pressure_qc      (row) float64 ...
+    depth_qc         (row) float64 ...
+    lat_uv_qc        (row) float64 ...
 Attributes:
     acknowledgement:               Funding provided by the National Science F...
     cdm_data_type:                 TrajectoryProfile
@@ -1233,17 +1376,17 @@ Attributes:
     date_issued:                   2017-04-19T14:33:41Z
     date_modified:                 2017-04-19T14:33:41Z
     deployment_number:             4
-    Easternmost_Easting:           -69.9830368207
+    Easternmost_Easting:           -69.98303682074565
     featureType:                   TrajectoryProfile
     format_version:                https://github.com/ioos/ioosngdac/tree/mas...
-    geospatial_lat_max:            39.9172641723
-    geospatial_lat_min:            39.3237067304
+    geospatial_lat_max:            39.91726417227544
+    geospatial_lat_min:            39.32370673037986
     geospatial_lat_units:          degrees_north
-    geospatial_lon_max:            -69.9830368207
-    geospatial_lon_min:            -71.182596026
+    geospatial_lon_max:            -69.98303682074565
+    geospatial_lon_min:            -71.18259602604894
     geospatial_lon_units:          degrees_east
     geospatial_vertical_max:       976.756
-    geospatial_vertical_min:       -0.0396958
+    geospatial_vertical_min:       -0.03969577
     geospatial_vertical_positive:  down
     geospatial_vertical_units:     m
     history:                       2017-04-19T14:33:35Z: Data Source /Users/k...
@@ -1258,7 +1401,7 @@ Attributes:
     Metadata_Conventions:          Unidata Dataset Discovery v1.0, COARDS, CF...
     metadata_link:                 http://ooi.visualocean.net/sites/view/CP05...
     naming_authority:              org.oceanobservatories
-    Northernmost_Northing:         39.9172641723
+    Northernmost_Northing:         39.91726417227544
     platform_type:                 Slocum Glider
     processing_level:              Contains any/all of the following: L0 Data...
     project:                       Ocean Observatories Initiative
@@ -1269,47 +1412,66 @@ Attributes:
     sea_name:                      Mid-Atlantic Bight
     source:                        Observational data from a profiling glider
     sourceUrl:                     (local files)
-    Southernmost_Northing:         39.3237067304
+    Southernmost_Northing:         39.32370673037986
     standard_name_vocabulary:      CF Standard Name Table v27
     subsetVariables:               trajectory, wmo_id, profile_id, time, lati...
     summary:                       The Pioneer Array is located off the coast...
     time_coverage_end:             2017-02-09T23:03:25Z
     time_coverage_start:           2017-01-16T13:03:04Z
     title:                         cp_336-20170116T1254
-    Westernmost_Easting:           -71.182596026
+    Westernmost_Easting:           -71.18259602604894
 </pre></div>
 </div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">erddapy.utilities</span> <span class="kn">import</span> <span class="n">_urlopen</span>
+
+
+<span class="k">def</span> <span class="nf">to_xarray</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">xarray</span> <span class="kn">as</span> <span class="nn">xr</span>
+    <span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">NamedTemporaryFile</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.nc&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;erddapy_&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
+        <span class="n">tmp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">tmp</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">to_xarray</span><span class="p">(</span>
+    <span class="n">download_url</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ds</span>
+</pre></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [30]:
+<span></span>In [32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>ds[&#39;temperature&#39;]
+<span></span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>Out[30]:
+<span></span>Out[32]:
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
 <span></span>&lt;xarray.DataArray &#39;temperature&#39; (row: 16232)&gt;
-array([ 14.3976,  14.4236,  14.4596, ...,   4.4004,   4.3975,   4.3978])
+array([14.3976, 14.4236, 14.4596, ...,  4.4004,  4.3975,  4.3978])
 Coordinates:
-    longitude  (row) float64 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 -70.4 ...
-    depth      (row) float64 0.5061 0.516 1.895 0.3473 2.084 8.584 18.54 ...
-    time_uv    (row) datetime64[ns] NaT NaT NaT NaT NaT NaT NaT NaT NaT NaT ...
-    lat_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
-    time       (row) datetime64[ns] 2017-01-16T13:03:04.437930 ...
-    lon_uv     (row) float64 nan nan nan nan nan nan nan nan nan nan nan nan ...
-    latitude   (row) float64 39.92 39.92 39.92 39.92 39.92 39.92 39.92 39.92 ...
+    lon_uv     (row) float64 ...
+    depth      (row) float64 ...
+    lat_uv     (row) float64 ...
+    time       (row) float64 ...
+    time_uv    (row) float64 ...
+    latitude   (row) float64 ...
+    longitude  (row) float64 ...
 Dimensions without coordinates: row
 Attributes:
     _ChunkSizes:          1
-    actual_range:         [  0.          17.26519966]
+    actual_range:         [ 0.     17.2652]
     ancillary_variables:  temperature_qc
     colorBarMaximum:      32.0
     colorBarMinimum:      0.0
@@ -1328,71 +1490,72 @@ Attributes:
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [31]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>data = ds[&#39;temperature&#39;].values
-depth = ds[&#39;depth&#39;].values
-
-mask = ~np.ma.masked_invalid(data).mask
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
-<span></span>In [32]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>data = data[mask]
-depth = depth[mask]
-lon = ds[&#39;longitude&#39;].values[mask]
-lat = ds[&#39;latitude&#39;].values[mask]
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>import warnings
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">depth</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-
-with warnings.catch_warnings():
-    warnings.simplefilter(&#39;ignore&#39;)
-    mask = depth &lt;= 5
-
-data = data[mask]
-depth = depth[mask]
-lon = lon[mask]
-lat = lat[mask]
+<span class="n">mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">mask</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>%matplotlib inline
-import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">depth</span> <span class="o">=</span> <span class="n">depth</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;longitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
 
 
-extent = (
-    ds.geospatial_lon_min-dx, ds.geospatial_lon_max+dx,
-    ds.geospatial_lat_min-dy, ds.geospatial_lat_max+dy
-)
-fig, ax = make_map(extent)
+<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">&lt;=</span> <span class="mi">5</span>
 
-cs = ax.scatter(lon, lat, c=data, s=50, alpha=0.5, edgecolor=&#39;none&#39;)
-kw = dict(orientation=&#39;vertical&#39;, fraction=0.1,
-          shrink=0.9, extend=&#39;both&#39;)
-cbar = fig.colorbar(cs, **kw)
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">depth</span> <span class="o">=</span> <span class="n">depth</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+
+
+<span class="n">dx</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">=</span> <span class="mf">1.5</span>
+<span class="n">extent</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">geospatial_lon_min</span><span class="o">-</span><span class="n">dx</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">geospatial_lon_max</span><span class="o">+</span><span class="n">dx</span><span class="p">,</span>
+    <span class="n">ds</span><span class="o">.</span><span class="n">geospatial_lat_min</span><span class="o">-</span><span class="n">dy</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">geospatial_lat_max</span><span class="o">+</span><span class="n">dy</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_map</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
+
+<span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span>
+                    <span class="n">fraction</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="s1">&#39;10m&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1400,7 +1563,7 @@ cbar = fig.colorbar(cs, **kw)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/quick_intro_53_0.png" src="_images/quick_intro_53_0.png" />
+<img alt="_images/quick_intro_57_0.png" src="_images/quick_intro_57_0.png" />
 </div>
 </div>
 </div>
@@ -1417,7 +1580,7 @@ cbar = fig.colorbar(cs, **kw)
       &copy;2017, Filipe Fernandes.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

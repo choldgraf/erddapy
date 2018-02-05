@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Searching datasets &#8212; erddapy 0.1.1+24.g533e06c documentation</title>
+    <title>Searching datasets &#8212; erddapy 0.1.3+1.ge189795 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.1+24.g533e06c',
+        VERSION:     '0.1.3+1.ge189795',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -73,8 +73,9 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="erddapy.html"><code class="docutils literal"><span class="pre">erddapy</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="erddapy.html#module-erddapy.extras"><code class="docutils literal"><span class="pre">extras</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="erddapy.html#extras"><code class="docutils literal"><span class="pre">extras</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="quick_intro.html">Quick introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_intro.html#Longer-introduction">Longer introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Searching datasets</a></li>
 </ul>
 
@@ -262,7 +263,11 @@ div.nboutput div.output_area.stderr {
 .ansi-white-intense-fg { color: #A1A6B2; }
 .ansi-white-intense-bg { background-color: #A1A6B2; }
 
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
 .ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
 </style>
 <div class="section" id="Searching-datasets">
 <h1>Searching datasets<a class="headerlink" href="#Searching-datasets" title="Permalink to this headline">¶</a></h1>
@@ -274,15 +279,15 @@ with the <code class="docutils literal"><span class="pre">search_for</span></cod
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>def show_iframe(src):
-    from IPython.display import HTML
-    iframe = &#39;&lt;iframe src=&quot;{src}&quot; width=&quot;100%&quot; height=&quot;950&quot;&gt;&lt;/iframe&gt;&#39;.format
-    return HTML(iframe(src=src))
+<span></span><span class="k">def</span> <span class="nf">show_iframe</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">HTML</span>
+    <span class="n">iframe</span> <span class="o">=</span> <span class="s1">&#39;&lt;iframe src=&quot;</span><span class="si">{src}</span><span class="s1">&quot; width=&quot;100%&quot; height=&quot;950&quot;&gt;&lt;/iframe&gt;&#39;</span><span class="o">.</span><span class="n">format</span>
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">iframe</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">src</span><span class="p">))</span>
 
 
-def to_df(url):
-    import pandas as pd
-    return pd.read_csv(url)
+<span class="k">def</span> <span class="nf">to_df</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -292,12 +297,10 @@ def to_df(url):
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>from erddapy import ERDDAP
+<span></span><span class="kn">from</span> <span class="nn">erddapy</span> <span class="k">import</span> <span class="n">ERDDAP</span>
 
 
-server_url = &#39;http://upwell.pfeg.noaa.gov/erddap&#39;
-
-e = ERDDAP(server_url=server_url)
+<span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;http://upwell.pfeg.noaa.gov/erddap&#39;</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tabledap&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -308,11 +311,11 @@ e = ERDDAP(server_url=server_url)
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>search_for = &#39;fukushima&#39;
+<span></span><span class="n">search_for</span> <span class="o">=</span> <span class="s1">&#39;fukushima&#39;</span>
 
-url = e.get_search_url(search_for=search_for, response=&#39;csv&#39;)
+<span class="n">url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_search_url</span><span class="p">(</span><span class="n">search_for</span><span class="o">=</span><span class="n">search_for</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span>
 
-to_df(url)[&#39;Dataset ID&#39;]
+<span class="n">to_df</span><span class="p">(</span><span class="n">url</span><span class="p">)[</span><span class="s1">&#39;Dataset ID&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -322,10 +325,13 @@ to_df(url)[&#39;Dataset ID&#39;]
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>0    northerngulfinstitute_a8f3_c2d4_2227
-1                     whoi_7a97_cb6f_a9db
-2                     whoi_4a75_e5e1_6640
-3    northerngulfinstitute_1412_d11d_1e9b
+<span></span>0    northerngulfinstitute_edac_dap3_2689_8c24_7dcb
+1    northerngulfinstitute_edac_dap3_0a94_4f88_8950
+2    northerngulfinstitute_edac_dap3_0bc3_0230_8add
+3                               whoi_7a97_cb6f_a9db
+4                               whoi_4a75_e5e1_6640
+5              northerngulfinstitute_1412_d11d_1e9b
+6              northerngulfinstitute_a8f3_c2d4_2227
 Name: Dataset ID, dtype: object
 </pre></div>
 </div>
@@ -337,11 +343,11 @@ Name: Dataset ID, dtype: object
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>search_for = &#39;fukushima velocity&#39;
+<span></span><span class="n">search_for</span> <span class="o">=</span> <span class="s1">&#39;fukushima velocity&#39;</span>
 
-url = e.get_search_url(search_for=search_for, response=&#39;csv&#39;)
+<span class="n">url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_search_url</span><span class="p">(</span><span class="n">search_for</span><span class="o">=</span><span class="n">search_for</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span>
 
-to_df(url)[&#39;Dataset ID&#39;]
+<span class="n">to_df</span><span class="p">(</span><span class="n">url</span><span class="p">)[</span><span class="s1">&#39;Dataset ID&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -351,8 +357,9 @@ to_df(url)[&#39;Dataset ID&#39;]
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>0    northerngulfinstitute_a8f3_c2d4_2227
-1                     whoi_7a97_cb6f_a9db
+<span></span>0    northerngulfinstitute_edac_dap3_0a94_4f88_8950
+1                               whoi_7a97_cb6f_a9db
+2              northerngulfinstitute_a8f3_c2d4_2227
 Name: Dataset ID, dtype: object
 </pre></div>
 </div>
@@ -364,11 +371,11 @@ Name: Dataset ID, dtype: object
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>search_for = &#39;fukushima -velocity&#39;
+<span></span><span class="n">search_for</span> <span class="o">=</span> <span class="s1">&#39;fukushima -velocity&#39;</span>
 
-url = e.get_search_url(search_for=search_for, response=&#39;csv&#39;)
+<span class="n">url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_search_url</span><span class="p">(</span><span class="n">search_for</span><span class="o">=</span><span class="n">search_for</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span>
 
-to_df(url)[&#39;Dataset ID&#39;]
+<span class="n">to_df</span><span class="p">(</span><span class="n">url</span><span class="p">)[</span><span class="s1">&#39;Dataset ID&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -378,8 +385,10 @@ to_df(url)[&#39;Dataset ID&#39;]
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>0                     whoi_4a75_e5e1_6640
-1    northerngulfinstitute_1412_d11d_1e9b
+<span></span>0    northerngulfinstitute_edac_dap3_2689_8c24_7dcb
+1    northerngulfinstitute_edac_dap3_0bc3_0230_8add
+2                               whoi_4a75_e5e1_6640
+3              northerngulfinstitute_1412_d11d_1e9b
 Name: Dataset ID, dtype: object
 </pre></div>
 </div>
@@ -391,11 +400,11 @@ Name: Dataset ID, dtype: object
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>search_for = &#39;wind speed&#39;
+<span></span><span class="n">search_for</span> <span class="o">=</span> <span class="s1">&#39;wind speed&#39;</span>
 
-url = e.get_search_url(search_for=search_for, response=&#39;csv&#39;)
+<span class="n">url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_search_url</span><span class="p">(</span><span class="n">search_for</span><span class="o">=</span><span class="n">search_for</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span>
 
-len(to_df(url)[&#39;Dataset ID&#39;])
+<span class="nb">len</span><span class="p">(</span><span class="n">to_df</span><span class="p">(</span><span class="n">url</span><span class="p">)[</span><span class="s1">&#39;Dataset ID&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -405,7 +414,7 @@ len(to_df(url)[&#39;Dataset ID&#39;])
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>784
+<span></span>927
 </pre></div>
 </div>
 </div>
@@ -418,11 +427,11 @@ to only <code class="docutils literal"><span class="pre">wind</span> <span class
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3"><div class="highlight"><pre>
-<span></span>search_for = &#39;&quot;wind speed&quot;&#39;
+<span></span><span class="n">search_for</span> <span class="o">=</span> <span class="s1">&#39;&quot;wind speed&quot;&#39;</span>
 
-url = e.get_search_url(search_for=search_for, response=&#39;csv&#39;)
+<span class="n">url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_search_url</span><span class="p">(</span><span class="n">search_for</span><span class="o">=</span><span class="n">search_for</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span>
 
-len(to_df(url)[&#39;Dataset ID&#39;])
+<span class="nb">len</span><span class="p">(</span><span class="n">to_df</span><span class="p">(</span><span class="n">url</span><span class="p">)[</span><span class="s1">&#39;Dataset ID&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -432,7 +441,7 @@ len(to_df(url)[&#39;Dataset ID&#39;])
 </pre></div>
 </div>
 <div class="output_area highlight-none"><div class="highlight"><pre>
-<span></span>690
+<span></span>901
 </pre></div>
 </div>
 </div>
@@ -448,7 +457,7 @@ len(to_df(url)[&#39;Dataset ID&#39;])
       &copy;2017, Filipe Fernandes.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
