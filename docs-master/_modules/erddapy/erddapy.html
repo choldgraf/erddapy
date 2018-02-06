@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy.erddapy &#8212; erddapy 0.1.2+26.g9d3ee94 documentation</title>
+    <title>erddapy.erddapy &#8212; erddapy 0.1.3+2.gf7699b0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.1.2+26.g9d3ee94',
+        VERSION:     '0.1.3+2.gf7699b0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -304,16 +304,15 @@
         <span class="n">url</span> <span class="o">=</span> <span class="n">info_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">,</span> <span class="n">dataset_id</span><span class="o">=</span><span class="n">dataset_id</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span>
 
         <span class="c1"># Creates the variables dictionary for the `get_var_by_attr` lookup.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_id</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_id</span><span class="p">:</span>
-            <span class="n">variables</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="n">_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_kwargs</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_id</span>
-            <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">_df</span><span class="p">[</span><span class="s1">&#39;Variable Name&#39;</span><span class="p">]):</span>
-                <span class="n">attributes</span> <span class="o">=</span> <span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-                    <span class="n">_df</span><span class="p">[</span><span class="s1">&#39;Variable Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">variable</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Attribute Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">]</span>
-                <span class="p">]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Attribute Name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span>
-                <span class="n">variables</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">variable</span><span class="p">:</span> <span class="n">attributes</span><span class="p">})</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span> <span class="o">=</span> <span class="n">variables</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_kwargs</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dataset_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_id</span>
+        <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">_df</span><span class="p">[</span><span class="s1">&#39;Variable Name&#39;</span><span class="p">]):</span>
+            <span class="n">attributes</span> <span class="o">=</span> <span class="n">_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                <span class="n">_df</span><span class="p">[</span><span class="s1">&#39;Variable Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">variable</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Attribute Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">]</span>
+            <span class="p">]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Attribute Name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span>
+            <span class="n">variables</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">variable</span><span class="p">:</span> <span class="n">attributes</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span> <span class="o">=</span> <span class="n">variables</span>
         <span class="c1"># Virtually the same code as the netCDF4 counterpart.</span>
         <span class="n">vs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">has_value_flag</span> <span class="o">=</span> <span class="kc">False</span>
@@ -343,7 +342,7 @@
       &copy;2017, Filipe Fernandes.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
