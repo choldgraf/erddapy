@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Quick introduction &#8212; erddapy 0.1.5+2.gc40c70c documentation</title>
+    <title>Quick introduction &#8212; erddapy 0.1.5+6.gc206716 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="_static/documentation_options.js"></script>
@@ -273,7 +273,8 @@ div.nboutput div.output_area.stderr {
 </style>
 <div class="section" id="Quick-introduction">
 <h1>Quick introduction<a class="headerlink" href="#Quick-introduction" title="Permalink to this headline">¶</a></h1>
-<div class="nbinput docutils container">
+<p>First we need to instantiate the erddapy server object.</p>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [1]:
 </pre></div>
@@ -283,7 +284,25 @@ div.nboutput div.output_area.stderr {
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
-<span class="n">constraints</span> <span class="o">=</span> <span class="p">{</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span>
+    <span class="n">server</span><span class="o">=</span><span class="s1">&#39;https://data.ioos.us/gliders/erddap&#39;</span><span class="p">,</span>
+    <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tabledap&#39;</span><span class="p">,</span>
+    <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Now we can populate the object with constraints, the variables of
+interest and the dataset id.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">e</span><span class="o">.</span><span class="n">dataset_id</span> <span class="o">=</span> <span class="s1">&#39;blue-20160818T1448&#39;</span>
+
+<span class="n">e</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;time&gt;=&#39;</span><span class="p">:</span> <span class="s1">&#39;2016-07-10T00:00:00Z&#39;</span><span class="p">,</span>
     <span class="s1">&#39;time&lt;=&#39;</span><span class="p">:</span> <span class="s1">&#39;2017-02-10T00:00:00Z&#39;</span><span class="p">,</span>
     <span class="s1">&#39;latitude&gt;=&#39;</span><span class="p">:</span> <span class="mf">38.0</span><span class="p">,</span>
@@ -292,25 +311,18 @@ div.nboutput div.output_area.stderr {
     <span class="s1">&#39;longitude&lt;=&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">69.0</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="n">variables</span> <span class="o">=</span> <span class="p">[</span>
- <span class="s1">&#39;depth&#39;</span><span class="p">,</span>
- <span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
- <span class="s1">&#39;longitude&#39;</span><span class="p">,</span>
- <span class="s1">&#39;salinity&#39;</span><span class="p">,</span>
- <span class="s1">&#39;temperature&#39;</span><span class="p">,</span>
- <span class="s1">&#39;time&#39;</span><span class="p">,</span>
+<span class="n">e</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;depth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;latitude&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;longitude&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;salinity&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;temperature&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;time&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span>
-    <span class="n">server</span><span class="o">=</span><span class="s1">&#39;https://data.ioos.us/gliders/erddap&#39;</span><span class="p">,</span>
-    <span class="n">protocol</span><span class="o">=</span><span class="s1">&#39;tabledap&#39;</span><span class="p">,</span>
-    <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span>
-    <span class="n">dataset_id</span><span class="o">=</span><span class="s1">&#39;blue-20160818T1448&#39;</span><span class="p">,</span>
-    <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
-    <span class="n">variables</span><span class="o">=</span><span class="n">variables</span><span class="p">,</span>
-<span class="p">)</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">()</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -325,7 +337,7 @@ https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitu
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [2]:
+<span></span>In [3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -341,7 +353,7 @@ https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitu
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[2]:
+<span></span>Out[3]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -425,7 +437,7 @@ https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitu
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [3]:
+<span></span>In [4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -434,7 +446,8 @@ https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitu
 <span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -451,7 +464,7 @@ https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitu
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/quick_intro_3_0.png" src="_images/quick_intro_3_0.png" />
+<img alt="_images/quick_intro_6_0.png" src="_images/quick_intro_6_0.png" />
 </div>
 </div>
 </div>
@@ -461,7 +474,7 @@ https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitu
 server. In this example we will use <a class="reference external" href="https://data.ioos.us/gliders/erddap">https://data.ioos.us/gliders/erddap</a>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [4]:
+<span></span>In [5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -475,7 +488,7 @@ server. In this example we will use <a class="reference external" href="https://
 <p>What are the methods/attributes available?</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [5]:
+<span></span>In [6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -485,7 +498,7 @@ server. In this example we will use <a class="reference external" href="https://
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[5]:
+<span></span>Out[6]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -511,7 +524,7 @@ requested response and options. <code class="docutils literal notranslate"><span
 URL HEADER cannot be validated.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [6]:
+<span></span>In [7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -536,7 +549,7 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 <p>Let’s load the <code class="docutils literal notranslate"><span class="pre">csv</span></code> reponse directly with <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [7]:
+<span></span>In [8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -549,7 +562,7 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [8]:
+<span></span>In [9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -563,7 +576,7 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[8]:
+<span></span>Out[9]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -574,7 +587,7 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 <p>We can refine our search by providing some constraints.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<span></span>In [10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -590,7 +603,7 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 <code class="docutils literal notranslate"><span class="pre">sea_water_temperature</span></code> only.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<span></span>In [11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -613,7 +626,7 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[10]:
+<span></span>Out[11]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -626,7 +639,7 @@ a <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame<
 available for download.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [11]:
+<span></span>In [12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -667,7 +680,7 @@ whoi_406-20160902T1700
 with the <code class="docutils literal notranslate"><span class="pre">get_info_url</span></code> method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [12]:
+<span></span>In [13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -679,7 +692,7 @@ with the <code class="docutils literal notranslate"><span class="pre">get_info_u
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[12]:
+<span></span>Out[13]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -689,7 +702,7 @@ with the <code class="docutils literal notranslate"><span class="pre">get_info_u
 find the variables that have the <code class="docutils literal notranslate"><span class="pre">cdm_profile_variables</span></code> attribute.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [13]:
+<span></span>In [14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -703,7 +716,7 @@ find the variables that have the <code class="docutils literal notranslate"><spa
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[13]:
+<span></span>Out[14]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -779,7 +792,7 @@ find the variables that have the <code class="docutils literal notranslate"><spa
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [14]:
+<span></span>In [15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -789,7 +802,7 @@ find the variables that have the <code class="docutils literal notranslate"><spa
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[14]:
+<span></span>Out[15]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -811,7 +824,7 @@ request is made.</p>
 <p>(See the execution times below.)</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [15]:
+<span></span>In [16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -830,13 +843,13 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 206 ms, sys: 4.5 ms, total: 211 ms
-Wall time: 1.69 s
+CPU times: user 300 ms, sys: 11.9 ms, total: 312 ms
+Wall time: 2.02 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[15]:
+<span></span>Out[16]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -846,13 +859,13 @@ Wall time: 1.69 s
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [16]:
+<span></span>In [17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%%</span><span class="k">time</span>
 
-# Second one on the same glider, fast.
+# Second one on the same glider, a little bit faster.
 e.get_var_by_attr(
     dataset_id=&#39;blue-20160818T1448&#39;,
     standard_name=&#39;sea_water_practical_salinity&#39;
@@ -865,13 +878,13 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 35.3 ms, sys: 0 ns, total: 35.3 ms
-Wall time: 771 ms
+CPU times: user 21.4 ms, sys: 272 µs, total: 21.6 ms
+Wall time: 814 ms
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[16]:
+<span></span>Out[17]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -881,7 +894,7 @@ Wall time: 771 ms
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [17]:
+<span></span>In [18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -900,13 +913,13 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 132 ms, sys: 0 ns, total: 132 ms
-Wall time: 1.63 s
+CPU times: user 154 ms, sys: 16 µs, total: 154 ms
+Wall time: 1.44 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[17]:
+<span></span>Out[18]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -918,7 +931,7 @@ Wall time: 1.63 s
 variables with <code class="docutils literal notranslate"><span class="pre">standard_names</span></code></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [18]:
+<span></span>In [19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -936,7 +949,7 @@ variables with <code class="docutils literal notranslate"><span class="pre">stan
 <code class="docutils literal notranslate"><span class="pre">dataset_id</span></code>s.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [19]:
+<span></span>In [20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -948,7 +961,7 @@ variables with <code class="docutils literal notranslate"><span class="pre">stan
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[19]:
+<span></span>Out[20]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -993,7 +1006,7 @@ variables names and not the standardized ones for the <code class="docutils lite
 method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [20]:
+<span></span>In [21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1024,13 +1037,13 @@ method.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-https://data.ioos.us/gliders/erddap/tabledap/allrutgersGliders.html?u,v_qc,density_qc,precise_lon,longitude,conductivity_qc,lon_uv_qc,precise_time_qc,time_uv,time,latitude,density,salinity_qc,lat_uv_qc,temperature,precise_time,latitude_qc,depth,salinity,conductivity,time_qc,pressure,lon_uv,depth_qc,precise_lat,time_uv_qc,v,pressure_qc,u_qc,temperature_qc,longitude_qc,lat_uv&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0
+https://data.ioos.us/gliders/erddap/tabledap/allrutgersGliders.html?temperature_qc,u,v,precise_lon,latitude,pressure_qc,time_qc,lat_uv_qc,salinity,conductivity_qc,u_qc,time_uv_qc,conductivity,time_uv,time,density,lat_uv,longitude,precise_time,v_qc,depth_qc,lon_uv,depth,precise_time_qc,precise_lat,longitude_qc,temperature,salinity_qc,pressure,latitude_qc,lon_uv_qc,density_qc&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0
 </pre></div></div>
 </div>
 <p>Putting everything in <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [21]:
+<span></span>In [22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1078,7 +1091,7 @@ not true. The cell below applies the mask as described by the data QC
 flag.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [22]:
+<span></span>In [23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1096,7 +1109,7 @@ flag.</p>
 <p>Finally let’s see some figures!</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [23]:
+<span></span>In [24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1139,12 +1152,12 @@ flag.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/quick_intro_39_0.png" src="_images/quick_intro_39_0.png" />
+<img alt="_images/quick_intro_42_0.png" src="_images/quick_intro_42_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [24]:
+<span></span>In [25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1168,7 +1181,7 @@ flag.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/quick_intro_40_0.png" src="_images/quick_intro_40_0.png" />
+<img alt="_images/quick_intro_43_0.png" src="_images/quick_intro_43_0.png" />
 </div>
 </div>
 <div class="section" id="Extras">
@@ -1177,7 +1190,7 @@ flag.</p>
 <h3>OPeNDAP response<a class="headerlink" href="#OPeNDAP-response" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [25]:
+<span></span>In [26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1202,11 +1215,12 @@ https://data.ioos.us/gliders/erddap/tabledap/cp_336-20170116T1254
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [26]:
+<span></span>In [27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">netCDF4</span> <span class="k">import</span> <span class="n">Dataset</span>
+
 
 <span class="k">with</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">opendap_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">nc</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">nc</span><span class="o">.</span><span class="n">summary</span><span class="p">)</span>
@@ -1228,7 +1242,7 @@ The Pioneer Array is located off the coast of New England, south of Martha&#39;s
 constraints to avoid downloading several gigabytes!</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [27]:
+<span></span>In [28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1243,7 +1257,7 @@ constraints to avoid downloading several gigabytes!</p>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [28]:
+<span></span>In [29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1267,11 +1281,11 @@ constraints to avoid downloading several gigabytes!</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[28]:
+<span></span>Out[29]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&#39;602.93 KB&#39;
+<span></span>&#39;602.58 KB&#39;
 </pre></div>
 </div>
 </div>
@@ -1279,7 +1293,7 @@ constraints to avoid downloading several gigabytes!</p>
 less than that, <code class="docutils literal notranslate"><span class="pre">ERDDAP</span></code> streams gzip’ed data.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [29]:
+<span></span>In [30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1289,7 +1303,7 @@ less than that, <code class="docutils literal notranslate"><span class="pre">ERD
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[29]:
+<span></span>Out[30]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1299,58 +1313,59 @@ less than that, <code class="docutils literal notranslate"><span class="pre">ERD
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [30]:
+<span></span>In [31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">ds</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">to_xarray</span><span class="p">(</span><span class="n">decode_times</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
 <span class="n">ds</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[30]:
+<span></span>Out[31]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;xarray.Dataset&gt;
 Dimensions:          (row: 16232)
 Coordinates:
-    longitude        (row) float64 ...
+    latitude         (row) float64 ...
     time_uv          (row) float64 ...
     time             (row) float64 ...
-    latitude         (row) float64 ...
-    depth            (row) float32 ...
-    lon_uv           (row) float64 ...
     lat_uv           (row) float64 ...
+    longitude        (row) float64 ...
+    lon_uv           (row) float64 ...
+    depth            (row) float32 ...
 Dimensions without coordinates: row
 Data variables:
-    u                (row) float64 ...
-    v_qc             (row) float32 ...
-    density_qc       (row) float32 ...
-    precise_lon      (row) float64 ...
-    conductivity_qc  (row) float32 ...
-    lon_uv_qc        (row) float32 ...
-    precise_time_qc  (row) float32 ...
-    density          (row) float32 ...
-    salinity_qc      (row) float32 ...
-    lat_uv_qc        (row) float32 ...
-    temperature      (row) float32 ...
-    precise_time     (row) float64 ...
-    latitude_qc      (row) float32 ...
-    salinity         (row) float32 ...
-    conductivity     (row) float32 ...
-    time_qc          (row) float32 ...
-    pressure         (row) float64 ...
-    depth_qc         (row) float32 ...
-    precise_lat      (row) float64 ...
-    time_uv_qc       (row) float32 ...
-    v                (row) float64 ...
-    pressure_qc      (row) float32 ...
-    u_qc             (row) float32 ...
     temperature_qc   (row) float32 ...
+    u                (row) float64 ...
+    v                (row) float64 ...
+    precise_lon      (row) float64 ...
+    pressure_qc      (row) float32 ...
+    time_qc          (row) float32 ...
+    lat_uv_qc        (row) float32 ...
+    salinity         (row) float32 ...
+    conductivity_qc  (row) float32 ...
+    u_qc             (row) float32 ...
+    time_uv_qc       (row) float32 ...
+    conductivity     (row) float32 ...
+    density          (row) float32 ...
+    precise_time     (row) float64 ...
+    v_qc             (row) float32 ...
+    depth_qc         (row) float32 ...
+    precise_time_qc  (row) float32 ...
+    precise_lat      (row) float64 ...
     longitude_qc     (row) float32 ...
+    temperature      (row) float32 ...
+    salinity_qc      (row) float32 ...
+    pressure         (row) float64 ...
+    latitude_qc      (row) float32 ...
+    lon_uv_qc        (row) float32 ...
+    density_qc       (row) float32 ...
 Attributes:
     acknowledgement:               Funding provided by the National Science F...
     cdm_data_type:                 TrajectoryProfile
@@ -1413,28 +1428,9 @@ Attributes:
 </pre></div>
 </div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">erddapy.utilities</span> <span class="kn">import</span> <span class="n">_urlopen</span>
-
-
-<span class="k">def</span> <span class="nf">to_xarray</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">xarray</span> <span class="kn">as</span> <span class="nn">xr</span>
-    <span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">NamedTemporaryFile</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">_urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="k">with</span> <span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.nc&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;erddapy_&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tmp</span><span class="p">:</span>
-        <span class="n">tmp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">tmp</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">tmp</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-
-<span class="n">ds</span> <span class="o">=</span> <span class="n">to_xarray</span><span class="p">(</span>
-    <span class="n">download_url</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="n">ds</span>
-</pre></div>
-</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [31]:
+<span></span>In [32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1444,7 +1440,7 @@ Attributes:
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[31]:
+<span></span>Out[32]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1452,13 +1448,13 @@ Attributes:
 array([14.3976, 14.4236, 14.4596, ...,  4.4004,  4.3975,  4.3978],
       dtype=float32)
 Coordinates:
-    longitude  (row) float64 ...
+    latitude   (row) float64 ...
     time_uv    (row) float64 ...
     time       (row) float64 ...
-    latitude   (row) float64 ...
-    depth      (row) float32 ...
-    lon_uv     (row) float64 ...
     lat_uv     (row) float64 ...
+    longitude  (row) float64 ...
+    lon_uv     (row) float64 ...
+    depth      (row) float32 ...
 Dimensions without coordinates: row
 Attributes:
     _ChunkSizes:          1
@@ -1481,7 +1477,7 @@ Attributes:
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [32]:
+<span></span>In [33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1494,7 +1490,7 @@ Attributes:
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [33]:
+<span></span>In [34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1507,7 +1503,7 @@ Attributes:
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [34]:
+<span></span>In [35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1527,7 +1523,7 @@ Attributes:
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [35]:
+<span></span>In [36]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1554,7 +1550,7 @@ Attributes:
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/quick_intro_55_0.png" src="_images/quick_intro_55_0.png" />
+<img alt="_images/quick_intro_57_0.png" src="_images/quick_intro_57_0.png" />
 </div>
 </div>
 </div>
