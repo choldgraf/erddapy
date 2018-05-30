@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Quick introduction &#8212; erddapy 0.1.7+10.g5a0fe32 documentation</title>
+    <title>Quick introduction &#8212; erddapy 0.1.8+2.gb797138 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="_static/documentation_options.js"></script>
@@ -65,7 +65,6 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="erddapy.html"><code class="docutils literal notranslate"><span class="pre">erddapy</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="erddapy.html#extras"><code class="docutils literal notranslate"><span class="pre">extras</span></code></a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quick introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#Longer-introduction">Longer introduction</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Extras">Extras</a><ul>
@@ -281,7 +280,6 @@ div.nboutput div.output_area.stderr {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">erddapy</span> <span class="k">import</span> <span class="n">ERDDAP</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 
 <span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span>
@@ -300,7 +298,7 @@ interest and the dataset id.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">e</span><span class="o">.</span><span class="n">dataset_id</span> <span class="o">=</span> <span class="s1">&#39;blue-20160818T1448&#39;</span>
+<span></span><span class="n">e</span><span class="o">.</span><span class="n">dataset_id</span> <span class="o">=</span> <span class="s1">&#39;whoi_406-20160902T1700&#39;</span>
 
 <span class="n">e</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;time&gt;=&#39;</span><span class="p">:</span> <span class="s1">&#39;2016-07-10T00:00:00Z&#39;</span><span class="p">,</span>
@@ -332,7 +330,7 @@ interest and the dataset id.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitude,longitude,salinity,temperature,time&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0
+https://data.ioos.us/gliders/erddap/tabledap/whoi_406-20160902T1700.csv?depth,latitude,longitude,salinity,temperature,time&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -341,7 +339,10 @@ https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitu
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">(</span>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">(</span>
     <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span>
     <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">skiprows</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>  <span class="c1"># units information can be dropped.</span>
@@ -392,44 +393,44 @@ https://data.ioos.us/gliders/erddap/tabledap/blue-20160818T1448.csv?depth,latitu
   </thead>
   <tbody>
     <tr>
-      <th>2016-08-19 17:41:53</th>
-      <td>4.58</td>
-      <td>40.997572</td>
-      <td>-70.953544</td>
-      <td>32.241924</td>
-      <td>22.1122</td>
+      <th>2016-09-03 20:15:46</th>
+      <td>5.35</td>
+      <td>40.990881</td>
+      <td>-71.12439</td>
+      <td>32.245422</td>
+      <td>20.6620</td>
     </tr>
     <tr>
-      <th>2016-08-19 17:41:53</th>
-      <td>5.92</td>
-      <td>40.997572</td>
-      <td>-70.953544</td>
-      <td>32.231640</td>
-      <td>21.9331</td>
+      <th>2016-09-03 20:15:46</th>
+      <td>6.09</td>
+      <td>40.990881</td>
+      <td>-71.12439</td>
+      <td>32.223183</td>
+      <td>20.6512</td>
     </tr>
     <tr>
-      <th>2016-08-19 17:41:53</th>
-      <td>7.09</td>
-      <td>40.997572</td>
-      <td>-70.953544</td>
-      <td>32.225613</td>
-      <td>21.7394</td>
+      <th>2016-09-03 20:15:46</th>
+      <td>6.72</td>
+      <td>40.990881</td>
+      <td>-71.12439</td>
+      <td>32.237950</td>
+      <td>20.6047</td>
     </tr>
     <tr>
-      <th>2016-08-19 17:41:53</th>
-      <td>8.25</td>
-      <td>40.997572</td>
-      <td>-70.953544</td>
-      <td>32.231335</td>
-      <td>21.3219</td>
+      <th>2016-09-03 20:15:46</th>
+      <td>7.37</td>
+      <td>40.990881</td>
+      <td>-71.12439</td>
+      <td>32.235470</td>
+      <td>20.5843</td>
     </tr>
     <tr>
-      <th>2016-08-19 17:41:53</th>
-      <td>10.11</td>
-      <td>40.997572</td>
-      <td>-70.953544</td>
-      <td>32.286210</td>
-      <td>19.7151</td>
+      <th>2016-09-03 20:15:46</th>
+      <td>8.43</td>
+      <td>40.990881</td>
+      <td>-71.12439</td>
+      <td>32.224503</td>
+      <td>20.5691</td>
     </tr>
   </tbody>
 </table>
@@ -580,7 +581,7 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&#39;We have 432 tabledap, 0 griddap, and 0 wms endpoints.&#39;
+<span></span>&#39;We have 434 tabledap, 0 griddap, and 0 wms endpoints.&#39;
 </pre></div>
 </div>
 </div>
@@ -752,7 +753,7 @@ find the variables that have the <code class="docutils literal notranslate"><spa
       <td>NC_GLOBAL</td>
       <td>acknowledgment</td>
       <td>String</td>
-      <td>This deployment supported by funding from the ...</td>
+      <td>This deployment supported by National Science ...</td>
     </tr>
     <tr>
       <th>1</th>
@@ -782,9 +783,9 @@ find the variables that have the <code class="docutils literal notranslate"><spa
       <th>4</th>
       <td>attribute</td>
       <td>NC_GLOBAL</td>
-      <td>contributor_name</td>
+      <td>comment</td>
       <td>String</td>
-      <td>Josh Kohut, Dave Aragon, Chip Haldeman, Nicole...</td>
+      <td>Glider operated by the Rutgers University Cent...</td>
     </tr>
   </tbody>
 </table>
@@ -832,7 +833,7 @@ request is made.</p>
 
 # First one, slow.
 e.get_var_by_attr(
-    dataset_id=&#39;blue-20160818T1448&#39;,
+    dataset_id=&#39;whoi_406-20160902T1700&#39;,
     standard_name=&#39;sea_water_temperature&#39;
 )
 </pre></div>
@@ -843,8 +844,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 300 ms, sys: 11.9 ms, total: 312 ms
-Wall time: 2.02 s
+CPU times: user 127 ms, sys: 6.14 ms, total: 133 ms
+Wall time: 1.79 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -867,7 +868,7 @@ Wall time: 2.02 s
 
 # Second one on the same glider, a little bit faster.
 e.get_var_by_attr(
-    dataset_id=&#39;blue-20160818T1448&#39;,
+    dataset_id=&#39;whoi_406-20160902T1700&#39;,
     standard_name=&#39;sea_water_practical_salinity&#39;
 )
 </pre></div>
@@ -878,8 +879,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 21.4 ms, sys: 272 µs, total: 21.6 ms
-Wall time: 814 ms
+CPU times: user 25.3 ms, sys: 3.07 ms, total: 28.4 ms
+Wall time: 697 ms
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -913,8 +914,8 @@ e.get_var_by_attr(
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 154 ms, sys: 16 µs, total: 154 ms
-Wall time: 1.44 s
+CPU times: user 137 ms, sys: 5.3 ms, total: 142 ms
+Wall time: 1.64 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1037,7 +1038,7 @@ method.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-https://data.ioos.us/gliders/erddap/tabledap/allrutgersGliders.html?temperature_qc,u,v,precise_lon,latitude,pressure_qc,time_qc,lat_uv_qc,salinity,conductivity_qc,u_qc,time_uv_qc,conductivity,time_uv,time,density,lat_uv,longitude,precise_time,v_qc,depth_qc,lon_uv,depth,precise_time_qc,precise_lat,longitude_qc,temperature,salinity_qc,pressure,latitude_qc,lon_uv_qc,density_qc&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0
+https://data.ioos.us/gliders/erddap/tabledap/allrutgersGliders.html?conductivity,latitude,density_qc,u_qc,temperature_qc,lon_uv_qc,depth,precise_time,longitude,salinity,lat_uv_qc,time_uv,time,salinity_qc,depth_qc,longitude_qc,precise_time_qc,time_uv_qc,v_qc,latitude_qc,pressure_qc,precise_lat,lon_uv,pressure,precise_lon,v,conductivity_qc,density,time_qc,lat_uv,u,temperature&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0
 </pre></div></div>
 </div>
 <p>Putting everything in <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s.</p>
@@ -1198,7 +1199,8 @@ flag.</p>
 <span class="n">e</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="s1">&#39;tabledap&#39;</span>
 
 <span class="n">opendap_url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">(</span>
-    <span class="n">dataset_id</span><span class="o">=</span><span class="s1">&#39;cp_336-20170116T1254&#39;</span><span class="p">,</span>
+    <span class="n">dataset_id</span><span class="o">=</span><span class="s1">&#39;whoi_406-20160902T1700&#39;</span><span class="p">,</span>
+    <span class="n">response</span><span class="o">=</span><span class="s1">&#39;opendap&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">opendap_url</span><span class="p">)</span>
@@ -1210,7 +1212,7 @@ flag.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-https://data.ioos.us/gliders/erddap/tabledap/cp_336-20170116T1254
+https://data.ioos.us/gliders/erddap/tabledap/whoi_406-20160902T1700
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -1232,7 +1234,7 @@ https://data.ioos.us/gliders/erddap/tabledap/cp_336-20170116T1254
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-The Pioneer Array is located off the coast of New England, south of Martha&#39;s Vineyard. The Continental Shelf-Slope area off the New England coast is a highly productive area and one that is located at a dynamic intersection where ocean currents meet in weather-like &#39;fronts&#39;, and where nutrients, pollutants, and other properties are exchanged between the coast and the deep ocean. Data from the inshore, shelf area helps to examine exchanges between the shelf and slope and the shelf ecosystem, as well as provide broader insight into the issues of air-sea gas exchange, including Carbon Dioxide. In order to provide synoptic, multi-scale observations of the outer continental shelf, shelf break region, and continental slope, the moored portion of the Pioneer Array is supplemented by six Coastal Gliders. The role of the Coastal Gliders is to monitor the mesoscale field of the slope sea and outer shelf, resolving rings, eddies and meanders from the Gulf Stream as they impinge on the shelf break front.  This dataset contains profiles of conductivity, temperature, depth, salinity and density, which are either measured or derived from the CTD measurements.
+Slocum glider dataset gathered as part of the TEMPESTS (The Experiment to Measure and Predict East coast STorm Strength), funded by NOAA through CINAR (Cooperative Institute for the North Atlantic Region).
 </pre></div></div>
 </div>
 </div>
@@ -1285,7 +1287,7 @@ constraints to avoid downloading several gigabytes!</p>
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&#39;602.58 KB&#39;
+<span></span>&#39;604.09 KB&#39;
 </pre></div>
 </div>
 </div>
@@ -1333,39 +1335,39 @@ less than that, <code class="docutils literal notranslate"><span class="pre">ERD
 Dimensions:          (row: 16232)
 Coordinates:
     latitude         (row) float64 ...
+    depth            (row) float32 ...
+    longitude        (row) float64 ...
     time_uv          (row) float64 ...
     time             (row) float64 ...
-    lat_uv           (row) float64 ...
-    longitude        (row) float64 ...
     lon_uv           (row) float64 ...
-    depth            (row) float32 ...
+    lat_uv           (row) float64 ...
 Dimensions without coordinates: row
 Data variables:
-    temperature_qc   (row) float32 ...
-    u                (row) float64 ...
-    v                (row) float64 ...
-    precise_lon      (row) float64 ...
-    pressure_qc      (row) float32 ...
-    time_qc          (row) float32 ...
-    lat_uv_qc        (row) float32 ...
-    salinity         (row) float32 ...
-    conductivity_qc  (row) float32 ...
-    u_qc             (row) float32 ...
-    time_uv_qc       (row) float32 ...
     conductivity     (row) float32 ...
-    density          (row) float32 ...
-    precise_time     (row) float64 ...
-    v_qc             (row) float32 ...
-    depth_qc         (row) float32 ...
-    precise_time_qc  (row) float32 ...
-    precise_lat      (row) float64 ...
-    longitude_qc     (row) float32 ...
-    temperature      (row) float32 ...
-    salinity_qc      (row) float32 ...
-    pressure         (row) float64 ...
-    latitude_qc      (row) float32 ...
-    lon_uv_qc        (row) float32 ...
     density_qc       (row) float32 ...
+    u_qc             (row) float32 ...
+    temperature_qc   (row) float32 ...
+    lon_uv_qc        (row) float32 ...
+    precise_time     (row) float64 ...
+    salinity         (row) float32 ...
+    lat_uv_qc        (row) float32 ...
+    salinity_qc      (row) float32 ...
+    depth_qc         (row) float32 ...
+    longitude_qc     (row) float32 ...
+    precise_time_qc  (row) float32 ...
+    time_uv_qc       (row) float32 ...
+    v_qc             (row) float32 ...
+    latitude_qc      (row) float32 ...
+    pressure_qc      (row) float32 ...
+    precise_lat      (row) float64 ...
+    pressure         (row) float64 ...
+    precise_lon      (row) float64 ...
+    v                (row) float64 ...
+    conductivity_qc  (row) float32 ...
+    density          (row) float32 ...
+    time_qc          (row) float32 ...
+    u                (row) float64 ...
+    temperature      (row) float32 ...
 Attributes:
     acknowledgement:               Funding provided by the National Science F...
     cdm_data_type:                 TrajectoryProfile
@@ -1449,12 +1451,12 @@ array([14.3976, 14.4236, 14.4596, ...,  4.4004,  4.3975,  4.3978],
       dtype=float32)
 Coordinates:
     latitude   (row) float64 ...
+    depth      (row) float32 ...
+    longitude  (row) float64 ...
     time_uv    (row) float64 ...
     time       (row) float64 ...
-    lat_uv     (row) float64 ...
-    longitude  (row) float64 ...
     lon_uv     (row) float64 ...
-    depth      (row) float32 ...
+    lat_uv     (row) float64 ...
 Dimensions without coordinates: row
 Attributes:
     _ChunkSizes:          1
