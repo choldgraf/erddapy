@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy.erddapy &#8212; erddapy 0.1.8+6.g95f5b8f documentation</title>
+    <title>erddapy.erddapy &#8212; erddapy 0.1.8+8.gef9ad48 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -253,8 +253,13 @@
 
 <span class="sd">        Accepts any `pandas.read_csv` keyword arguments.</span>
 
+<span class="sd">        This method uses the `.csvp`(1) response for simplicity,</span>
+<span class="sd">        please check ERDDAP&#39;s documentation for the other csv options available.</span>
+
+<span class="sd">        1) Download a ISO-8859-1 .csv file with line 1: name (units). Times are ISO 8601 strings.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="s1">&#39;csvp&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">requests_kwargs</span><span class="p">),</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ERDDAP.to_xarray"><a class="viewcode-back" href="../../erddapy.html#erddapy.erddapy.ERDDAP.to_xarray">[docs]</a>    <span class="k">def</span> <span class="nf">to_xarray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>

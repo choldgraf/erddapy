@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Quick introduction &#8212; erddapy 0.1.8+6.g95f5b8f documentation</title>
+    <title>Quick introduction &#8212; erddapy 0.1.8+8.gef9ad48 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -346,9 +346,8 @@ https://data.ioos.us/gliders/erddap/tabledap/whoi_406-20160902T1700.csv?depth,la
 
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">(</span>
-    <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span>
+    <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time (UTC)&#39;</span><span class="p">,</span>
     <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">skiprows</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>  <span class="c1"># units information can be dropped.</span>
 <span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -450,8 +449,8 @@ https://data.ioos.us/gliders/erddap/tabledap/whoi_406-20160902T1700.csv?depth,la
 <span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
-                <span class="n">c</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;depth (m)&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                <span class="n">c</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;temperature (Celcius)&#39;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -1057,9 +1056,8 @@ https://data.ioos.us/gliders/erddap/tabledap/allrutgersGliders.html?conductivity
 <span class="k">def</span> <span class="nf">download_csv</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
         <span class="n">url</span><span class="p">,</span>
-        <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span>
+        <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;time (UTC)&#39;</span><span class="p">,</span>
         <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="p">)</span>
 
 

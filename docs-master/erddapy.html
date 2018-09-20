@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy &#8212; erddapy 0.1.8+6.g95f5b8f documentation</title>
+    <title>erddapy &#8212; erddapy 0.1.8+8.gef9ad48 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -284,6 +284,11 @@ for the <cite>dataset_id</cite>, and the variables attribute dictionary.</p>
 <code class="descname">to_pandas</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.to_pandas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.to_pandas" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a data request to a pandas.DataFrame.</p>
 <p>Accepts any <cite>pandas.read_csv</cite> keyword arguments.</p>
+<p>This method uses the <a href="#id1"><span class="problematic" id="id2">`</span></a>.csvp`(1) response for simplicity,
+please check ERDDAP’s documentation for the other csv options available.</p>
+<ol class="arabic simple">
+<li>Download a ISO-8859-1 .csv file with line 1: name (units). Times are ISO 8601 strings.</li>
+</ol>
 </dd></dl>
 
 <dl class="method">
