@@ -6,13 +6,14 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy &#8212; erddapy 0.1.8+2.gb797138 documentation</title>
+    <title>erddapy &#8212; erddapy 0.1.8+6.g95f5b8f documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Quick introduction" href="quick_intro.html" />
@@ -95,6 +96,8 @@
       </div>
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-erddapy.erddapy">
@@ -110,22 +113,83 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>server</strong> (<em>str</em>) – an ERDDAP server URL or an acronym for one of the builtin servers.</li>
-<li><strong>dataset_id</strong> (<em>str</em>) – a dataset unique id.</li>
 <li><strong>protocol</strong> (<em>str</em>) – tabledap or griddap.</li>
-<li><strong>variables</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>/<cite>tuple</cite>) – a list variables to download.</li>
-<li><strong>response</strong> (<em>str</em>) – default is HTML.</li>
-<li><strong>constraints</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – download constraints, default None (opendap-like url)</li>
-<li><strong>and requests_kwargs</strong> (<em>params</em>) – <cite>request.get</cite> options</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the ERDDAP URL builder.</p>
-</td>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="erddapy.erddapy.ERDDAP.dataset_id">
+<code class="descname">dataset_id</code><a class="headerlink" href="#erddapy.erddapy.ERDDAP.dataset_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>a dataset unique id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">instance</p>
-</td>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="erddapy.erddapy.ERDDAP.variables">
+<code class="descname">variables</code><a class="headerlink" href="#erddapy.erddapy.ERDDAP.variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>a list variables to download.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="erddapy.erddapy.ERDDAP.response">
+<code class="descname">response</code><a class="headerlink" href="#erddapy.erddapy.ERDDAP.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>default is HTML.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="erddapy.erddapy.ERDDAP.constraints">
+<code class="descname">constraints</code><a class="headerlink" href="#erddapy.erddapy.ERDDAP.constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>download constraints, default None (opendap-like url)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">params and requests_kwargs</code></dt>
+<dd><p><cite>request.get</cite> options</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ERDDAP URL builder.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">instance</td>
 </tr>
 </tbody>
 </table>
@@ -235,6 +299,7 @@ for the <cite>dataset_id</cite>, and the variables attribute dictionary.</p>
 
 
           </div>
+          
         </div>
       </div>
     <div class="clearer"></div>
@@ -243,8 +308,8 @@ for the <cite>dataset_id</cite>, and the variables attribute dictionary.</p>
       &copy;2017, Filipe Fernandes.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="_sources/erddapy.rst.txt"
