@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Quick introduction &#8212; erddapy 0.1.10+4.gbfa776b documentation</title>
+    <title>Quick introduction &#8212; erddapy 0.1.11+8.g851df5c documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -302,7 +302,7 @@ div.nboutput div.output_area.stderr {
 </div>
 </div>
 <p>Now we can populate the object with constraints, the variables of
-interest and the dataset id.</p>
+interest, and the dataset id.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [2]:
@@ -515,6 +515,7 @@ server. In this example we will use <a class="reference external" href="https://
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>[&#39;constraints&#39;,
  &#39;dataset_id&#39;,
+ &#39;get_categorize_url&#39;,
  &#39;get_download_url&#39;,
  &#39;get_info_url&#39;,
  &#39;get_search_url&#39;,
@@ -524,6 +525,7 @@ server. In this example we will use <a class="reference external" href="https://
  &#39;requests_kwargs&#39;,
  &#39;response&#39;,
  &#39;server&#39;,
+ &#39;to_iris&#39;,
  &#39;to_pandas&#39;,
  &#39;to_xarray&#39;,
  &#39;variables&#39;]
@@ -577,23 +579,21 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="s1">&#39;We have </span><span class="si">{}</span><span class="s1"> tabledap, </span><span class="si">{}</span><span class="s1"> griddap, and </span><span class="si">{}</span><span class="s1"> wms endpoints.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-    <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tabledap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())),</span>
-    <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;griddap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())),</span>
-    <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;wms&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()))</span>
+<span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="n">f</span><span class="s1">&#39;We have {len(set(df[&quot;tabledap&quot;].dropna()))} &#39;</span>
+    <span class="n">f</span><span class="s1">&#39;tabledap, {len(set(df[&quot;griddap&quot;].dropna()))} &#39;</span>
+    <span class="n">f</span><span class="s1">&#39;griddap, and {len(set(df[&quot;wms&quot;].dropna()))} wms endpoints.&#39;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[9]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
-<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&#39;We have 498 tabledap, 0 griddap, and 0 wms endpoints.&#39;
-</pre></div>
-</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+We have 482 tabledap, 0 griddap, and 0 wms endpoints.
+</pre></div></div>
 </div>
 <p>We can refine our search by providing some constraints.</p>
 <div class="nbinput nblast docutils container">
@@ -605,8 +605,8 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 <span></span><span class="k">def</span> <span class="nf">show_iframe</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Helper function to show HTML returns.&quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">HTML</span>
-    <span class="n">iframe</span> <span class="o">=</span> <span class="s1">&#39;&lt;iframe src=&quot;</span><span class="si">{src}</span><span class="s1">&quot; width=&quot;100%&quot; height=&quot;950&quot;&gt;&lt;/iframe&gt;&#39;</span><span class="o">.</span><span class="n">format</span>
-    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">iframe</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">src</span><span class="p">))</span>
+    <span class="n">iframe</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;&lt;iframe src=&quot;</span><span class="si">{src}</span><span class="s1">&quot; width=&quot;100%&quot; height=&quot;950&quot;&gt;&lt;/iframe&gt;&#39;</span>
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">iframe</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -635,6 +635,15 @@ respectively. The most useful ones for Pythonistas are the <code class="docutils
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/filipe/miniconda3/envs/ERDDAPY/lib/python3.6/site-packages/IPython/core/display.py:689: UserWarning: Consider using IPython.display.IFrame instead
+  warnings.warn(&#34;Consider using IPython.display.IFrame instead&#34;)
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[11]:
@@ -658,7 +667,8 @@ available for download.</p>
 <span class="n">search</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">search_url</span><span class="p">)</span>
 <span class="n">gliders</span> <span class="o">=</span> <span class="n">search</span><span class="p">[</span><span class="s1">&#39;Dataset ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found </span><span class="si">{}</span><span class="s1"> Glider Datasets:</span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gliders</span><span class="p">),</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gliders</span><span class="p">)))</span>
+<span class="n">gliders_list</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gliders</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Found {len(gliders)} Glider Datasets:</span><span class="se">\n</span><span class="si">{gliders_list}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -667,8 +677,7 @@ available for download.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Found 17 Glider Datasets:
-allrutgersGliders
+Found 16 Glider Datasets:
 blue-20160818T1448
 cp_335-20170116T1459
 cp_336-20161011T0027
@@ -707,7 +716,7 @@ with the <code class="docutils literal notranslate"><span class="pre">get_info_u
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<iframe src="https://data.ioos.us/gliders/erddap/info/allrutgersGliders/index.html" width="100%" height="950"></iframe></div>
+<iframe src="https://data.ioos.us/gliders/erddap/info/blue-20160818T1448/index.html" width="100%" height="950"></iframe></div>
 </div>
 <p>Again, with the <code class="docutils literal notranslate"><span class="pre">csv</span></code> response, we can manipulate the metadata and
 find the variables that have the <code class="docutils literal notranslate"><span class="pre">cdm_profile_variables</span></code> attribute.</p>
@@ -763,7 +772,7 @@ find the variables that have the <code class="docutils literal notranslate"><spa
       <td>NC_GLOBAL</td>
       <td>acknowledgement</td>
       <td>String</td>
-      <td>This deployment supported by National Oceanic ...</td>
+      <td>This deployment supported by NOAA U.S. IOOS</td>
     </tr>
     <tr>
       <th>1</th>
@@ -779,7 +788,7 @@ find the variables that have the <code class="docutils literal notranslate"><spa
       <td>NC_GLOBAL</td>
       <td>cdm_profile_variables</td>
       <td>String</td>
-      <td>profile_id, time, latitude, longitude, time_uv...</td>
+      <td>time_uv,lat_uv,lon_uv,u,v,profile_id,time,lati...</td>
     </tr>
     <tr>
       <th>3</th>
@@ -787,15 +796,15 @@ find the variables that have the <code class="docutils literal notranslate"><spa
       <td>NC_GLOBAL</td>
       <td>cdm_trajectory_variables</td>
       <td>String</td>
-      <td>trajectory, wmo_id</td>
+      <td>trajectory,wmo_id</td>
     </tr>
     <tr>
       <th>4</th>
       <td>attribute</td>
       <td>NC_GLOBAL</td>
-      <td>contributor_name</td>
+      <td>comment</td>
       <td>String</td>
-      <td>Wendell Brown, Richard Arena, Kate Tremblay, J...</td>
+      <td>Glider deployed by the University of Massachus...</td>
     </tr>
   </tbody>
 </table>
@@ -817,7 +826,7 @@ find the variables that have the <code class="docutils literal notranslate"><spa
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&#39;profile_id, time, latitude, longitude, time_uv, lat_uv, lon_uv, u, v&#39;
+<span></span>&#39;time_uv,lat_uv,lon_uv,u,v,profile_id,time,latitude,longitude&#39;
 </pre></div>
 </div>
 </div>
@@ -854,8 +863,8 @@ request is made.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 150 ms, sys: 4.2 ms, total: 154 ms
-Wall time: 1.68 s
+CPU times: user 220 ms, sys: 1.9 ms, total: 222 ms
+Wall time: 1.75 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -889,8 +898,8 @@ Wall time: 1.68 s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 31.8 ms, sys: 1.36 ms, total: 33.2 ms
-Wall time: 813 ms
+CPU times: user 17.6 ms, sys: 1.94 ms, total: 19.6 ms
+Wall time: 982 ms
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -911,7 +920,7 @@ Wall time: 813 ms
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%%time</span>
 
-<span class="c1"># New one, slow.</span>
+<span class="c1"># New one, slow again.</span>
 <span class="n">e</span><span class="o">.</span><span class="n">get_var_by_attr</span><span class="p">(</span>
     <span class="n">dataset_id</span><span class="o">=</span><span class="s1">&#39;cp_336-20170116T1254&#39;</span><span class="p">,</span>
     <span class="n">standard_name</span><span class="o">=</span><span class="s1">&#39;sea_water_practical_salinity&#39;</span>
@@ -924,8 +933,8 @@ Wall time: 813 ms
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-CPU times: user 136 ms, sys: 0 ns, total: 136 ms
-Wall time: 1.7 s
+CPU times: user 178 ms, sys: 5.53 ms, total: 184 ms
+Wall time: 2.32 s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -938,11 +947,153 @@ Wall time: 1.7 s
 </pre></div>
 </div>
 </div>
+<p>Another way to browse datasets is via the <code class="docutils literal notranslate"><span class="pre">categorize</span></code> URL. In the
+example below we can get all the <code class="docutils literal notranslate"><span class="pre">standard_names</span></code> available in the
+dataset with a single request.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_categorize_url</span><span class="p">(</span><span class="n">categorize_by</span><span class="o">=</span><span class="s1">&#39;standard_name&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)[</span><span class="s1">&#39;Category&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[19]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0                                             _null
+1                          conductivity_status_flag
+2                               density_status_flag
+3                                             depth
+4                                 depth_status_flag
+5                       eastward_sea_water_velocity
+6           eastward_sea_water_velocity_status_flag
+7                                          latitude
+8                              latitude_status_flag
+9                                         longitude
+10                            longitude_status_flag
+11                         north_sea_water_velocity
+12                     northward_sea_water_velocity
+13         northward_sea_water_velocity_status_flag
+14                                         pressure
+15                             pressure_status_flag
+16                             salinity_status_flag
+17                                sea_water_density
+18                    sea_water_density_status_flag
+19                sea_water_electrical_conductivity
+20    sea_water_electrical_conductivity_status_flag
+21    sea_water_electrival_conductivity_status_flag
+22                     sea_water_practical_salinity
+23         sea_water_practical_salinity_status_flag
+24                               sea_water_pressure
+25                   sea_water_pressure_status_flag
+26                               sea_water_salinity
+27                   sea_water_salinity_status_flag
+28                            sea_water_temperature
+29                sea_water_temperature_status_flag
+30                          temperature_status_flag
+31                         temperuature_status_flag
+32                                             time
+33                                 time_status_flag
+Name: Category, dtype: object
+</pre></div>
+</div>
+</div>
+<p>We can also pass a <code class="docutils literal notranslate"><span class="pre">value</span></code> to filter the categorize results.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">url</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_categorize_url</span><span class="p">(</span>
+    <span class="n">categorize_by</span><span class="o">=</span><span class="s1">&#39;institution&#39;</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="s1">&#39;woods_hole_oceanographic_institution&#39;</span><span class="p">,</span>
+    <span class="n">response</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span>
+<span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">whoi_gliders</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tabledap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">(),</span> <span class="s1">&#39;Dataset ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="n">whoi_gliders</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[21]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[&#39;sp007-20170427T1652&#39;,
+ &#39;sp010-20150409T1524&#39;,
+ &#39;sp010-20170707T1647&#39;,
+ &#39;sp010-20180620T1455&#39;,
+ &#39;sp022-20170209T1616&#39;,
+ &#39;sp022-20170802T1414&#39;,
+ &#39;sp022-20180124T1514&#39;,
+ &#39;sp022-20180422T1229&#39;,
+ &#39;sp022-20180912T1553&#39;,
+ &#39;sp055-20150716T1359&#39;,
+ &#39;sp062-20171116T1557&#39;,
+ &#39;sp065-20151001T1507&#39;,
+ &#39;sp065-20180310T1828&#39;,
+ &#39;sp065-20181015T1349&#39;,
+ &#39;sp066-20151217T1624&#39;,
+ &#39;sp066-20160818T1505&#39;,
+ &#39;sp066-20170416T1744&#39;,
+ &#39;sp066-20171129T1616&#39;,
+ &#39;sp066-20180629T1411&#39;,
+ &#39;sp069-20170907T1531&#39;,
+ &#39;sp069-20180411T1516&#39;,
+ &#39;whoi_406-20160902T1700&#39;]
+</pre></div>
+</div>
+</div>
+<p>Now it is easy to filter non WHOI gliders from our original glider
+search.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">gliders</span> <span class="o">=</span> <span class="p">[</span><span class="n">glider</span> <span class="k">for</span> <span class="n">glider</span> <span class="ow">in</span> <span class="n">gliders</span> <span class="k">if</span> <span class="n">glider</span> <span class="ow">in</span> <span class="n">whoi_gliders</span><span class="p">]</span>
+<span class="n">gliders</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[22]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>[&#39;sp022-20170209T1616&#39;, &#39;whoi_406-20160902T1700&#39;]
+</pre></div>
+</div>
+</div>
 <p>With Python it is easy to loop over all the <code class="docutils literal notranslate"><span class="pre">dataset_id</span></code>s for the
 variables with <code class="docutils literal notranslate"><span class="pre">standard_names</span></code></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [19]:
+<span></span>In [23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -960,7 +1111,7 @@ variables with <code class="docutils literal notranslate"><span class="pre">stan
 <code class="docutils literal notranslate"><span class="pre">dataset_id</span></code>s.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [20]:
+<span></span>In [24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -972,7 +1123,7 @@ variables with <code class="docutils literal notranslate"><span class="pre">stan
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[20]:
+<span></span>Out[24]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1017,7 +1168,7 @@ variables names and not the standardized ones for the <code class="docutils lite
 method.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [21]:
+<span></span>In [25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1048,13 +1199,13 @@ method.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-https://data.ioos.us/gliders/erddap/tabledap/allrutgersGliders.html?time_uv_qc,conductivity_qc,density,u,longitude_qc,time,precise_lat,latitude_qc,lat_uv_qc,lat_uv,depth,time_qc,precise_time,longitude,precise_lon,conductivity,temperature_qc,u_qc,lon_uv,salinity,density_qc,pressure_qc,temperature,precise_time_qc,pressure,time_uv,lon_uv_qc,v_qc,depth_qc,v,latitude,salinity_qc&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0
+https://data.ioos.us/gliders/erddap/tabledap/sp022-20170209T1616.html?precise_lon,longitude,temperature_qc,latitude,precise_lat,density_qc,u,pressure_qc,density,lat_uv,precise_time_qc,precise_time,temperature,conductivity_qc,latitude_qc,salinity,pressure,lon_uv_qc,v,v_qc,lat_uv_qc,u_qc,time_uv_qc,depth_qc,conductivity,time_uv,salinity_qc,depth,longitude_qc,lon_uv,time,time_qc&amp;longitude&gt;=-72.0&amp;longitude&lt;=-69.0&amp;latitude&gt;=38.0&amp;latitude&lt;=41.0&amp;time&gt;=1468108800.0&amp;time&lt;=1486684800.0
 </pre></div></div>
 </div>
 <p>Putting everything in <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> objects.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [22]:
+<span></span>In [26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1081,7 +1232,7 @@ https://data.ioos.us/gliders/erddap/tabledap/allrutgersGliders.html?time_uv_qc,c
             <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span>
         <span class="p">)</span>
     <span class="k">except</span> <span class="n">HTTPError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Failed to download </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">glider</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Failed to download </span><span class="si">{glider}</span><span class="s1">.&#39;</span><span class="p">)</span>
         <span class="k">continue</span>
     <span class="n">dfs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">glider</span><span class="p">:</span> <span class="n">download_csv</span><span class="p">(</span><span class="n">download_url</span><span class="p">)})</span>
 </pre></div>
@@ -1092,8 +1243,7 @@ https://data.ioos.us/gliders/erddap/tabledap/allrutgersGliders.html?time_uv_qc,c
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Failed to download silbo-20160413T1534
-Failed to download sp022-20170209T1616
+Failed to download sp022-20170209T1616.
 </pre></div></div>
 </div>
 <p>The glider datasets should be masked automatically but we found that is
@@ -1102,7 +1252,7 @@ flag.</p>
 <p>Finally let’s see some figures!</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [23]:
+<span></span>In [27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1145,12 +1295,12 @@ flag.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/quick_intro_41_0.png" src="_images/quick_intro_41_0.png" />
+<img alt="_images/quick_intro_47_0.png" src="_images/quick_intro_47_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [24]:
+<span></span>In [28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1174,7 +1324,7 @@ flag.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/quick_intro_42_0.png" src="_images/quick_intro_42_0.png" />
+<img alt="_images/quick_intro_48_0.png" src="_images/quick_intro_48_0.png" />
 </div>
 </div>
 <div class="section" id="Extras">
@@ -1183,7 +1333,7 @@ flag.</p>
 <h3>OPeNDAP response<a class="headerlink" href="#OPeNDAP-response" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [25]:
+<span></span>In [29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1209,7 +1359,7 @@ https://data.ioos.us/gliders/erddap/tabledap/whoi_406-20160902T1700
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [26]:
+<span></span>In [30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1236,7 +1386,7 @@ Slocum glider dataset gathered as part of the TEMPESTS (The Experiment to Measur
 constraints to avoid downloading several gigabytes!</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [27]:
+<span></span>In [31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1251,7 +1401,7 @@ constraints to avoid downloading several gigabytes!</p>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [28]:
+<span></span>In [32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1275,11 +1425,11 @@ constraints to avoid downloading several gigabytes!</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[28]:
+<span></span>Out[32]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&#39;602.31 KB&#39;
+<span></span>&#39;599.82 KB&#39;
 </pre></div>
 </div>
 </div>
@@ -1287,7 +1437,7 @@ constraints to avoid downloading several gigabytes!</p>
 less than that, <code class="docutils literal notranslate"><span class="pre">ERDDAP</span></code> streams gzip’ed data.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [29]:
+<span></span>In [33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1297,7 +1447,7 @@ less than that, <code class="docutils literal notranslate"><span class="pre">ERD
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[29]:
+<span></span>Out[33]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1307,7 +1457,7 @@ less than that, <code class="docutils literal notranslate"><span class="pre">ERD
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [30]:
+<span></span>In [34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1319,52 +1469,52 @@ less than that, <code class="docutils literal notranslate"><span class="pre">ERD
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[30]:
+<span></span>Out[34]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;xarray.Dataset&gt;
 Dimensions:          (row: 16232)
 Coordinates:
-    time             (row) float64 ...
     lat_uv           (row) float64 ...
-    depth            (row) float32 ...
-    longitude        (row) float64 ...
-    lon_uv           (row) float64 ...
     time_uv          (row) float64 ...
-    latitude         (row) float64 ...
+    lon_uv           (row) float64 ...
 Dimensions without coordinates: row
 Data variables:
-    time_uv_qc       (row) float32 ...
-    conductivity_qc  (row) float32 ...
-    density          (row) float32 ...
-    u                (row) float64 ...
-    longitude_qc     (row) float32 ...
-    precise_lat      (row) float64 ...
-    latitude_qc      (row) float32 ...
-    lat_uv_qc        (row) float32 ...
-    time_qc          (row) float32 ...
-    precise_time     (row) float64 ...
     precise_lon      (row) float64 ...
-    conductivity     (row) float32 ...
+    longitude        (row) float64 ...
     temperature_qc   (row) float32 ...
-    u_qc             (row) float32 ...
-    salinity         (row) float32 ...
+    latitude         (row) float64 ...
+    precise_lat      (row) float64 ...
     density_qc       (row) float32 ...
+    u                (row) float64 ...
     pressure_qc      (row) float32 ...
-    temperature      (row) float32 ...
+    density          (row) float32 ...
     precise_time_qc  (row) float32 ...
-    pressure         (row) float64 ...
+    precise_time     (row) float64 ...
+    temperature      (row) float32 ...
+    conductivity_qc  (row) float32 ...
+    latitude_qc      (row) float32 ...
+    salinity         (row) float32 ...
+    pressure         (row) float32 ...
     lon_uv_qc        (row) float32 ...
-    v_qc             (row) float32 ...
-    depth_qc         (row) float32 ...
     v                (row) float64 ...
+    v_qc             (row) float32 ...
+    lat_uv_qc        (row) float32 ...
+    u_qc             (row) float32 ...
+    time_uv_qc       (row) float32 ...
+    depth_qc         (row) float32 ...
+    conductivity     (row) float32 ...
     salinity_qc      (row) float32 ...
+    depth            (row) float32 ...
+    longitude_qc     (row) float32 ...
+    time             (row) float64 ...
+    time_qc          (row) float32 ...
 Attributes:
     acknowledgement:               Funding provided by the National Science F...
     cdm_data_type:                 TrajectoryProfile
-    cdm_profile_variables:         profile_id, time, latitude, longitude, tim...
-    cdm_trajectory_variables:      trajectory, wmo_id
+    cdm_profile_variables:         time_uv,lat_uv,lon_uv,u,v,profile_id,time,...
+    cdm_trajectory_variables:      trajectory,wmo_id
     contributor_name:              Paul Matthias,Peter Brickley,Sheri White,D...
     contributor_role:              CGSN Program Manager,CGSN Operations Engin...
     Conventions:                   Unidata Dataset Discovery v1.0, COARDS, CF...
@@ -1389,7 +1539,7 @@ Attributes:
     geospatial_vertical_positive:  down
     geospatial_vertical_units:     m
     history:                       2017-04-19T14:33:35Z: Data Source /Users/k...
-    id:                            cp_336-20170116T1254_e698_69e3_e309
+    id:                            cp_336-20170116T125400Z
     infoUrl:                       http://data.ioos.us/gliders/erddap/
     institution:                   Ocean Observatories Initiative
     ioos_dac_checksum:             f42b729c0bf19af1b7229b21350ebaaf
@@ -1413,7 +1563,7 @@ Attributes:
     sourceUrl:                     (local files)
     Southernmost_Northing:         39.32370673037986
     standard_name_vocabulary:      CF Standard Name Table v27
-    subsetVariables:               trajectory, wmo_id, profile_id, time, lati...
+    subsetVariables:               trajectory,wmo_id,time_uv,lat_uv,lon_uv,u,...
     summary:                       The Pioneer Array is located off the coast...
     time_coverage_end:             2017-02-09T23:03:25Z
     time_coverage_start:           2017-01-16T13:03:04Z
@@ -1424,7 +1574,7 @@ Attributes:
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [31]:
+<span></span>In [35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1434,7 +1584,7 @@ Attributes:
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[31]:
+<span></span>Out[35]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -1442,13 +1592,9 @@ Attributes:
 array([14.3976, 14.4236, 14.4596, ...,  4.4004,  4.3975,  4.3978],
       dtype=float32)
 Coordinates:
-    time       (row) float64 ...
-    lat_uv     (row) float64 ...
-    depth      (row) float32 ...
-    longitude  (row) float64 ...
-    lon_uv     (row) float64 ...
-    time_uv    (row) float64 ...
-    latitude   (row) float64 ...
+    lat_uv   (row) float64 ...
+    time_uv  (row) float64 ...
+    lon_uv   (row) float64 ...
 Dimensions without coordinates: row
 Attributes:
     _ChunkSizes:          1
@@ -1456,6 +1602,7 @@ Attributes:
     ancillary_variables:  temperature_qc
     colorBarMaximum:      32.0
     colorBarMinimum:      0.0
+    coordinates:          time lat lon depth
     instrument:           instrument_ctd
     ioos_category:        Temperature
     long_name:            Sea Water Temperature
@@ -1471,7 +1618,7 @@ Attributes:
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [32]:
+<span></span>In [36]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1487,7 +1634,7 @@ Attributes:
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [33]:
+<span></span>In [37]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1500,7 +1647,7 @@ Attributes:
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [34]:
+<span></span>In [38]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1520,7 +1667,7 @@ Attributes:
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [35]:
+<span></span>In [39]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1547,8 +1694,415 @@ Attributes:
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/quick_intro_56_0.png" src="_images/quick_intro_56_0.png" />
+<img alt="_images/quick_intro_62_0.png" src="_images/quick_intro_62_0.png" />
 </div>
+</div>
+<p>Or iris if the data is easier to navigate via the CF conventions data
+model.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="c1"># Iris warnings are quire verbose!</span>
+<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+    <span class="n">cubes</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">to_iris</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">cubes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0: latitude Variable Quality Flag / (1) (-- : 16232)
+1: sea_water_electrical_conductivity / (S m-1) (-- : 16232)
+2: longitude / (degrees)               (-- : 16232)
+3: longitude / (degrees)               (-- : 16232)
+4: sea_water_practical_salinity / (unknown) (-- : 16232)
+5: longitude Variable Quality Flag / (1) (-- : 16232)
+6: latitude / (degrees)                (-- : 16232)
+7: sea_water_pressure / (dbar)         (-- : 16232)
+8: latitude / (degrees)                (-- : 16232)
+9: eastward_sea_water_velocity / (m s-1) (-- : 16232)
+10: northward_sea_water_velocity / (m s-1) (-- : 16232)
+11: sea_water_density / (kg/m^3)        (-- : 16232)
+12: precise_time Variable Quality Flag / (1) (-- : 16232)
+13: time / (seconds since 1970-01-01T00:00:00Z) (-- : 16232)
+14: sea_water_temperature / (degree_Celsius) (-- : 16232)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cubes</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="s1">&#39;sea_water_pressure&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[41]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<style>
+  a.iris {
+      text-decoration: none !important;
+  }
+  table.iris {
+      white-space: pre;
+      border: 1px solid;
+      border-color: #9c9c9c;
+      font-family: monaco, monospace;
+  }
+  th.iris {
+      background: #303f3f;
+      color: #e0e0e0;
+      border-left: 1px solid;
+      border-color: #9c9c9c;
+      font-size: 1.05em;
+      min-width: 50px;
+      max-width: 125px;
+  }
+  tr.iris :first-child {
+      border-right: 1px solid #9c9c9c !important;
+  }
+  td.iris-title {
+      background: #d5dcdf;
+      border-top: 1px solid #9c9c9c;
+      font-weight: bold;
+  }
+  .iris-word-cell {
+      text-align: left !important;
+      white-space: pre;
+  }
+  .iris-subheading-cell {
+      padding-left: 2em !important;
+  }
+  .iris-inclusion-cell {
+      padding-right: 1em !important;
+  }
+  .iris-panel-body {
+      padding-top: 0px;
+  }
+  .iris-panel-title {
+      padding-left: 3em;
+  }
+  .iris-panel-title {
+      margin-top: 7px;
+  }
+</style>
+<table class="iris" id="139631583026032">
+    <tr class="iris">
+<th class="iris iris-word-cell">Sea Water Pressure (dbar)</th>
+<th class="iris iris-word-cell">--</th>
+</tr>
+    <tr class="iris">
+<td class="iris-word-cell iris-subheading-cell">Shape</td>
+<td class="iris iris-inclusion-cell">16232</td>
+</td>
+    <tr class="iris">
+    <td class="iris-title iris-word-cell">Attributes</td>
+    <td class="iris-title"></td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        Conventions</td>
+    <td class="iris-word-cell" colspan="1">Unidata Dataset Discovery v1.0, COARDS, CF-1.6</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        Easternmost_Easting</td>
+    <td class="iris-word-cell" colspan="1">-69.98303682074565</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        Metadata_Conventions</td>
+    <td class="iris-word-cell" colspan="1">Unidata Dataset Discovery v1.0, COARDS, CF-1.6</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        Northernmost_Northing</td>
+    <td class="iris-word-cell" colspan="1">39.91726417227544</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        Southernmost_Northing</td>
+    <td class="iris-word-cell" colspan="1">39.32370673037986</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        Westernmost_Easting</td>
+    <td class="iris-word-cell" colspan="1">-71.18259602604894</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        _ChunkSizes</td>
+    <td class="iris-word-cell" colspan="1">1</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        acknowledgement</td>
+    <td class="iris-word-cell" colspan="1">Funding provided by the National Science Foundation.  Glider deployed by...</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        actual_range</td>
+    <td class="iris-word-cell" colspan="1">[-4.0000e-02  9.8658e+02]</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        cdm_data_type</td>
+    <td class="iris-word-cell" colspan="1">TrajectoryProfile</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        cdm_profile_variables</td>
+    <td class="iris-word-cell" colspan="1">time_uv,lat_uv,lon_uv,u,v,profile_id,time,latitude,longitude</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        cdm_trajectory_variables</td>
+    <td class="iris-word-cell" colspan="1">trajectory,wmo_id</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        colorBarMaximum</td>
+    <td class="iris-word-cell" colspan="1">2000.0</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        colorBarMinimum</td>
+    <td class="iris-word-cell" colspan="1">0.0</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        contributor_name</td>
+    <td class="iris-word-cell" colspan="1">Paul Matthias,Peter Brickley,Sheri White,Diana Wickman,John Kerfoot</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        contributor_role</td>
+    <td class="iris-word-cell" colspan="1">CGSN Program Manager,CGSN Operations Engineer,CGSN Operations Engineer,CGSN...</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        creator_email</td>
+    <td class="iris-word-cell" colspan="1">kerfoot@marine.rutgers.edu</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        creator_name</td>
+    <td class="iris-word-cell" colspan="1">John Kerfoot</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        creator_url</td>
+    <td class="iris-word-cell" colspan="1">http://rucool.marine.rutgers.edu</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        date_created</td>
+    <td class="iris-word-cell" colspan="1">2017-04-19T14:33:41Z</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        date_issued</td>
+    <td class="iris-word-cell" colspan="1">2017-04-19T14:33:41Z</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        date_modified</td>
+    <td class="iris-word-cell" colspan="1">2017-04-19T14:33:41Z</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        deployment_number</td>
+    <td class="iris-word-cell" colspan="1">4</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        featureType</td>
+    <td class="iris-word-cell" colspan="1">TrajectoryProfile</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        format_version</td>
+    <td class="iris-word-cell" colspan="1">https://github.com/ioos/ioosngdac/tree/master/nc/template/IOOS_Glider_...</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        geospatial_lat_max</td>
+    <td class="iris-word-cell" colspan="1">39.91726417227544</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        geospatial_lat_min</td>
+    <td class="iris-word-cell" colspan="1">39.32370673037986</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        geospatial_lat_units</td>
+    <td class="iris-word-cell" colspan="1">degrees_north</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        geospatial_lon_max</td>
+    <td class="iris-word-cell" colspan="1">-69.98303682074565</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        geospatial_lon_min</td>
+    <td class="iris-word-cell" colspan="1">-71.18259602604894</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        geospatial_lon_units</td>
+    <td class="iris-word-cell" colspan="1">degrees_east</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        geospatial_vertical_max</td>
+    <td class="iris-word-cell" colspan="1">976.756</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        geospatial_vertical_min</td>
+    <td class="iris-word-cell" colspan="1">-0.03969577</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        geospatial_vertical_positive</td>
+    <td class="iris-word-cell" colspan="1">down</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        geospatial_vertical_units</td>
+    <td class="iris-word-cell" colspan="1">m</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        history</td>
+    <td class="iris-word-cell" colspan="1">2017-04-19T14:33:35Z: Data Source /Users/kerfoot/datasets/ooi/dac/deployments/CP05MOAS-GL336-deployment0004-telemetered/nc-source/deployment0004_CP05MOAS-GL336-03-CTDGVM000-telemetered-ctdgv_m_glider_instrument_20170418T091545.141720-20170419T010002.022580.nc</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        2017-04-19T14</td>
+    <td class="iris-word-cell" colspan="1">3:41Z:...</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        id</td>
+    <td class="iris-word-cell" colspan="1">cp_336-20170116T125400Z</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        infoUrl</td>
+    <td class="iris-word-cell" colspan="1">http://data.ioos.us/gliders/erddap/</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        institution</td>
+    <td class="iris-word-cell" colspan="1">Ocean Observatories Initiative</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        instrument</td>
+    <td class="iris-word-cell" colspan="1">instrument_ctd</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        ioos_category</td>
+    <td class="iris-word-cell" colspan="1">Pressure</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        ioos_dac_checksum</td>
+    <td class="iris-word-cell" colspan="1">f42b729c0bf19af1b7229b21350ebaaf</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        ioos_dac_completed</td>
+    <td class="iris-word-cell" colspan="1">False</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        keywords</td>
+    <td class="iris-word-cell" colspan="1">AUVS > Autonomous Underwater Vehicles, Oceans > Ocean Pressure > Water...</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        keywords_vocabulary</td>
+    <td class="iris-word-cell" colspan="1">GCMD Science Keywords</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        license</td>
+    <td class="iris-word-cell" colspan="1">All OOI data including data from OOI core sensors and all proposed sensors...</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        metadata_link</td>
+    <td class="iris-word-cell" colspan="1">http://ooi.visualocean.net/sites/view/CP05MOAS</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        naming_authority</td>
+    <td class="iris-word-cell" colspan="1">org.oceanobservatories</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        observation_type</td>
+    <td class="iris-word-cell" colspan="1">calculated</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        platform</td>
+    <td class="iris-word-cell" colspan="1">platform</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        platform_type</td>
+    <td class="iris-word-cell" colspan="1">Slocum Glider</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        positive</td>
+    <td class="iris-word-cell" colspan="1">down</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        processing_level</td>
+    <td class="iris-word-cell" colspan="1">Contains any/all of the following: L0 Data (Unprocessed, parsed data product...</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        project</td>
+    <td class="iris-word-cell" colspan="1">Ocean Observatories Initiative</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        publisher_email</td>
+    <td class="iris-word-cell" colspan="1">kerfoot@marine.rutgers.edu</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        publisher_name</td>
+    <td class="iris-word-cell" colspan="1">John Kerfoot</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        publisher_url</td>
+    <td class="iris-word-cell" colspan="1">http://rucool.marine.rutgers.edu</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        reference_datum</td>
+    <td class="iris-word-cell" colspan="1">sea-surface</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        references</td>
+    <td class="iris-word-cell" colspan="1">http://oceanobservatories.org/</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        sea_name</td>
+    <td class="iris-word-cell" colspan="1">Mid-Atlantic Bight</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        source</td>
+    <td class="iris-word-cell" colspan="1">Observational data from a profiling glider</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        sourceUrl</td>
+    <td class="iris-word-cell" colspan="1">(local files)</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        source_variable</td>
+    <td class="iris-word-cell" colspan="1">sci_water_pressure_dbar</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        standard_name_vocabulary</td>
+    <td class="iris-word-cell" colspan="1">CF Standard Name Table v27</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        subsetVariables</td>
+    <td class="iris-word-cell" colspan="1">trajectory,wmo_id,time_uv,lat_uv,lon_uv,u,v,profile_id,time,latitude,l...</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        summary</td>
+    <td class="iris-word-cell" colspan="1">The Pioneer Array is located off the coast of New England, south of Martha's...</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        time_coverage_end</td>
+    <td class="iris-word-cell" colspan="1">2017-02-09T23:03:25Z</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        time_coverage_start</td>
+    <td class="iris-word-cell" colspan="1">2017-01-16T13:03:04Z</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        title</td>
+    <td class="iris-word-cell" colspan="1">cp_336-20170116T1254</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        valid_max</td>
+    <td class="iris-word-cell" colspan="1">2000.0</td>
+</tr>
+<tr class="iris">
+    <td class="iris-word-cell iris-subheading-cell">        valid_min</td>
+    <td class="iris-word-cell" colspan="1">0.0</td>
+</tr>
+</table></div>
 </div>
 </div>
 </div>

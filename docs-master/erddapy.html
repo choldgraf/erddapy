@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy &#8212; erddapy 0.1.10+4.gbfa776b documentation</title>
+    <title>erddapy &#8212; erddapy 0.1.11+8.g851df5c documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -224,25 +224,30 @@
 <p>to get a list of the shortcuts available servers:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">erddapy</span> <span class="k">import</span> <span class="n">servers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">url</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">servers</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-<span class="go">{&#39;BMLSC&#39;: &#39;http://bmlsc.ucdavis.edu:8080/erddap&#39;,</span>
-<span class="go"> &#39;CSCGOM&#39;: &#39;http://cwcgom.aoml.noaa.gov/erddap&#39;,</span>
-<span class="go"> &#39;CSWC&#39;: &#39;https://coastwatch.pfeg.noaa.gov/erddap&#39;,</span>
-<span class="go"> &#39;CeNCOOS&#39;: &#39;http://erddap.axiomalaska.com/erddap&#39;,</span>
-<span class="go"> &#39;IFREMER&#39;: &#39;http://www.ifremer.fr/erddap&#39;,</span>
-<span class="go"> &#39;MDA&#39;: &#39;https://bluehub.jrc.ec.europa.eu/erddap&#39;,</span>
-<span class="go"> &#39;MII&#39;: &#39;http://erddap.marine.ie/erddap&#39;,</span>
-<span class="go"> &#39;NCEI&#39;: &#39;http://ecowatch.ncddc.noaa.gov/erddap&#39;,</span>
-<span class="go"> &#39;NERACOOS&#39;: &#39;http://www.neracoos.org/erddap&#39;,</span>
-<span class="go"> &#39;NGDAC&#39;: &#39;http://data.ioos.us/gliders/erddap&#39;,</span>
-<span class="go"> &#39;ONC&#39;: &#39;http://dap.onc.uvic.ca/erddap&#39;,</span>
-<span class="go"> &#39;OSMC&#39;: &#39;http://osmc.noaa.gov/erddap&#39;,</span>
-<span class="go"> &#39;PacIOOS&#39;: &#39;http://oos.soest.hawaii.edu/erddap&#39;,</span>
-<span class="go"> &#39;RTECH&#39;: &#39;http://meteo.rtech.fr/erddap&#39;,</span>
-<span class="go"> &#39;SECOORA&#39;: &#39;http://erddap.secoora.org/erddap&#39;,</span>
-<span class="go"> &#39;UAF&#39;: &#39;https://upwell.pfeg.noaa.gov/erddap&#39;</span>
-<span class="go"> &#39;UBC&#39;: &#39;https://salishsea.eos.ubc.ca/erddap&#39;}</span>
+<span class="go">{&#39;MDA&#39;: &#39;https://bluehub.jrc.ec.europa.eu/erddap/&#39;,</span>
+<span class="go"> &#39;MII&#39;: &#39;https://erddap.marine.ie/erddap/&#39;,</span>
+<span class="go"> &#39;CSCGOM&#39;: &#39;http://cwcgom.aoml.noaa.gov/erddap/&#39;,</span>
+<span class="go"> &#39;CSWC&#39;: &#39;https://coastwatch.pfeg.noaa.gov/erddap/&#39;,</span>
+<span class="go"> &#39;CeNCOOS&#39;: &#39;http://erddap.axiomalaska.com/erddap/&#39;,</span>
+<span class="go"> &#39;NERACOOS&#39;: &#39;http://www.neracoos.org/erddap/&#39;,</span>
+<span class="go"> &#39;NGDAC&#39;: &#39;https://data.ioos.us/gliders/erddap/&#39;,</span>
+<span class="go"> &#39;PacIOOS&#39;: &#39;http://oos.soest.hawaii.edu/erddap/&#39;,</span>
+<span class="go"> &#39;SECOORA&#39;: &#39;http://erddap.secoora.org/erddap/&#39;,</span>
+<span class="go"> &#39;NCEI&#39;: &#39;https://ecowatch.ncddc.noaa.gov/erddap/&#39;,</span>
+<span class="go"> &#39;OSMC&#39;: &#39;http://osmc.noaa.gov/erddap/&#39;,</span>
+<span class="go"> &#39;UAF&#39;: &#39;https://upwell.pfeg.noaa.gov/erddap/&#39;,</span>
+<span class="go"> &#39;ONC&#39;: &#39;http://dap.onc.uvic.ca/erddap/&#39;,</span>
+<span class="go"> &#39;BMLSC&#39;: &#39;http://bmlsc.ucdavis.edu:8080/erddap/&#39;,</span>
+<span class="go"> &#39;RTECH&#39;: &#39;https://meteo.rtech.fr/erddap/&#39;,</span>
+<span class="go"> &#39;IFREMER&#39;: &#39;http://www.ifremer.fr/erddap/&#39;,</span>
+<span class="go"> &#39;UBC&#39;: &#39;https://salishsea.eos.ubc.ca/erddap/&#39;}</span>
 </pre></div>
 </div>
+<dl class="method">
+<dt id="erddapy.erddapy.ERDDAP.get_categorize_url">
+<code class="descname">get_categorize_url</code><span class="sig-paren">(</span><em>categorize_by</em>, <em>value=None</em>, <em>response=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_categorize_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_categorize_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="erddapy.erddapy.ERDDAP.get_download_url">
 <code class="descname">get_download_url</code><span class="sig-paren">(</span><em>dataset_id=None</em>, <em>protocol=None</em>, <em>variables=None</em>, <em>response=None</em>, <em>constraints=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_download_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_download_url" title="Permalink to this definition">¶</a></dt>
