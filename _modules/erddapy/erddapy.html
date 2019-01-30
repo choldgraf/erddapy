@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy.erddapy &#8212; erddapy 0.3.0+8.g46bffa6 documentation</title>
+    <title>erddapy.erddapy &#8212; erddapy 0.3.0+12.gf1b633c documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -367,13 +367,12 @@
 <span class="sd">            variables (list/tuple): a list of the variables to download.</span>
 <span class="sd">            response (str): default is HTML.</span>
 <span class="sd">            constraints (dict): download constraints, default None (opendap-like url)</span>
-<span class="sd">                example: constraints = {&#39;latitude&lt;=&#39;: 41.0,</span>
-<span class="sd">                                        &#39;latitude&gt;=&#39;: 38.0,</span>
-<span class="sd">                                        &#39;longitude&lt;=&#39;: -69.0,</span>
-<span class="sd">                                        &#39;longitude&gt;=&#39;: -72.0,</span>
-<span class="sd">                                        &#39;time&lt;=&#39;: &#39;2017-02-10T00:00:00+00:00&#39;,</span>
-<span class="sd">                                        &#39;time&gt;=&#39;: &#39;2016-07-10T00:00:00+00:00&#39;,</span>
-<span class="sd">                                        }</span>
+<span class="sd">            example: constraints = {&#39;latitude&lt;=&#39;: 41.0,</span>
+<span class="sd">                                    &#39;latitude&gt;=&#39;: 38.0,</span>
+<span class="sd">                                    &#39;longitude&lt;=&#39;: -69.0,</span>
+<span class="sd">                                    &#39;longitude&gt;=&#39;: -72.0,</span>
+<span class="sd">                                    &#39;time&lt;=&#39;: &#39;2017-02-10T00:00:00+00:00&#39;,</span>
+<span class="sd">                                    &#39;time&gt;=&#39;: &#39;2016-07-10T00:00:00+00:00&#39;,}</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            url (str): the download URL for the `response` chosen.</span>
@@ -424,10 +423,10 @@
 
 <span class="sd">        Accepts any `pandas.read_csv` keyword arguments.</span>
 
-<span class="sd">        This method uses the `.csvp`(1) response for simplicity,</span>
+<span class="sd">        This method uses the .csvp [1] response for simplicity,</span>
 <span class="sd">        please check ERDDAP&#39;s documentation for the other csv options available.</span>
 
-<span class="sd">        1) Download a ISO-8859-1 .csv file with line 1: name (units). Times are ISO 8601 strings.</span>
+<span class="sd">        [1] Download a ISO-8859-1 .csv file with line 1: name (units). Times are ISO 8601 strings.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_download_url</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="s2">&quot;csvp&quot;</span><span class="p">)</span>
