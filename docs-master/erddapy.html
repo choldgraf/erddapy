@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy &#8212; erddapy 0.3.0+8.g46bffa6 documentation</title>
+    <title>erddapy &#8212; erddapy 0.3.0+12.gf1b633c documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -281,16 +281,13 @@
 <li><strong>protocol</strong> (<em>str</em>) – tabledap or griddap.</li>
 <li><strong>variables</strong> (<em>list/tuple</em>) – a list of the variables to download.</li>
 <li><strong>response</strong> (<em>str</em>) – default is HTML.</li>
-<li><strong>constraints</strong> (<em>dict</em>) – <p>download constraints, default None (opendap-like url)
-example: constraints = {‘latitude&lt;=’: 41.0,</p>
-<blockquote>
-<div>’latitude&gt;=’: 38.0,
+<li><strong>constraints</strong> (<em>dict</em>) – download constraints, default None (opendap-like url)</li>
+<li><strong>example</strong> – constraints = {‘latitude&lt;=’: 41.0,
+‘latitude&gt;=’: 38.0,
 ‘longitude&lt;=’: -69.0,
 ‘longitude&gt;=’: -72.0,
 ‘time&lt;=’: ‘2017-02-10T00:00:00+00:00’,
-‘time&gt;=’: ‘2016-07-10T00:00:00+00:00’,
-}</div></blockquote>
-</li>
+‘time&gt;=’: ‘2016-07-10T00:00:00+00:00’,}</li>
 </ul>
 </td>
 </tr>
@@ -433,11 +430,9 @@ for the <cite>dataset_id</cite>, and the variables attribute dictionary.</p>
 <code class="descname">to_pandas</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.to_pandas"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.to_pandas" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a data request to a pandas.DataFrame.</p>
 <p>Accepts any <cite>pandas.read_csv</cite> keyword arguments.</p>
-<p>This method uses the <a href="#id1"><span class="problematic" id="id2">`</span></a>.csvp`(1) response for simplicity,
+<p>This method uses the .csvp [1] response for simplicity,
 please check ERDDAP’s documentation for the other csv options available.</p>
-<ol class="arabic simple">
-<li>Download a ISO-8859-1 .csv file with line 1: name (units). Times are ISO 8601 strings.</li>
-</ol>
+<p>[1] Download a ISO-8859-1 .csv file with line 1: name (units). Times are ISO 8601 strings.</p>
 </dd></dl>
 
 <dl class="method">
