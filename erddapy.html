@@ -1,12 +1,10 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>erddapy &#8212; erddapy 0.4.0 documentation</title>
+    <meta charset="utf-8" />
+    <title>erddapy &#8212; erddapy 0.4.0+3.g4723ad3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -65,7 +63,7 @@
 <h3>Navigation</h3>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">erddapy</span></code></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">erddapy</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="quick_intro.html">Quick introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quick_intro.html#Longer-introduction">Longer introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="searchfor.html">Searching datasets</a></li>
@@ -86,8 +84,6 @@
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -117,72 +113,56 @@
 <em class="property">class </em><code class="descclassname">erddapy.erddapy.</code><code class="descname">ERDDAP</code><span class="sig-paren">(</span><em>server</em>, <em>protocol=None</em>, <em>response='html'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Creates an ERDDAP instance for a specific server endpoint.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>server</strong> (<em>str</em>) – an ERDDAP server URL or an acronym for one of the builtin servers.</li>
-<li><strong>protocol</strong> (<em>str</em>) – tabledap or griddap.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server</strong> (<em>str</em>) – an ERDDAP server URL or an acronym for one of the builtin servers.</p></li>
+<li><p><strong>protocol</strong> (<em>str</em>) – tabledap or griddap.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="attribute">
 <dt id="erddapy.erddapy.ERDDAP.dataset_id">
 <code class="descname">dataset_id</code><a class="headerlink" href="#erddapy.erddapy.ERDDAP.dataset_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>a dataset unique id.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="erddapy.erddapy.ERDDAP.variables">
 <code class="descname">variables</code><a class="headerlink" href="#erddapy.erddapy.ERDDAP.variables" title="Permalink to this definition">¶</a></dt>
 <dd><p>a list variables to download.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>/<cite>tuple</cite></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>/<cite>tuple</cite></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="erddapy.erddapy.ERDDAP.response">
 <code class="descname">response</code><a class="headerlink" href="#erddapy.erddapy.ERDDAP.response" title="Permalink to this definition">¶</a></dt>
 <dd><p>default is HTML.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="erddapy.erddapy.ERDDAP.constraints">
 <code class="descname">constraints</code><a class="headerlink" href="#erddapy.erddapy.ERDDAP.constraints" title="Permalink to this definition">¶</a></dt>
 <dd><p>download constraints, default None (opendap-like url)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
@@ -191,16 +171,14 @@
 <dd><p><cite>request.get</cite> options</p>
 </dd></dl>
 
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the ERDDAP URL builder.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">instance</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the ERDDAP URL builder.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>instance</p>
+</dd>
+</dl>
 <p class="rubric">Examples</p>
 <p>Specifying the server URL</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">ERDDAP</span><span class="p">(</span><span class="n">server</span><span class="o">=</span><span class="s1">&#39;https://data.ioos.us/gliders/erddap&#39;</span><span class="p">)</span>
@@ -247,146 +225,130 @@
 <dt id="erddapy.erddapy.ERDDAP.get_categorize_url">
 <code class="descname">get_categorize_url</code><span class="sig-paren">(</span><em>categorize_by</em>, <em>value=None</em>, <em>response=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_categorize_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_categorize_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>The categorize URL for the <cite>server</cite> endpoint.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>categorize_by</strong> (<em>str</em>) – a valid attribute, e.g.: ioos_category or standard_name.</li>
-<li><strong>value</strong> (<em>str</em>) – an attribute value.</li>
-<li><strong>response</strong> (<em>str</em>) – default is HTML.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>categorize_by</strong> (<em>str</em>) – a valid attribute, e.g.: ioos_category or standard_name.</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – an attribute value.</p></li>
+<li><p><strong>response</strong> (<em>str</em>) – default is HTML.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the categorized URL for the <cite>response</cite> chosen.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">url (str)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the categorized URL for the <cite>response</cite> chosen.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>url (str)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="erddapy.erddapy.ERDDAP.get_download_url">
 <code class="descname">get_download_url</code><span class="sig-paren">(</span><em>dataset_id=None</em>, <em>protocol=None</em>, <em>variables=None</em>, <em>response=None</em>, <em>constraints=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_download_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_download_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>The download URL for the <cite>server</cite> endpoint.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dataset_id</strong> (<em>str</em>) – a dataset unique id.</li>
-<li><strong>protocol</strong> (<em>str</em>) – tabledap or griddap.</li>
-<li><strong>variables</strong> (<em>list/tuple</em>) – a list of the variables to download.</li>
-<li><strong>response</strong> (<em>str</em>) – default is HTML.</li>
-<li><strong>constraints</strong> (<em>dict</em>) – download constraints, default None (opendap-like url)</li>
-<li><strong>example</strong> – constraints = {‘latitude&lt;=’: 41.0,
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_id</strong> (<em>str</em>) – a dataset unique id.</p></li>
+<li><p><strong>protocol</strong> (<em>str</em>) – tabledap or griddap.</p></li>
+<li><p><strong>variables</strong> (<em>list/tuple</em>) – a list of the variables to download.</p></li>
+<li><p><strong>response</strong> (<em>str</em>) – default is HTML.</p></li>
+<li><p><strong>constraints</strong> (<em>dict</em>) – download constraints, default None (opendap-like url)</p></li>
+<li><p><strong>example</strong> – constraints = {‘latitude&lt;=’: 41.0,
 ‘latitude&gt;=’: 38.0,
 ‘longitude&lt;=’: -69.0,
 ‘longitude&gt;=’: -72.0,
 ‘time&lt;=’: ‘2017-02-10T00:00:00+00:00’,
-‘time&gt;=’: ‘2016-07-10T00:00:00+00:00’,}</li>
+‘time&gt;=’: ‘2016-07-10T00:00:00+00:00’,}</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the download URL for the <cite>response</cite> chosen.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">url (str)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the download URL for the <cite>response</cite> chosen.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>url (str)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="erddapy.erddapy.ERDDAP.get_info_url">
 <code class="descname">get_info_url</code><span class="sig-paren">(</span><em>dataset_id=None</em>, <em>response=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_info_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_info_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>The info URL for the <cite>server</cite> endpoint.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dataset_id</strong> (<em>str</em>) – a dataset unique id.</li>
-<li><strong>response</strong> (<em>str</em>) – default is HTML.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_id</strong> (<em>str</em>) – a dataset unique id.</p></li>
+<li><p><strong>response</strong> (<em>str</em>) – default is HTML.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the info URL for the <cite>response</cite> chosen.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">url (str)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the info URL for the <cite>response</cite> chosen.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>url (str)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="erddapy.erddapy.ERDDAP.get_search_url">
 <code class="descname">get_search_url</code><span class="sig-paren">(</span><em>response=None</em>, <em>search_for=None</em>, <em>items_per_page=1000</em>, <em>page=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/erddapy/erddapy.html#ERDDAP.get_search_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#erddapy.erddapy.ERDDAP.get_search_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>The search URL for the <cite>server</cite> endpoint provided.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>search_for</strong> (<em>str</em>) – <p>“Google-like” search of the datasets’ metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_for</strong> (<em>str</em>) – <p>“Google-like” search of the datasets’ metadata.</p>
 <ul>
-<li><dl class="first docutils">
-<dt>Type the words you want to search for, with spaces between the words.</dt>
-<dd>ERDDAP will search for the words separately, not as a phrase.</dd>
+<li><dl class="simple">
+<dt>Type the words you want to search for, with spaces between the words.</dt><dd><p>ERDDAP will search for the words separately, not as a phrase.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>To search for a phrase, put double quotes around the phrase</dt>
-<dd>(for example, <cite>“wind speed”</cite>).</dd>
+<li><dl class="simple">
+<dt>To search for a phrase, put double quotes around the phrase</dt><dd><p>(for example, <cite>“wind speed”</cite>).</p>
+</dd>
 </dl>
 </li>
-<li>To exclude datasets with a specific word, use <cite>-excludedWord</cite>.</li>
-<li>To exclude datasets with a specific phrase, use <cite>-“excluded phrase”</cite></li>
-<li>Searches are not case-sensitive.</li>
-<li><dl class="first docutils">
-<dt>To find just grid or just table datasets, include <cite>protocol=griddap</cite></dt>
-<dd>or <cite>protocol=tabledap</cite> in your search.</dd>
+<li><p>To exclude datasets with a specific word, use <cite>-excludedWord</cite>.</p></li>
+<li><p>To exclude datasets with a specific phrase, use <cite>-“excluded phrase”</cite></p></li>
+<li><p>Searches are not case-sensitive.</p></li>
+<li><dl class="simple">
+<dt>To find just grid or just table datasets, include <cite>protocol=griddap</cite></dt><dd><p>or <cite>protocol=tabledap</cite> in your search.</p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>You can search for any part of a word. For example,</dt>
-<dd>searching for <cite>spee</cite> will find datasets with <cite>speed</cite> and datasets with
-<cite>WindSpeed</cite></dd>
+<li><dl class="simple">
+<dt>You can search for any part of a word. For example,</dt><dd><p>searching for <cite>spee</cite> will find datasets with <cite>speed</cite> and datasets with
+<cite>WindSpeed</cite></p>
+</dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>The last word in a phrase may be a partial word. For example,</dt>
-<dd>to find datasets from a specific website (usually the start of the datasetID),
-include (for example) <cite>“datasetID=erd”</cite> in your search.</dd>
+<li><dl class="simple">
+<dt>The last word in a phrase may be a partial word. For example,</dt><dd><p>to find datasets from a specific website (usually the start of the datasetID),
+include (for example) <cite>“datasetID=erd”</cite> in your search.</p>
+</dd>
 </dl>
 </li>
 </ul>
-</li>
-<li><strong>response</strong> (<em>str</em>) – default is HTML.</li>
-<li><strong>items_per_page</strong> (<em>int</em>) – how many items per page in the return,
-default is 1000.</li>
-<li><strong>page</strong> (<em>int</em>) – which page to display, default is the first page (1).</li>
-<li><strong>kwargs</strong> (<em>dict</em>) – extra search constraints based on metadata and/or coordinates ke/value.
+</p></li>
+<li><p><strong>response</strong> (<em>str</em>) – default is HTML.</p></li>
+<li><p><strong>items_per_page</strong> (<em>int</em>) – how many items per page in the return,
+default is 1000.</p></li>
+<li><p><strong>page</strong> (<em>int</em>) – which page to display, default is the first page (1).</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – extra search constraints based on metadata and/or coordinates ke/value.
 metadata: <cite>cdm_data_type</cite>, <cite>institution</cite>, <cite>ioos_category</cite>,
 <cite>keywords</cite>, <cite>long_name</cite>, <cite>standard_name</cite>, and <cite>variableName</cite>.
-coordinates: <cite>minLon</cite>, <cite>maxLon</cite>, <cite>minLat</cite>, <cite>maxLat</cite>, <cite>minTime</cite>, and <cite>maxTime</cite>.</li>
+coordinates: <cite>minLon</cite>, <cite>maxLon</cite>, <cite>minLat</cite>, <cite>maxLat</cite>, <cite>minTime</cite>, and <cite>maxTime</cite>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the search URL.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">url (str)</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the search URL.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>url (str)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -457,7 +419,7 @@ please check ERDDAP’s documentation for the other csv options available.</p>
       &copy;2017, Filipe Fernandes.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
